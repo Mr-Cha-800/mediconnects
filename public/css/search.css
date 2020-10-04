@@ -1,0 +1,32 @@
+
+@media screen and (max-width: 600px) {
+    .screenlarge{
+      left:160px;
+    }
+}
+@media screen and (min-width: 600px)  and (max-width: 950px){
+  .screenlarge{
+        width:50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+  }
+}
+@media screen and (min-width: 951px)  and (max-width: 2000px) {
+  .screenlarge{
+        width:50%;
+        top: 50%;
+        left: 350px;
+        transform: translate(-50%, -50%);
+  }
+
+}
+@media screen and (min-width: 2000px)  {
+  .screenlarge{
+        width:50%;
+        top: 50%;
+        left: 500px;
+        transform: translate(-50%, -50%);
+  }
+
+}

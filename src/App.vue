@@ -10,3 +10,8 @@ export default Vue.extend({
   name: 'App'
 });
 </script>
+<style lang="scss" >
+body {
+  font-family: Sans-Serif;
+}
+</style>
