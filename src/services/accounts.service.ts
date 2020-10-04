@@ -1,30 +1,31 @@
 import { API } from 'src/constants';
 
-export const login = (username: string, password: string) => {
+export const login = (user: string, password: string) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ user, password })
   };
 
-  return fetch(`${API}/api/login`, requestOptions)
+  return fetch(`${API}/security/login`, requestOptions)
     .then(res => res.json())
-    .then(({ user, token }) => {
+    .then(({ id, email, token }) => {
       if (token) {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('user', JSON.stringify({ id, email }));
       }
-      return user;
+      return {id, email};
     });
 };
 
 export const logout = () => localStorage.removeItem('user');
 
-export const register = (user: { username: string, password: string }) => {
+export const register = (user: { user: string, password: string }) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user)
   };
 
-  return fetch(`${API}/api/register`, requestOptions).then(res => res.json());
+  return fetch(`${API}/security/signup`, requestOptions).then(res => res.json());
 };

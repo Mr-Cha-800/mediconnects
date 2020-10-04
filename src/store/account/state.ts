@@ -5,9 +5,9 @@ export interface AccountInterface {
     registering?: boolean,
   },
   user: {
+    id?: string;
     email?: string;
-    password?: string;
-  }
+  },
 }
 
 const user = JSON.parse(<string>localStorage.getItem('user'));

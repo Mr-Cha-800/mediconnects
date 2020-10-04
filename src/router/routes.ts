@@ -6,9 +6,10 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: '/feed', component: () => import('pages/UserInterface/Customizedfeeds.vue') },
-      { path: '/profile', component: () => import('pages/UserInterface/Profile.vue') },
-      { path: '/organization', component: () => import('pages/UserInterface/Organization.vue') }
+      { path: '/feed', component: () => import('pages/feed/Customizedfeeds.vue') },
+      { path: '/profile', component: () => import('pages/accounts/UserProfile.vue') },
+      { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue') },
+      { path: '/profile/organizations/:orgId', component: () => import('pages/accounts/organizationProfile.vue') }
     ]
   },
 

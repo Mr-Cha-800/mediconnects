@@ -7,7 +7,7 @@ const mutation: MutationTree<AccountInterface> = {
     state = { status: { loggingIn: true }, user };
   },
   loginSuccess(state, user) {
-    state = { status: { loggedIn: true }, user };
+    state = { status: { loggedIn: true }, ...user };
   },
   loginFailure(state) {
     state = { status: {}, user: {} };
@@ -19,7 +19,7 @@ const mutation: MutationTree<AccountInterface> = {
     state = { status: { registering: true }, user };
   },
   registerSuccess(state, user) {
-    state = { status: {}, user };
+    state = { status: {}, ...user };
   },
   registerFailure(state, error) {
     state = { status: {}, user: {} };

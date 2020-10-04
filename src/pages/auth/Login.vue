@@ -62,8 +62,8 @@
       ...mapActions('accountModule', ['login', 'logout']),
       handleSubmit(): void {
         if (this.vLoginForm.validate()) {
-          const { userLogin: { email, password } } = this;
-          this.login({ email, password })
+          const { userLogin: { email: user, password } } = this;
+          this.login({ user, password })
         }
       }
     }
