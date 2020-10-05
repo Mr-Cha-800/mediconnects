@@ -4,23 +4,27 @@ import { Store } from 'vuex';
 import { StateInterface } from '../store';
 import routes from './routes';
 
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation
- */
+export const Router = new VueRouter({
+  scrollBehavior: () => ({ x: 0, y: 0 }),
+  routes,
 
-export default route<Store<StateInterface>>(function ({ Vue }) {
+  // Leave these as is and change from quasar.conf.js instead!
+  // quasar.conf.js -> build -> vueRouterMode
+  // quasar.conf.js -> build -> publicPath
+  mode: process.env.VUE_ROUTER_MODE,
+  base: process.env.VUE_ROUTER_BASE
+});
+
+export default route<Store<StateInterface>>(({ Vue, store }) => {
   Vue.use(VueRouter);
 
-  const Router = new VueRouter({
-    scrollBehavior: () => ({ x: 0, y: 0 }),
-    routes,
+  Router.beforeEach(async (to, from, next) => {
+    const { meta: { auth } } = to;
 
-    // Leave these as is and change from quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
-    mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE
+    if (auth && !store.getters['accountModule/isAuthenticated']) {
+      return Router.push({name: 'login'});
+    }
+    next();
   });
 
   return Router;

@@ -9,6 +9,9 @@
           <div class="col-12 q-my-md">
             <p class="text-center text-h5">Make the most of your professional life</p>
           </div>
+          <q-banner v-if="status.error" dense inline-actions class="text-white bg-red full-width q-mb-sm">
+            <span class="text-body1">{{ status.error }}</span>
+          </q-banner>
           <div class="col-12 q-my-xs">
             <q-input outlined v-model="userLogin.email" label="Email" :rules="[validateEmail]" lazy-rules/>
           </div>
@@ -61,8 +64,8 @@
       validateEmail: validateEmail,
       handleSubmit(): void {
         if (this.vSignUpForm.validate()) {
-          const { userLogin: { email, password } } = this;
-          this.register({ email, password })
+          const { userLogin: { email: user, password } } = this;
+          this.register({ user, password })
         }
       }
     }

@@ -1,27 +1,34 @@
 <template>
-  <div>
-    <q-item>
-      <q-item-section avatar>
-        <q-avatar size="10rem">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg">
-        </q-avatar>
-      </q-item-section>
-      <q-item-section>
+  <div class="q-pa-sm">
+    <q-item class="row">
+      <div class="col-3 text-center q-pr-lg q-pr-xl-md">
+        <q-img
+          src="https://cdn.quasar.dev/img/image-src.png"
+          srcset="https://cdn.quasar.dev/img/image-1x.png 300w,
+                https://cdn.quasar.dev/img/image-2x.png 2x,
+                https://cdn.quasar.dev/img/image-3x.png 3x,
+                https://cdn.quasar.dev/img/image-4x.png 4x"
+          style="border-radius: 50%;"
+        />
+      </div>
+      <div class="col-9 self-center">
         <q-item-label>
           <span class="text-h5 text-primary">Kingsley R. Chin, M.D.</span>
         </q-item-label>
         <q-item-label caption>
           <span class="text-h6 text-primary">CEO KICventures LLC</span>
         </q-item-label>
-
         <q-rating
           v-model="ratingModel"
           size="1.5em"
           color="yellow-7"
           icon="star_border"
           icon-selected="star"
-          class="q-pb-md"
         />
+      </div>
+    </q-item>
+    <q-item class="row">
+      <q-item-section class="col-12">
         <q-item-label caption>
           <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
           <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
@@ -37,7 +44,6 @@
         </q-item-label>
       </q-item-section>
     </q-item>
-
     <q-item>
       <q-item-label caption>
           <span class="text-body1">

@@ -1,6 +1,7 @@
 import { store } from 'quasar/wrappers';
 import Vuex from 'vuex';
 import accountModule from 'src/store/account';
+import userProfileModule from 'src/store/userProfile';
 
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
@@ -11,10 +12,6 @@ import accountModule from 'src/store/account';
  */
 
 export interface StateInterface {
-  // Define your own store structure, using submodules if needed
-  // example: ExampleStateInterface;
-  // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown;
 }
 
 export default store(function ({ Vue }) {
@@ -22,7 +19,8 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      accountModule
+      accountModule,
+      userProfileModule
     },
 
     // enable strict mode (adds overhead!)

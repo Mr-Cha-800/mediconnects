@@ -2,42 +2,40 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { AccountInterface } from './state';
 import * as AccountService from 'src/services/accounts.service';
+import { Router } from 'src/router';
 
 const actions: ActionTree<AccountInterface, StateInterface> = {
-  login({ dispatch, commit }, { user, password }) {
-    commit('loginRequest', { user });
-
+  login({ commit }, { user, password }) {
+    commit('loginRequest');
     AccountService.login(user, password)
       .then(
-        ({ id, email }) => {
-          commit('loginSuccess', { user: { email, id } });
-          // redirect('/');
-        },
-        error => {
-          console.log(error)
-          commit('loginFailure', error);
+        (user) => {
+          commit('loginSuccess', user);
+          return Router.push({name: 'home'});
         }
-      ).catch(console.log);
+      ).catch(error => {
+
+      commit('loginFailure', error);
+    });
   },
 
   logout({ commit }) {
-    // userService.logout();
+    AccountService.logout();
     commit('logout');
+    return Router.push({name: 'login'});
   },
 
-  register({ dispatch, commit }, user) {
-    commit('registerRequest', user);
-
-    AccountService.register(user)
+  register({ dispatch, commit }, { user, password }) {
+    commit('registerRequest');
+    AccountService.register(user, password)
       .then(
-        ({ id, email }) => {
-          commit('registerSuccess', { user: { email, id } });
-          //router.push('/login');
+        (user) => {
+          commit('registerSuccess', user);
+          return Router.push({name: 'userProfile'});
         },
         error => {
           commit('registerFailure', error);
-        }
-      );
+        });
   }
 };
 

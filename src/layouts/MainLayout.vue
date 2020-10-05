@@ -15,14 +15,22 @@
 <script lang="ts">
   import Header from 'layouts/Header.vue';
   import Footer from 'layouts/Footer.vue';
+  import { mapActions, mapGetters } from 'vuex';
 
   import Vue from 'vue';
 
   export default Vue.extend({
     name: 'MainLayout',
     components: { Header, Footer },
-    data() {
-      return {};
+    computed: {
+    },
+    methods: {
+      ...mapGetters('accountModule', ['user']),
+      ...mapActions('userProfileModule', ['getUserProfile']),
+    },
+    created() {
+      const { id } = this.user();
+      this.getUserProfile(id);
     }
   });
 </script>

@@ -1,28 +1,33 @@
 import { MutationTree } from 'vuex';
-import { AccountInterface } from './state';
+import { AccountInterface, UserInterface } from './state';
+import Vue from 'vue';
 
 const mutation: MutationTree<AccountInterface> = {
-  loginRequest(state, user) {
-    console.log(state, user)
-    state = { status: { loggingIn: true }, user };
+  loginRequest(state) {
+    Vue.set(state, 'user', {});
+    Vue.set(state, 'status', {loggedIn: false});
   },
-  loginSuccess(state, user) {
-    state = { status: { loggedIn: true }, ...user };
+  loginSuccess(state, user: UserInterface) {
+    Vue.set(state, 'user', user);
+    Vue.set(state, 'status', {loggedIn: true});
   },
-  loginFailure(state) {
-    state = { status: {}, user: {} };
+  loginFailure(state, error) {
+    Vue.set(state, 'status', { loggedIn: false, error });
   },
   logout(state) {
-    state = { status: {}, user: {} };
+    Vue.set(state, 'user', {});
+    Vue.set(state, 'status', { loggedIn: false });
   },
-  registerRequest(state, user) {
-    state = { status: { registering: true }, user };
+  registerRequest(state) {
+    Vue.set(state, 'user', {});
+    Vue.set(state, 'status', {loggedIn: false});
   },
-  registerSuccess(state, user) {
-    state = { status: {}, ...user };
+  registerSuccess(state, user: UserInterface) {
+    Vue.set(state, 'user', user);
+    Vue.set(state, 'status', {loggedIn: true});
   },
   registerFailure(state, error) {
-    state = { status: {}, user: {} };
+    Vue.set(state, 'status', { loggedIn: false, error });
   }
 };
 

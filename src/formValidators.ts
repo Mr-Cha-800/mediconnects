@@ -1,6 +1,6 @@
 export const validatePassword = ( val?: string): string | boolean => {
   if(!val) return 'Password is required';
-  if(val.length < 6) return 'Passwords must be at least 6 characters';
+  if(!/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(val)) return 'Weak password! It should be 8 characters or more, contains at least 1 upper case letter, another in lower case, one numeral and one of the special characters !@#$&*';
   return true;
 };
 
