@@ -2,16 +2,21 @@
   <div>
     <q-card flat>
       <div class="flex q-pa-md">
-        <q-chip outline color="grey-8" clickable text-color="white">Your Orgs</q-chip>
-        <q-chip color="teal" clickable text-color="white">Orgs</q-chip>
-        <q-chip outline color="grey-8" clickable text-color="white">Discover</q-chip>
-        <q-chip outline color="grey-8" class="q-ml-auto" text-color="white" clickable @click="prompt = true">
-          <q-icon name="add" size="sm"/>
-        </q-chip>
+        <q-btn
+          rounded
+          v-for="(orgCategory, orgKey) in orgCategories"
+          :outline="!isOrgActive(orgKey)"
+          :color="isOrgActive(orgKey) ? 'primary' : 'grey-8'"
+          :label="orgCategory.label"
+          @click="setOrgCategory(orgCategory.payload, orgKey)"
+          class="q-ml-sm"
+        />
+
+        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'AddOrganization' }" />
       </div>
       <q-separator/>
       <q-list bordered>
-        <q-item clickable v-ripple v-for="i in [1,2,3,4,5,6,7,8,9,10]" to="/profile/organizations/0">
+        <q-item clickable v-ripple v-for="org in getOrgs" to="/profile/organizations/0">
           <q-item-section class="q-ml-none" avatar>
             <q-avatar size="5rem" square>
               <img
@@ -37,22 +42,6 @@
         </q-item>
         <q-separator/>
       </q-list>
-      <q-dialog v-model="prompt" persistent>
-        <q-card class="" style="width: 90%">
-          <q-card-section>
-            <div class="text-h6">Add</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            <q-input dense color="white" text-color="white" v-model="org" autofocus @keyup.enter="submitorg"/>
-          </q-card-section>
-
-          <q-card-actions align="right" class="q-pt-none float-right ">
-            <q-btn flat label="Cancel" v-close-popup/>
-            <q-btn flat @click="submitorg" label="Add " v-close-popup/>
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
     </q-card>
     <q-bar class="bg-grey-4" style="height:50px">
 
@@ -61,31 +50,45 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
+  import { OrgSearchQueryInterface, OrgSearchScopeEnum } from 'src/services/organisations.service';
+  import { mapActions, mapGetters } from 'vuex';
 
   export default Vue.extend({
     name: 'Organization',
     components: {},
     data() {
       return {
-        checkedNames: [],
-        org: null,
-        prompt: false,
-        Experience: true
+        activeOrg: 'account',
+        orgCategories: {
+          'account': {
+            label: 'Your Orgs',
+            payload: { scope: OrgSearchScopeEnum.ACCOUNT }
+          },
+          'partOf': {
+            label: 'Orgs',
+            payload: { scope: OrgSearchScopeEnum.PART_OF }
+          },
+          'public': {
+            label: 'Discover',
+            payload: { scope: OrgSearchScopeEnum.PUBLIC }
+          }
+        }
       };
     },
+    created() {
+      const { account: { payload = {} } = {}} = this.orgCategories;
+      this.getOrgsList(payload);
+    },
+    computed: {
+      ...mapGetters('orgProfileModule', ['getOrgs', 'status']),
+    },
     methods: {
-      submitorg() {
-        //use this method to send to database
-        this.prompt = false;
-        this.org = null;
-        this.$q.notify({
-          progress: true,
-          color: 'teal-6',
-          textColor: 'white',
-          icon: 'done',
-          message: ' Organisation added'
-        });
-      }
+      ...mapActions('orgProfileModule', ['getOrgsList']),
+      isOrgActive(orgKey: string) {return orgKey === this.activeOrg},
+      setOrgCategory(payload: OrgSearchQueryInterface, orgKey: string) {
+        this.activeOrg = orgKey;
+        this.getOrgsList(payload);
+      },
     }
 
   });

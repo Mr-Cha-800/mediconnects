@@ -4,7 +4,19 @@
       <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
         <div class="flex items-center">
           <div>
-            <q-btn round @click="$router.push({name: 'userProfile'})" flat>
+            <q-btn
+              v-if="$route.name !== 'home' "
+              v-go-back.single
+              flat
+              round
+              icon="arrow_back"
+            />
+            <q-btn
+              round
+              v-if="$route.name === 'home' "
+              flat
+              :to="{name: 'userProfile'}"
+            >
               <q-avatar size="40px">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
@@ -33,28 +45,61 @@
                 size="14px"
                 icon="more_vert"
                 aria-label="Menu"
+                @click="sideMenu = !sideMenu"
               />
-              <q-menu
-                transition-show="jump-down"
-                transition-hide="jump-up"
-              >
-                <q-list style="min-width: 100px">
-                  <q-item clickable to="/profile">
-                    <q-item-section>Profile</q-item-section>
-                  </q-item>
-                  <q-item clickable to="/profile/organizations">
-                    <q-item-section>Organizations</q-item-section>
-                  </q-item>
-                  <q-separator />
-                  <q-item clickable @click="logout()">
-                    <q-item-section>Logout</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
             </div>
           </div>
         </div>
       </div>
+
+      <q-drawer show-if-above v-model="sideMenu" side="left">
+        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px;">
+          <q-list padding class="text-grey-8">
+            <q-item
+              v-for="menuItem in menuItems"
+              :active="$route.name === menuItem.pathName"
+              clickable
+              v-ripple
+              exact
+              :to="{ name: menuItem.pathName }"
+            >
+              <q-item-section avatar>
+                <q-icon :name="menuItem.icon"/>
+              </q-item-section>
+
+              <q-item-section>
+                {{menuItem.label}}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
+
+        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+          <div class="absolute-bottom bg-transparent">
+            <q-avatar size="56px" class="q-mb-sm">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+            <div class="text-weight-bold">Razvan Stoenescu</div>
+            <router-link exact :to="{name: 'userProfile'}" class="text-white">View Profile</router-link>
+            <router-link exact :to="{name: 'userProfile'}" class="text-white q-ml-md">Edit</router-link>
+          </div>
+        </q-img>
+
+        <q-item
+          clickable
+          v-ripple
+          class="absolute-bottom text-grey-8"
+          @click="logout()"
+        >
+          <q-item-section avatar>
+            <q-icon name="power_settings_new"/>
+          </q-item-section>
+
+          <q-item-section>
+            Logout
+          </q-item-section>
+        </q-item>
+      </q-drawer>
 
     </q-toolbar>
     <q-bar class="bg-red-7">
@@ -69,16 +114,43 @@
 <script lang="ts">
   import Search from 'components/Search.vue';
   import Vue from 'vue';
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex';
 
   export default Vue.extend({
     name: 'MainLayout',
     components: { Search },
+    data() {
+      return {
+        sideMenu: false,
+        menuItems: {
+          home: {
+            label: 'Home',
+            icon: 'home',
+            pathName: 'home'
+          },
+          org: {
+            label: 'Organizations',
+            icon: 'apartment',
+            pathName: 'profileOrganizations'
+          },
+          groups: {
+            label: 'Groups',
+            icon: 'groups',
+            pathName: 'groups'
+          },
+          messages: {
+            label: 'Messages',
+            icon: 'message',
+            pathName: 'messages'
+          }
+        }
+      };
+    },
     computed: {
-      ...mapGetters('userProfileModule', ['getAvatar']),
+      ...mapGetters('userProfileModule', ['getAvatar'])
     },
     methods: {
-      ...mapActions('accountModule', ['logout']),
+      ...mapActions('accountModule', ['logout'])
     }
   });
 </script>

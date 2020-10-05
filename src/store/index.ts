@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers';
 import Vuex from 'vuex';
 import accountModule from 'src/store/account';
 import userProfileModule from 'src/store/userProfile';
+import orgProfileModule from 'src/store/orgProfile';
 
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
@@ -20,7 +21,8 @@ export default store(function ({ Vue }) {
   const Store = new Vuex.Store<StateInterface>({
     modules: {
       accountModule,
-      userProfileModule
+      userProfileModule,
+      orgProfileModule
     },
 
     // enable strict mode (adds overhead!)

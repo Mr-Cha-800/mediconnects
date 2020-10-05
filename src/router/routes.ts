@@ -10,7 +10,11 @@ const routes: RouteConfig[] = [
       { path: '/feed', component: () => import('pages/feed/Customizedfeeds.vue'), name: 'feed', meta: { auth: true }  },
       { path: '/profile', component: () => import('pages/accounts/UserProfile.vue'), name: 'userProfile', meta: { auth: true } },
       { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue'), name: 'profileOrganizations', meta: { auth: true } },
-      { path: '/profile/organizations/:orgId', component: () => import('pages/accounts/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } }
+      { path: '/profile/organizations/add', component: () => import('pages/accounts/OrganizationProfileEdit.vue'), name: 'AddOrganization', meta: { auth: true } },
+      { path: '/profile/organizations/:orgId', component: () => import('pages/accounts/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
+      { path: '/profile/organizations/:orgId/edit', component: () => import('pages/accounts/OrganizationProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true } },
+      { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
+      { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
     ]
   },
 
