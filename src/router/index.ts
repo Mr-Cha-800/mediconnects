@@ -22,8 +22,7 @@ export default route<Store<StateInterface>>(({ Vue, store }) => {
     const { meta: { auth } } = to;
 
     if (auth && !store.getters['accountModule/isAuthenticated']) {
-      next();
-      //return Router.push({name: 'login'});
+      return Router.push({name: 'login'});
     }
     next();
   });

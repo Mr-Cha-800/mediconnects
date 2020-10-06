@@ -6,9 +6,9 @@ export const login = (user: string, password: string) =>
   axios.post<UserInterface>(`${API}/security/login`, { user, password })
     .then(({ data }) => handleLoginResponse(data));
 
-export const refreshToken = (oldToken: string) =>
-  axios.post<string>(`${API}/security/token`, { token: oldToken })
-    .then(({ data }) => data);
+export const refreshToken = () =>
+  axios.post<UserInterface>(`${API}/security/token`, { 'Content-Type' : 'application/json', payload: {age: 60*24*5}})
+    .then(({ data }) => handleRefreshTokenResponse(data));
 
 export const logout = () => localStorage.removeItem('user');
 
@@ -22,4 +22,10 @@ const handleLoginResponse = ({ id, email, token }: UserInterface) => {
     localStorage.setItem('user', JSON.stringify({ id, email }));
   }
   return { id, email, token };
+};
+const handleRefreshTokenResponse = ({ token }: UserInterface) => {
+  if (token) {
+    localStorage.setItem('token', JSON.stringify(token));
+  }
+  return { token };
 };

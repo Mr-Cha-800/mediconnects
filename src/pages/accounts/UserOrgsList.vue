@@ -12,9 +12,18 @@
           class="q-ml-sm"
         />
 
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'AddOrganization' }" />
+        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'OrgProfileAdd' }"/>
       </div>
       <q-separator/>
+      <div v-if="status.error" class="text-h6 text-center text-negative q-py-xl">
+        <q-icon name="error" color="negative" size="3rem"></q-icon>
+        {{status.error}}
+      </div>
+      <div v-if="!status.error && !getOrgs.length"
+           class="text-h5 text-center text-warning q-py-xl">
+        <q-icon name="warning" color="warning" size="3rem"></q-icon>
+        Oups Empty List
+      </div>
       <q-list bordered>
         <q-item clickable v-ripple v-for="org in getOrgs" to="/profile/organizations/0">
           <q-item-section class="q-ml-none" avatar>
@@ -32,7 +41,7 @@
             </q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-checkbox size="md" value="true" color="primary" />
+            <q-checkbox size="md" value="true" color="primary"/>
           </q-item-section>
           <q-item-section side>
             <q-btn flat>
@@ -76,19 +85,21 @@
       };
     },
     created() {
-      const { account: { payload = {} } = {}} = this.orgCategories;
+      const { account: { payload = {} } = {} } = this.orgCategories;
       this.getOrgsList(payload);
     },
     computed: {
-      ...mapGetters('orgProfileModule', ['getOrgs', 'status']),
+      ...mapGetters('orgProfileModule', ['getOrgs', 'status'])
     },
     methods: {
       ...mapActions('orgProfileModule', ['getOrgsList']),
-      isOrgActive(orgKey: string) {return orgKey === this.activeOrg},
+      isOrgActive(orgKey: string) {
+        return orgKey === this.activeOrg;
+      },
       setOrgCategory(payload: OrgSearchQueryInterface, orgKey: string) {
         this.activeOrg = orgKey;
         this.getOrgsList(payload);
-      },
+      }
     }
 
   });

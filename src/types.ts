@@ -3,3 +3,8 @@ export type VForm = Vue & {
   resetValidation: () => boolean;
   reset: () => void;
 };
+
+export type MediaObject = {
+  resource?: string;
+  id?: string;
+};

@@ -2,21 +2,16 @@
   <div class="q-pa-sm">
     <q-item class="row">
       <div class="col-3 text-center q-pr-lg q-pr-xl-md">
-        <q-img
-          src="https://cdn.quasar.dev/img/image-src.png"
-          srcset="https://cdn.quasar.dev/img/image-1x.png 300w,
-                https://cdn.quasar.dev/img/image-2x.png 2x,
-                https://cdn.quasar.dev/img/image-3x.png 3x,
-                https://cdn.quasar.dev/img/image-4x.png 4x"
-          style="border-radius: 50%;"
-        />
+        <q-avatar size="15vh">
+          <img :src="getAvatar">
+        </q-avatar>
       </div>
       <div class="col-9 self-center">
         <q-item-label>
-          <span class="text-h5 text-primary">Kingsley R. Chin, M.D.</span>
+          <span class="text-h5 text-primary">{{profile.firstName}} {{profile.lastName}}</span>
         </q-item-label>
         <q-item-label caption>
-          <span class="text-h6 text-primary">CEO KICventures LLC</span>
+          <span class="text-h6 text-primary">{{profile.title}}</span>
         </q-item-label>
         <q-rating
           v-model="ratingModel"
@@ -24,6 +19,7 @@
           color="yellow-7"
           icon="star_border"
           icon-selected="star"
+          readonly
         />
       </div>
     </q-item>
@@ -47,9 +43,7 @@
     <q-item>
       <q-item-label caption>
           <span class="text-body1">
-            Connect to get CEO life success tolls and daily motivaitons. DR. Kingsley R. Chin is a
-          Harvard graduate and the CEO of the KICVentures, a leading health and technology investment firm with a
-            portfolio valued at over one billion - and a goal of five billion in five years.
+            {{profile.description}}
           </span>
       </q-item-label>
     </q-item>
@@ -65,10 +59,14 @@
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
+  import { mapGetters } from 'vuex';
 
   export default Vue.extend({
     name: 'UserProfileHeader',
     components: { UserProfileSocialTags, UserProfileSkillsTags },
+    computed: {
+      ...mapGetters('userProfileModule', ['profile', 'getAvatar']),
+    },
     data() {
       return {
         infoprofile: {

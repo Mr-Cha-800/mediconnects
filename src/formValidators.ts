@@ -9,3 +9,8 @@ export const validateEmail = ( val?: string): string | boolean => {
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return 'Email is Invalid';
   return true;
 };
+
+export const validateRequired = ( val?: string): string | boolean => {
+  if(!val) return 'Field is required';
+  return true;
+};

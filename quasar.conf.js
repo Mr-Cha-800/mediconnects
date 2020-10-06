@@ -52,6 +52,7 @@ module.exports = configure(function (ctx) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
         API: 'https://kic.bluenimble.com/mcdev/api',
+        MEDIA_API: 'https://kic-mcdev-objects.bluenimble.com',
       },
 
       // transpile: false,

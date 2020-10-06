@@ -1,9 +1,10 @@
+import { MediaObject } from 'src/types';
+
 export interface OrganizationInterface {
   id?: string;
   name?: string;
-  title?: string;
   description?: string;
-  logo?: string;
+  avatar?: MediaObject;
 }
 
 export interface OrgProfileInterface {

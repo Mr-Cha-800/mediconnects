@@ -15,10 +15,10 @@
               round
               v-if="$route.name === 'home' "
               flat
-              :to="{name: 'userProfile'}"
+              @click="sideMenu = !sideMenu"
             >
               <q-avatar size="40px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <img :src="getAvatar">
               </q-avatar>
             </q-btn>
           </div>
@@ -38,22 +38,13 @@
                   2
                 </q-badge>
               </q-btn>
-              <q-btn
-                flat
-                dense
-                round
-                size="14px"
-                icon="more_vert"
-                aria-label="Menu"
-                @click="sideMenu = !sideMenu"
-              />
             </div>
           </div>
         </div>
       </div>
 
-      <q-drawer show-if-above v-model="sideMenu" side="left">
-        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px;">
+      <q-drawer v-model="sideMenu" side="left" behavior="mobile">
+        <q-scroll-area style="height: calc(100% - 12rem); margin-top: 12rem;">
           <q-list padding class="text-grey-8">
             <q-item
               v-for="menuItem in menuItems"
@@ -74,14 +65,14 @@
           </q-list>
         </q-scroll-area>
 
-        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 12rem">
           <div class="absolute-bottom bg-transparent">
-            <q-avatar size="56px" class="q-mb-sm">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            <q-avatar size="5rem" class="q-mb-sm">
+              <img :src="getAvatar">
             </q-avatar>
-            <div class="text-weight-bold">Razvan Stoenescu</div>
+            <div class="text-weight-bold">{{profile.firstName}} {{profile.lastName}}</div>
             <router-link exact :to="{name: 'userProfile'}" class="text-white">View Profile</router-link>
-            <router-link exact :to="{name: 'userProfile'}" class="text-white q-ml-md">Edit</router-link>
+            <router-link exact :to="{name: 'userProfileUpdate'}" class="text-white q-ml-md">Edit</router-link>
           </div>
         </q-img>
 
@@ -102,12 +93,12 @@
       </q-drawer>
 
     </q-toolbar>
-    <q-bar class="bg-red-7">
+<!--    <q-bar class="bg-red-7">
       <div class="col text-center text-white">
         <q-icon name="warning" class="text-white"/>
         NEWS ALERT
       </div>
-    </q-bar>
+    </q-bar>-->
   </q-header>
 </template>
 
@@ -146,11 +137,15 @@
         }
       };
     },
-    computed: {
-      ...mapGetters('userProfileModule', ['getAvatar'])
-    },
     methods: {
-      ...mapActions('accountModule', ['logout'])
+      ...mapActions('accountModule', ['logout']),
+      ...mapActions('userProfileModule', ['getProfile'])
+    },
+    computed: {
+      ...mapGetters('userProfileModule', ['profile', 'status', 'getAvatar'])
+    },
+    created() {
+      this.getProfile();
     }
   });
 </script>

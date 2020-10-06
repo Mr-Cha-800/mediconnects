@@ -55,14 +55,14 @@
     },
     computed: {
       ...mapState('accountModule', ['status']),
-      validatePassword: validatePassword,
-      validateEmail: validateEmail,
       vLoginForm(): VForm {
         return this.$refs.loginForm as VForm
       }
     },
     methods: {
       ...mapActions('accountModule', ['login', 'logout']),
+      validatePassword: validatePassword,
+      validateEmail: validateEmail,
       handleSubmit(): void {
         if (this.vLoginForm.validate()) {
           const { userLogin: { email: user, password } } = this;

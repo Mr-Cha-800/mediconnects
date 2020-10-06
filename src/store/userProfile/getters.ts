@@ -1,9 +1,12 @@
 import { GetterTree } from 'vuex';
 import { StateInterface } from '../index';
-import { UserProfileInterface } from './state';
+import { UserProfileStateInterface } from './state';
+import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
-const getters: GetterTree<UserProfileInterface, StateInterface> = {
-  getAvatar: ({ avatar }) => avatar,
+const getters: GetterTree<UserProfileStateInterface, StateInterface> = {
+  profile: ({ profile }) => profile,
+  status: ({ status }) => status,
+  getAvatar: ({ profile: { avatar } }) => avatarMediaObject(avatar),
 };
 
 export default getters;
