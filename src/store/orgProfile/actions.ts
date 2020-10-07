@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import * as organizations from './../../services/organisations.service';
 import { OrgSearchQueryInterface } from 'src/services/organisations.service';
-import { OrgProfileInterface } from 'src/store/orgProfile/state';
+import { OrganizationInterface, OrgProfileInterface } from 'src/store/orgProfile/state';
 import { Router } from 'src/router';
 
 const actions: ActionTree<OrgProfileInterface, StateInterface> = {
@@ -14,6 +14,14 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
       commit('orgSearchFailed', error);
     })
   },
+  getOrg: ({ commit }, id: string) => {
+    commit('orgByIdRequest');
+    organizations.getById(id).then(org => {
+      commit('orgByIdSuccess', org);
+    }).catch(error => {
+      commit('orgByIdFailed', error);
+    })
+  },
 
   addOrgProfile: ({ commit }, payload) => {
     commit('orgProfileAddRequest');
@@ -22,6 +30,16 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
       Router.back();
     }).catch(error => {
       commit('orgProfileAddFailed', error);
+    })
+  },
+
+  editOrgProfile: ({ commit }, payload) => {
+    commit('orgProfileEditRequest');
+    organizations.edit(payload).then(() => {
+      commit('orgProfileEditSuccess');
+      Router.back();
+    }).catch(error => {
+      commit('orgProfileEditFailed', error);
     })
   },
 };

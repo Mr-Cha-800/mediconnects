@@ -3,7 +3,7 @@
     <q-item-section class="q-pa-lg q-gutter-md">
       <div class="text-center">
         <q-avatar size="10rem">
-          <img ref="avatarImg" :src="avatarImg">
+          <q-img ref="avatarImg" :src="avatarImg || propAvatar" height="100%" />
         </q-avatar>
       </div>
 
@@ -38,14 +38,14 @@
   import Vue from 'vue';
   import { VForm } from 'src/types';
   import { validateRequired } from 'src/formValidators';
-  import { DEFAULT_IMAGE } from 'src/constants';
+  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
   export default Vue.extend({
     name: 'OrgProfileForm',
     props: {
       profile: {
         type: Object,
-        default: () => ({ avatar: DEFAULT_IMAGE }),
+        default: {},
       },
       submitting: {
         type: Boolean,
@@ -55,12 +55,15 @@
     data() {
       return {
         avatar: null,
-        avatarImg: this.$props.profile.avatar,
+        avatarImg: null,
       }
     },
     computed: {
       vUpdateForm(): VForm {
         return this.$refs.updateForm as VForm
+      },
+      propAvatar() {
+        return avatarMediaObject(this.$props.profile.avatar);
       },
     },
     methods: {

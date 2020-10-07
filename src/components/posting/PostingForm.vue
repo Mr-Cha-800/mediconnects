@@ -13,7 +13,7 @@
         style="color:#009688"
       />
     </q-bar>
-    <q-item class="q-pa-sm">
+    <q-item>
       <q-chip
         v-for="where in wheres"
         :outline="!where.active"
@@ -27,30 +27,78 @@
         <q-badge align="bottom" v-if="where.badge > 0 " color="red" floating>{{where.badge}}</q-badge>
       </q-chip>
     </q-item>
-    <q-item class="q-pb-xl">
-      <q-input
-        style="width: 100%"
-        placeholder="Share something..."
-        outlined
-        filled
-        rows="10"
-        type="textarea"
-      />
+    <q-item>
+      <q-item-section>
+        <q-input
+          class="full-width"
+          placeholder="Share something..."
+          borderless
+          rows="10"
+          type="textarea"
+        />
+      </q-item-section>
+    </q-item>
+    <q-item v-if="videoStream" class="q-pa-sm">
+      <video :src="videoStream" controls width="100%" preload="metadata" />
+    </q-item>
+    <q-item v-if="imageStream" class="q-pa-sm">
+      <q-img :src="imageStream" ratio="1" />
     </q-item>
     <q-item class="q-pa-sm">
-      <q-item-section >
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="photo" label="Photos / Videos"></q-btn>
-        <q-separator />
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="ondemand_video" label="Record Video"></q-btn>
-        <q-separator />
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="videocam" label="Go Live"></q-btn>
-        <q-separator />
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="description" label="Documents"></q-btn>
-        <q-separator />
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="history_edu" label="Article"></q-btn>
-        <q-separator />
-        <q-btn flat align="left"  no-caps color="grey-8" class="full-width" size="md" icon="palette" label="Backgrounds"></q-btn>
-        <q-separator />
+      <q-item-section>
+        <q-file
+          dense
+          no-caps
+          color="grey-8"
+          class="full-width"
+          size="sm"
+          label="Photos"
+          accept=".jpg, image/*"
+          @input="selectedImage"
+        >
+          <template v-slot:prepend>
+            <q-icon name="photo" />
+          </template>
+        </q-file>
+        <q-file
+          dense
+          no-caps
+          color="grey-8"
+          class="full-width"
+          size="sm"
+          label="Videos"
+          accept=".mp4, video/*"
+          @input="selectedVideo"
+        >
+          <template v-slot:prepend>
+            <q-icon name="ondemand_video" />
+          </template>
+        </q-file>
+        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Record Video" disable>
+          <template v-slot:prepend>
+            <q-icon name="ondemand_video" />
+          </template>
+        </q-file>
+        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Go Live" disable>
+          <template v-slot:prepend>
+            <q-icon name="videocam" />
+          </template>
+        </q-file>
+        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Documents" disable>
+          <template v-slot:prepend>
+            <q-icon name="description" />
+          </template>
+        </q-file>
+        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Article" disable>
+          <template v-slot:prepend>
+            <q-icon name="history_edu" />
+          </template>
+        </q-file>
+        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Backgrounds" disable>
+          <template v-slot:prepend>
+            <q-icon name="palette" />
+          </template>
+        </q-file>
       </q-item-section>
     </q-item>
 
@@ -73,14 +121,13 @@
   import Vue from 'vue';
   import { VForm } from 'src/types';
   import { validateRequired } from 'src/formValidators';
-  import { DEFAULT_IMAGE } from 'src/constants';
 
   export default Vue.extend({
     name: 'PostingForm',
     props: {
       profile: {
         type: Object,
-        default: () => ({ avatar: DEFAULT_IMAGE }),
+        default: () => ({}),
       },
       submitting: {
         type: Boolean,
@@ -89,6 +136,8 @@
     },
     data() {
       return {
+        imageStream: null,
+        videoStream: null,
         isPublicPost: false,
         wheres: [
           {
@@ -117,11 +166,17 @@
           this.$emit('submit', { profile: this.$props.profile });
         }
       },
-      selectedAvatar(file: File) {
-        /*const reader = new FileReader();
-
-        reader.onload = ({ target: { result }}: ProgressEvent) => this.avatarImg = result;
-        reader.readAsDataURL(file);*/
+      selectedImage(file: File) {
+        const reader = new FileReader();
+        this.videoStream = null;
+        reader.onload = ({ target: { result }}: ProgressEvent) => this.imageStream = result;
+        reader.readAsDataURL(file);
+      },
+      selectedVideo(file: File) {
+        const reader = new FileReader();
+        this.imageStream = null;
+        reader.onload = ({ target: { result }}: ProgressEvent) => this.videoStream = result;
+        reader.readAsDataURL(file);
       }
     },
   });

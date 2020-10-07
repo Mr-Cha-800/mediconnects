@@ -3,12 +3,12 @@
     <q-item-section class="q-pa-lg q-gutter-md">
       <div class="text-center">
         <q-avatar size="10rem">
-          <img ref="avatarImg" :src="avatarImg || getAvatar">
+          <q-img ref="avatarImg" :src="avatarImg || getAvatar" />
         </q-avatar>
       </div>
 
       <q-file v-model="avatar" color="teal"
-              accept=".jpg, .pdf, image/*"
+              accept=".jpg, image/*"
               filled
               label="Upload Image"
               @input="selectedAvatar"

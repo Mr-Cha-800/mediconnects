@@ -8,5 +8,5 @@ const fileExt = {
 }
 
 export const avatarMediaObject = (
-  { resource }: MediaObject = {resource: DEFAULT_IMAGE}
-  ) => `${MEDIA_API}/${resource}.840${fileExt.image}`;
+  { resource }: MediaObject = {}
+  ) => resource ? `${MEDIA_API}/${resource}.840${fileExt.image}` : DEFAULT_IMAGE;

@@ -1,12 +1,12 @@
 <template>
   <div class="q-pa-sm">
-    <q-item class="row">
-      <div class="col-3 text-center q-pr-lg q-pr-xl-md">
+    <q-item class="flex fit justify-start items-center">
+      <div class="q-pr-lg q-pr-xl-md">
         <q-avatar size="15vh">
-          <img :src="getAvatar">
+          <q-img :src="getAvatar" height="100%"/>
         </q-avatar>
       </div>
-      <div class="col-9 self-center">
+      <div class="self-center">
         <q-item-label>
           <span class="text-h5 text-primary">{{profile.firstName}} {{profile.lastName}}</span>
         </q-item-label>

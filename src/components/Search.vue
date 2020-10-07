@@ -1,15 +1,8 @@
 <template>
-  <q-input
-    class="bg-white"
-    dense
-    rounded
-    borderless
-    text-color="black"
-    v-model="search"
-
-    placeholder="Search">
+  <q-input dark dense standout v-model="search">
     <template v-slot:prepend>
-      <q-icon name="search"/>
+      <q-icon v-if="search === ''" name="search" />
+      <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
     </template>
   </q-input>
 </template>
@@ -17,20 +10,14 @@
 <script>
 
   export default {
-    name: 'MainLayout',
+    name: 'Search',
     data() {
       return {
-        search: null
+        search: ''
       };
     }
   };
 </script>
 
 <style lang="scss" scoped>
-  .q-input {
-    height: 2.5em;
-    width: 100%;
-    border-radius: 1.5rem;
-    padding: .5rem;
-  }
 </style>

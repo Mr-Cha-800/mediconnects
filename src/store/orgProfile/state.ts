@@ -5,10 +5,13 @@ export interface OrganizationInterface {
   name?: string;
   description?: string;
   avatar?: MediaObject;
+  followers?: number,
+  tenants?: number,
 }
 
 export interface OrgProfileInterface {
   orgs: OrganizationInterface[],
+  org: OrganizationInterface,
   status: {
     loading: boolean,
     error?: string
@@ -17,6 +20,7 @@ export interface OrgProfileInterface {
 
 const state: OrgProfileInterface = {
   orgs: [],
+  org: {},
   status: {
     loading: false,
   }

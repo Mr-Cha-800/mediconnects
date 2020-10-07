@@ -1,19 +1,14 @@
 <template>
   <div class="q-pa-sm">
-    <q-item class="row">
-      <div class="col-3 text-center q-pr-lg q-pr-xl-md">
-        <q-img
-          src="https://cdn.quasar.dev/img/image-src.png"
-          srcset="https://cdn.quasar.dev/img/image-1x.png 300w,
-                https://cdn.quasar.dev/img/image-2x.png 2x,
-                https://cdn.quasar.dev/img/image-3x.png 3x,
-                https://cdn.quasar.dev/img/image-4x.png 4x"
-          style="border-radius: 50%;"
-        />
+    <q-item class="flex fit justify-start items-center">
+      <div class="q-pr-lg q-pr-xl-md">
+        <q-avatar size="8rem">
+          <q-img :src="avatar" height="100%"/>
+        </q-avatar>
       </div>
-      <div class="col-9 self-center">
+      <div class="self-center">
         <q-item-label>
-          <span class="text-h5 text-primary">Organization name</span>
+          <span class="text-h5 text-primary">{{org.name}}</span>
         </q-item-label>
         <q-rating
           v-model="ratingModel"
@@ -21,23 +16,15 @@
           color="yellow-7"
           icon="star_border"
           icon-selected="star"
+          readonly
         />
       </div>
     </q-item>
     <q-item class="row">
       <q-item-section class="col-12">
         <q-item-label caption>
-          <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.following">Following</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.connections">Connections</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.reviews">Reviews</UserProfileSocialTags>
-        </q-item-label>
-        <q-item-label caption>
-          <UserProfileSocialTags :count="infoprofile.posts">Posts</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.helpful">Helpful</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.advice">Advice</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.reputation">Reputation</UserProfileSocialTags>
+          <UserProfileSocialTags :count="org.followers">Followers</UserProfileSocialTags>
+          <UserProfileSocialTags :count="org.tenants">Tenants</UserProfileSocialTags>
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -45,15 +32,9 @@
     <q-item>
       <q-item-label caption>
           <span class="text-body1">
-            Siemens Gamesa is a global technology leader in the renewable energy industry - specifically in the development, manufacturing, installation and maintenance of wind turbines. Being a pioneer in renewables since the 1980s, we put our scale and entrepreneurial culture to work on driving the energy transition towards a sustainable world. We empower our customers, people, and partners to lead the future with green energy.
+            {{org.description}}
           </span>
       </q-item-label>
-    </q-item>
-
-    <q-item>
-      <q-item-section>
-        <UserProfileSkillsTags/>
-      </q-item-section>
     </q-item>
   </div>
 </template>
@@ -61,10 +42,22 @@
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
+  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
   export default Vue.extend({
     name: 'orgProfileHeader',
+    props: {
+      org: {
+        type: Object,
+        default: () => ({})
+      }
+    },
     components: { UserProfileSocialTags, UserProfileSkillsTags },
+    computed: {
+      avatar() {
+        return avatarMediaObject(this.$props.org.avatar);
+      }
+    },
     data() {
       return {
         infoprofile: {
