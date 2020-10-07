@@ -6,7 +6,7 @@
           <div>
             <q-btn
               v-if="$route.name !== 'home' "
-              v-go-back.single
+              @click="$router.back()"
               flat
               round
               icon="arrow_back"

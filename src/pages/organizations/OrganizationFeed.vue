@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-grey-4">
+    <div>
       <q-card class="my-card " flat>
         <table class="grid bg-grey-2 q-pl-sm q-pr-sm" style="width:100%">
             <td  colspan="8">

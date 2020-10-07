@@ -3,7 +3,7 @@
     <q-item-section class="q-pa-lg q-gutter-md">
       <div class="text-center">
         <q-avatar size="10rem">
-          <q-img ref="avatarImg" :src="avatarImg || getAvatar" />
+          <q-img ref="avatarImg" :src="avatarImg || getAvatar" height="100%" />
         </q-avatar>
       </div>
 

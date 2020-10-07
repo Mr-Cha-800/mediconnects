@@ -6,8 +6,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     meta: { auth: true, },
     children: [
-      { path: '', component: () => import('pages/Index.vue'), name: 'home', meta: { auth: true } },
-      { path: '/feed', component: () => import('pages/feed/Customizedfeeds.vue'), name: 'feed', meta: { auth: true }  },
+      { path: '', component: () => import('pages/feed/Index.vue'), name: 'home', meta: { auth: true } },
       { path: '/profile', component: () => import('pages/accounts/UserProfile.vue'), name: 'userProfile', meta: { auth: true } },
       { path: '/profile/update', component: () => import('pages/accounts/UserProfileUpdate.vue'), name: 'userProfileUpdate', meta: { auth: true } },
       { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue'), name: 'profileOrganizations', meta: { auth: true } },

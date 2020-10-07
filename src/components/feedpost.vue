@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <q-bar class="bg-grey-4">
-
-    </q-bar>
+  <div class="q-mt-md">
     <q-card flat>
       <q-item>
         <q-item-section avatar>
@@ -140,10 +137,6 @@
           <q-icon class="q-pr-xs" name="share"/>
           Share
         </q-btn>
-      </q-bar>
-
-      <q-bar class="bg-grey-4" style="height:15px">
-
       </q-bar>
     </q-card>
   </div>

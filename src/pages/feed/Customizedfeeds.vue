@@ -1,5 +1,5 @@
 <template>
-<div class="bg-grey-4">
+<div>
  <q-bar class="bg-grey-2">
       <q-space />
      <q-toggle

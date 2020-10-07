@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <Header/>
-    <div class="row bg-grey-4">
+    <div class="row">
       <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
         <q-page-container>
           <router-view/>
