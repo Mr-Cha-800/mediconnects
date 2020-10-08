@@ -7,6 +7,8 @@ const getters: GetterTree<FollowConnectStateInterface, StateInterface> = {
   userConnectsRequests: ({ connectsRequests }) =>
     connectsRequests.filter(({type}) => type === EntityTypes.USER) || [],
   status: ({ status }) => status || {},
+  requestStatus: ({ requestStatus }) => (id: string) => requestStatus[id] || {},
+  followConnectStatus: ({ followConnectStatus }) => (id: string) => followConnectStatus[id] || {},
 };
 
 export default getters;

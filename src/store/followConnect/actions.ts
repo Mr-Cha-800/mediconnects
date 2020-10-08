@@ -5,17 +5,17 @@ import * as followConnect from './../../services/followConnect.service';
 
 const actions: ActionTree<FollowConnectStateInterface, StateInterface> = {
   follow: ({ commit }, { entity, type }) => {
-    commit('FollowRequest');
+    commit('FollowRequest', { entity });
     followConnect.follow(entity, type).then(() => {
-      commit('FollowSuccess');
-    }).catch(error => commit('FollowFailed', error));
+      commit('FollowSuccess', { entity });
+    }).catch(error => commit('FollowFailed', { entity, error }));
   },
 
   connect: ({ commit }, {entity, type, message}) => {
-    commit('ConnectRequest');
+    commit('ConnectRequest', { entity });
     followConnect.connect(entity, type, message).then(() => {
-      commit('ConnectSuccess');
-    }).catch(error => commit('ConnectFailed', error));
+      commit('ConnectSuccess', { entity });
+    }).catch(error => commit('ConnectFailed', { entity, error }));
   },
 
   getConnectRequests: ({ commit }) => {
@@ -26,17 +26,17 @@ const actions: ActionTree<FollowConnectStateInterface, StateInterface> = {
   },
 
   acceptConnect: ({ commit }, requestId: string) => {
-    commit('ConnectRequest');
+    commit('AcceptRequest', { requestId });
     followConnect.acceptConnect(requestId).then(() => {
-      commit('ConnectSuccess');
-    }).catch(error => commit('ConnectFailed', error));
+      commit('AcceptSuccess', { requestId });
+    }).catch(error => commit('AcceptFailed', { requestId, error }));
   },
 
   rejectConnect: ({ commit }, requestId: string) => {
-    commit('ConnectRequest');
+    commit('RejectRequest', { requestId });
     followConnect.rejectConnect(requestId).then(() => {
-      commit('ConnectSuccess');
-    }).catch(error => commit('ConnectFailed', error));
+      commit('RejectSuccess', { requestId });
+    }).catch(error => commit('RejectFailed', { requestId, error }));
   },
 };
 

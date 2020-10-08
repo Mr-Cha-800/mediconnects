@@ -29,30 +29,6 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   userProfileUpdateFailed(state, error: string) {
     Vue.set(state, 'status', { updating: false, error });
   },
-
-  userProfileFollowRequest(state) {
-    Vue.set(state, 'status', { following: true });
-  },
-
-  userProfileFollowSuccess(state) {
-    Vue.set(state, 'status', { following: false });
-  },
-
-  userProfileFollowFailed(state, error: string) {
-    Vue.set(state, 'status', { following: false, error });
-  },
-
-  userProfileConnectRequest(state) {
-    Vue.set(state, 'status', { following: true });
-  },
-
-  userProfileConnectSuccess(state) {
-    Vue.set(state, 'status', { following: false });
-  },
-
-  userProfileConnectFailed(state, error: string) {
-    Vue.set(state, 'status', { following: false, error });
-  },
 };
 
 export default mutation;
