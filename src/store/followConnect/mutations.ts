@@ -26,6 +26,19 @@ const mutation: MutationTree<FollowConnectStateInterface> = {
   ConnectFailed(state, error: string) {
     Vue.set(state, 'status', {...state.status, connecting: false, connected: false, error });
   },
+
+  ConnectRequestsRequest(state) {
+    Vue.set(state, 'status', {...state.status, loading: true });
+  },
+
+  ConnectRequestsSuccess(state, connectsRequests) {
+    Vue.set(state, 'status', {...state.status, loading: false });
+    Vue.set(state, 'connectsRequests', connectsRequests);
+  },
+
+  ConnectRequestsFailed(state, error: string) {
+    Vue.set(state, 'status', {...state.status, loading: false, error });
+  },
 };
 
 export default mutation;

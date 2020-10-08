@@ -124,6 +124,11 @@
             icon: 'apartment',
             pathName: 'profileOrganizations'
           },
+          requests: {
+            label: 'Connect Requests',
+            icon: 'group_add',
+            pathName: 'UserConnectRequests'
+          },
           groups: {
             label: 'Groups',
             icon: 'groups',

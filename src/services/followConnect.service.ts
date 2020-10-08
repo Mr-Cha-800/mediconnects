@@ -1,6 +1,7 @@
 import { API } from 'src/constants';
 import axios from 'axios';
 import { EntityTypes } from 'src/types';
+import { ConnectRequestInterface } from 'src/store/followConnect/state';
 
 export const follow = async (entity: string, type: EntityTypes) =>
   axios.post<any>(`${API}/account/follow`,
@@ -20,6 +21,10 @@ export const connect = async (entity: string, type: EntityTypes, message?: strin
       }
     }
   ).then(({ data }) => data);
+
+export const connectRequests = async () =>
+  axios.get<{requests: ConnectRequestInterface[]}>(`${API}/account/requests`)
+    .then(({ data: { requests} }) => requests);
 
 export const acceptConnect = async (requestId: string) =>
   axios.post<any>(`${API}/account/requests/${requestId}/accept`).then(({ data }) => data);

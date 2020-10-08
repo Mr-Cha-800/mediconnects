@@ -1,12 +1,23 @@
+import { UserProfileInterface } from 'src/store/userProfile/state';
+import { EntityTypes } from 'src/types';
 
 export interface ConnectRequestInterface {
   id?: string;
-  message?: string;
+  timestamp?: string;
+  data: {
+    message?: string;
+  };
+  createdBy: UserProfileInterface,
+  recipient: {
+    id?: string;
+  }
+  type: EntityTypes;
 }
 
 export interface FollowConnectStateInterface {
   connectsRequests: ConnectRequestInterface[];
   status: {
+    loading: boolean;
     following: boolean;
     followed: boolean;
     connecting: boolean;
@@ -18,6 +29,7 @@ export interface FollowConnectStateInterface {
 const state: FollowConnectStateInterface = {
   connectsRequests: [],
   status: {
+    loading: false,
     following: false,
     followed: false,
     connecting: false,

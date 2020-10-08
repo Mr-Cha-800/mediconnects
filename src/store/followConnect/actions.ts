@@ -2,7 +2,6 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { FollowConnectStateInterface } from './state';
 import * as followConnect from './../../services/followConnect.service';
-import { EntityTypes } from 'src/types';
 
 const actions: ActionTree<FollowConnectStateInterface, StateInterface> = {
   follow: ({ commit }, { entity, type }) => {
@@ -17,6 +16,13 @@ const actions: ActionTree<FollowConnectStateInterface, StateInterface> = {
     followConnect.connect(entity, type, message).then(() => {
       commit('ConnectSuccess');
     }).catch(error => commit('ConnectFailed', error));
+  },
+
+  getConnectRequests: ({ commit }) => {
+    commit('ConnectRequestsRequest');
+    followConnect.connectRequests().then(connectsRequests => {
+      commit('ConnectRequestsSuccess', connectsRequests);
+    }).catch(error => commit('ConnectRequestsFailed', error));
   },
 
   acceptConnect: ({ commit }, requestId: string) => {

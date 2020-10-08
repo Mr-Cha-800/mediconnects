@@ -13,6 +13,7 @@ const routes: RouteConfig[] = [
       { path: '/profile/organizations/add', component: () => import('pages/accounts/OrgProfileAdd.vue'), name: 'OrgProfileAdd', meta: { auth: true } },
       { path: '/profile/organizations/:orgId', component: () => import('pages/accounts/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
       { path: '/profile/organizations/:orgId/edit', component: () => import('pages/accounts/OrgProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true } },
+      { path: '/profile/requests', component: () => import('pages/accounts/UserConnectRequests.vue'), name: 'UserConnectRequests', meta: { auth: true } },
       { path: '/post', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
       { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
       { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
