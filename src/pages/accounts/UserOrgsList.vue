@@ -15,21 +15,14 @@
         <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'OrgProfileAdd' }"/>
       </div>
       <q-separator/>
-      <template v-if="status.loading">
-        <Loader />
-      </template>
-      <template v-else-if="status.error">
-        <ErrorState>{{status.error}}</ErrorState>
-      </template>
-      <template v-else-if="!getOrgs.length">
-        <EmptyState />
-      </template>
-      <q-list bordered v-else>
-        <template v-for="org in getOrgs">
-          <OrganizationTile :org="org" />
-          <q-separator/>
-        </template>
-      </q-list>
+      <State :status="status" :empty="!getOrgs.length" >
+        <q-list bordered>
+          <template v-for="org in getOrgs">
+            <OrganizationTile :org="org" />
+            <q-separator/>
+          </template>
+        </q-list>
+      </State>
     </q-card>
     <q-bar class="bg-grey-4" style="height:50px">
 
@@ -40,14 +33,12 @@
   import Vue from 'vue';
   import { OrgSearchQueryInterface, OrgSearchScopeEnum } from 'src/services/organisations.service';
   import { mapActions, mapGetters } from 'vuex';
-  import Loader from 'components/common/Loader.vue';
-  import ErrorState from 'components/common/ErrorState.vue';
-  import EmptyState from 'components/common/EmptyState.vue';
   import OrganizationTile from 'components/organizations/OrganizationTile.vue';
+  import State from 'components/common/State.vue';
 
   export default Vue.extend({
     name: 'Organization',
-    components: { Loader, ErrorState, EmptyState, OrganizationTile },
+    components: { State, OrganizationTile },
     data() {
       return {
         activeOrg: 'account',

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <State :status="status" :empty="!userConnectsRequests.length">
     <q-card flat>
       <q-separator/>
       <q-list bordered >
@@ -9,16 +9,17 @@
         </template>
       </q-list>
     </q-card>
-  </div>
+  </State>
 </template>
 <script lang="ts">
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
   import ConnectRequestTile from 'components/profile/ConnectRequestTile.vue';
+  import State from 'components/common/State.vue';
 
   export default Vue.extend({
     name: 'usersConnectRequests',
-    components: { ConnectRequestTile },
+    components: { ConnectRequestTile, State },
     data() {
       return {}
     },
@@ -26,7 +27,7 @@
       this.getConnectRequests();
     },
     computed: {
-      ...mapGetters('followConnectModule', ['userConnectsRequests']),
+      ...mapGetters('followConnectModule', ['userConnectsRequests', 'status']),
     },
     methods: {
       ...mapActions('followConnectModule', ['getConnectRequests']),
