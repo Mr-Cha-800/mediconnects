@@ -23,7 +23,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
         Router.back();
       }).catch(error => commit('userProfileUpdateFailed', error));
     }).catch(error => commit('userProfileUpdateFailed', error));
-  }
+  },
 };
 
 export default actions;

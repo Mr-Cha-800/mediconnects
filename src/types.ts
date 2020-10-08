@@ -8,3 +8,8 @@ export type MediaObject = {
   resource?: string;
   id?: string;
 };
+
+export enum EntityTypes {
+  ORG = "organization",
+  USER = "user",
+}

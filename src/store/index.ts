@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import accountModule from 'src/store/account';
 import userProfileModule from 'src/store/userProfile';
 import orgProfileModule from 'src/store/orgProfile';
+import followConnectModule from 'src/store/followConnect';
 
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
@@ -22,7 +23,8 @@ export default store(function ({ Vue }) {
     modules: {
       accountModule,
       userProfileModule,
-      orgProfileModule
+      orgProfileModule,
+      followConnectModule
     },
 
     // enable strict mode (adds overhead!)

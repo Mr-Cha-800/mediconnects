@@ -8,11 +8,20 @@ export interface UserProfileInterface {
   title?: string;
   description?: string;
   avatar?: MediaObject;
-  sections?: any[]
+  sections?: any[],
+  connections? : number;
+  followers? : number;
+  following? : number;
+  groups? : number;
+  groupsPartOf? : number;
+  organizations? : number;
+  organizationsPartOf? : number;
+  posts? : number;
 }
 
 export interface UserProfileStateInterface {
   profile: UserProfileInterface;
+  connectsRequests?: any[];
   status: {
     loading: boolean;
     updating: boolean;

@@ -23,6 +23,11 @@
         />
       </div>
     </q-item>
+    <q-item>
+      <q-item-label caption>
+        <FollowConnect :type="entity" :entity="profile.id" />
+      </q-item-label>
+    </q-item>
     <q-item class="row">
       <q-item-section class="col-12">
         <q-item-label caption>
@@ -60,12 +65,15 @@
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
   import { mapGetters } from 'vuex';
+  import FollowConnect from 'components/profile/FollowConnect.vue';
+  import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
     name: 'UserProfileHeader',
-    components: { UserProfileSocialTags, UserProfileSkillsTags },
+    components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
     computed: {
       ...mapGetters('userProfileModule', ['profile', 'getAvatar']),
+      entity: () => EntityTypes.USER,
     },
     data() {
       return {

@@ -20,6 +20,11 @@
         />
       </div>
     </q-item>
+    <q-item>
+      <q-item-label caption>
+        <FollowConnect :type="entity" :entity="org.id" />
+      </q-item-label>
+    </q-item>
     <q-item class="row">
       <q-item-section class="col-12">
         <q-item-label caption>
@@ -43,6 +48,8 @@
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import FollowConnect from 'components/profile/FollowConnect.vue';
+  import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
     name: 'orgProfileHeader',
@@ -52,24 +59,15 @@
         default: () => ({})
       }
     },
-    components: { UserProfileSocialTags, UserProfileSkillsTags },
+    components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
     computed: {
       avatar() {
         return avatarMediaObject(this.$props.org.avatar);
-      }
+      },
+      entity: () => EntityTypes.ORG,
     },
     data() {
       return {
-        infoprofile: {
-          followers: 10000,
-          following: 12000,
-          connections: 1000,
-          posts: 4000,
-          reviews: 54000,
-          helpful: 15000,
-          advice: 16000,
-          reputation: 100
-        },
         skill: null,
         prompt: false,
         Experience: true,
