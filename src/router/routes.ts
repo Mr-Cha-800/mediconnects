@@ -18,7 +18,11 @@ const routes: RouteConfig[] = [
       { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
       { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
 
-      { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
+      { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
+
+      { path: '/public/organizations/:q', component: () => import('pages/publicProfile/organizationsSearch.vue'), name: 'organizationSearch', meta: { auth: true } },
+      { path: '/public/profiles/:q', component: () => import('pages/publicProfile/profilesSearch.vue'), name: 'profilesSearch', meta: { auth: true } },
+
     ]
   },
 
