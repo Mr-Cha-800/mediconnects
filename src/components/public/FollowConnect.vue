@@ -5,9 +5,11 @@
         no-caps
         color="primary"
         :loading="status.following"
-        :disable="status.following || status.followed"
-        @click="follow({entity: $props.entity, type: $props.type})">
-      <span v-if="status.followed">
+        :disable="status.following"
+        @click="status.followed ?
+        unFollow({entity: $props.entity}) :
+        follow({entity: $props.entity, type: $props.type})">
+      <span v-if="$props.followed || status.followed">
         <q-icon name="done" size="xs"/> Followed
       </span>
         <span v-else>
@@ -82,7 +84,7 @@
       },
       entity: {
         type: String
-      }
+      },
     },
     data() {
       return {
@@ -91,7 +93,7 @@
       };
     },
     methods: {
-      ...mapActions('followConnectModule', ['follow', 'connect']),
+      ...mapActions('followConnectModule', ['follow', 'unFollow', 'connect']),
       onReset() {
         this.message = '';
         this.showMessage = false;

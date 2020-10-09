@@ -53,6 +53,15 @@ const mutation: MutationTree<OrgProfileInterface> = {
   orgProfileEditFailed(state, error: string) {
     Vue.set(state, 'status', { updating: false, error });
   },
+
+  IncreaseOrgFollowers(state) {
+    const { org: { followers = 0 } = {} } = state;
+    Vue.set(state, 'org', { ...state.org, followers: followers + 1 });
+  },
+  DecreaseOrgFollowers(state) {
+    const { org: { followers = 0 } = {} } = state;
+    Vue.set(state, 'org', { ...state.org, followers: followers && followers - 1 });
+  },
 };
 
 export default mutation;

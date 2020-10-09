@@ -17,6 +17,8 @@ const routes: RouteConfig[] = [
       { path: '/post', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
       { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
       { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
+
+      { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
     ]
   },
 

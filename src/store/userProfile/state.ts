@@ -17,6 +17,7 @@ export interface UserProfileInterface {
   organizations? : number;
   organizationsPartOf? : number;
   posts? : number;
+  followed? : boolean;
 }
 
 export interface UserProfileStateInterface {
@@ -25,6 +26,7 @@ export interface UserProfileStateInterface {
   status: {
     loading: boolean;
     updating: boolean;
+    error?: string
   }
 }
 

@@ -47,7 +47,7 @@
     props: {
       profile: {
         type: Object,
-        default: {},
+        default: () => ({}),
       }
     },
     data() {

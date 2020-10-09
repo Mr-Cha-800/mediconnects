@@ -15,12 +15,24 @@ const mutation: MutationTree<FollowConnectStateInterface> = {
     Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { error } });
   },
 
+  unFollowRequest(state, { entity }) {
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { following: true } });
+  },
+
+  unFollowSuccess(state, { entity }) {
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { followed: false } });
+  },
+
+  unFollowFailed(state, { entity, error }) {
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { error } });
+  },
+
   ConnectRequest(state, { entity }) {
     Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { connecting: true } });
   },
 
   ConnectSuccess(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { connected: true } });
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { connecting: false, connected: true } });
   },
 
   ConnectFailed(state, { entity, error }) {
@@ -45,7 +57,9 @@ const mutation: MutationTree<FollowConnectStateInterface> = {
   },
 
   AcceptSuccess(state, { requestId }) {
-    Vue.set(state, 'requestStatus', {...state.requestStatus, [requestId]: { accepting: true } });
+    const updateConnectsRequests = state.connectsRequests.filter(({id}) => id !== requestId)
+    Vue.set(state, 'connectsRequests', updateConnectsRequests);
+    Vue.set(state, 'requestStatus', {...state.requestStatus, [requestId]: { accepting: false } });
   },
 
   AcceptFailed(state, { requestId, error }) {
@@ -58,7 +72,9 @@ const mutation: MutationTree<FollowConnectStateInterface> = {
   },
 
   RejectSuccess(state, { requestId }) {
-    Vue.set(state, 'requestStatus', {...state.requestStatus, [requestId]: { rejecting: true } });
+    const updateConnectsRequests = state.connectsRequests.filter(({id}) => id !== requestId)
+    Vue.set(state, 'connectsRequests', updateConnectsRequests);
+    Vue.set(state, 'requestStatus', {...state.requestStatus, [requestId]: { rejecting: false } });
   },
 
   RejectFailed(state, { requestId, error }) {

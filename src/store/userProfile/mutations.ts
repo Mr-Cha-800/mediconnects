@@ -29,6 +29,15 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   userProfileUpdateFailed(state, error: string) {
     Vue.set(state, 'status', { updating: false, error });
   },
+
+  IncreaseUserFollowers(state) {
+    const { profile: { followers = 0 } = {} } = state;
+    Vue.set(state, 'profile', { ...state.profile, followers: followers + 1 });
+  },
+  DecreaseUserFollowers(state) {
+    const { profile: { followers = 0 } = {} } = state;
+    Vue.set(state, 'profile', { ...state.profile, followers: followers && followers - 1 });
+  },
 };
 
 export default mutation;

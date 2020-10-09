@@ -11,6 +11,9 @@ export const follow = async (entity: string, type: EntityTypes) =>
     }
   ).then(({ data }) => data);
 
+export const unFollow = async (entity: string) =>
+  axios.delete(`${API}/account/follow/${entity}`).then(({ data }) => data);
+
 export const connect = async (entity: string, type: EntityTypes, message?: string) =>
   axios.post<any>(`${API}/account/connect`,
     {

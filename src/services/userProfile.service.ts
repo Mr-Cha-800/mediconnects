@@ -8,6 +8,10 @@ export const get = () =>
   axios.get<UserProfileInterface>(`${API}/account/profile`)
     .then(({ data }) => data);
 
+export const getPublic = (id: string) =>
+  axios.get<UserProfileInterface>(`${API}/public/account/profile`)
+    .then(({ data }) => data);
+
 export const update = async ({ profile, avatar }: { profile: UserProfileInterface, avatar: File }) => {
   let avatarMediaObject;
   if (avatar) {

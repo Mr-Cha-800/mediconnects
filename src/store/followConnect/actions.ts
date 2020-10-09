@@ -8,7 +8,17 @@ const actions: ActionTree<FollowConnectStateInterface, StateInterface> = {
     commit('FollowRequest', { entity });
     followConnect.follow(entity, type).then(() => {
       commit('FollowSuccess', { entity });
+      commit('userProfileModule/IncreaseUserFollowers', {}, { root: true });
     }).catch(error => commit('FollowFailed', { entity, error }));
+  },
+
+  unFollow: ({ commit }, { entity }) => {
+    commit('unFollowRequest', { entity });
+    followConnect.unFollow(entity).then(() => {
+      commit('unFollowSuccess', { entity });
+      commit('orgProfileModule/DecreaseOrgFollowers', {}, { root: true });
+      commit('userProfileModule/DecreaseUserFollowers', {}, { root: true });
+    }).catch(error => commit('unFollowFailed', { entity, error }));
   },
 
   connect: ({ commit }, {entity, type, message}) => {

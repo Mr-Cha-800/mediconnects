@@ -23,6 +23,18 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
     })
   },
 
+  getPublicOrg: ({ commit }, id: string) => {
+    commit('orgByIdRequest');
+    organizations.getPublicById(id).then(org => {
+      commit('orgByIdSuccess', org);
+      if (org && org.followed) {
+        commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
+      }
+    }).catch(error => {
+      commit('orgByIdFailed', error);
+    })
+  },
+
   addOrgProfile: ({ commit }, payload) => {
     commit('orgProfileAddRequest');
     organizations.add(payload).then(() => {

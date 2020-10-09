@@ -65,7 +65,7 @@
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
   import { mapGetters } from 'vuex';
-  import FollowConnect from 'components/profile/FollowConnect.vue';
+  import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
