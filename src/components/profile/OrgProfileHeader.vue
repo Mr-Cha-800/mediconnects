@@ -21,7 +21,7 @@
       </div>
     </q-item>
     <q-item>
-      <q-item-label caption>
+      <q-item-label caption v-if="$props.public">
         <FollowConnect :type="entity" :entity="org.id" />
       </q-item-label>
     </q-item>
@@ -48,7 +48,7 @@
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
-  import FollowConnect from 'components/profile/FollowConnect.vue';
+  import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
@@ -57,6 +57,10 @@
       org: {
         type: Object,
         default: () => ({})
+      },
+      public: {
+        type: Boolean,
+        default: () => false
       }
     },
     components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },

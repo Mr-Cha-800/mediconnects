@@ -7,6 +7,7 @@ export interface OrganizationInterface {
   avatar?: MediaObject;
   followers?: number,
   tenants?: number,
+  followed?: boolean,
 }
 
 export interface OrgProfileInterface {

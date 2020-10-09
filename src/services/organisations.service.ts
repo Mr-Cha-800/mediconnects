@@ -23,6 +23,10 @@ export const getById = (id: string) =>
   axios.get<OrganizationInterface>(`${API}/organizations/${id}`)
   .then(({ data }) => data);
 
+export const getPublicById = (id: string) =>
+  axios.get<OrganizationInterface>(`${API}/public/organizations/${id}?link=${id}`)
+  .then(({ data }) => data);
+
 export const add = async ({ profile, avatar }: { profile: OrganizationInterface, avatar: File }) => {
   let avatarMediaObject;
   if (avatar) {

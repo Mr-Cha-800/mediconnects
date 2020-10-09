@@ -2,16 +2,9 @@
   <q-card flat>
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-md-2">
-        <template v-if="status.loading">
-          <Loader />
-        </template>
-        <template v-else-if="status.error">
-          <ErrorState>{{status.error}}</ErrorState>
-        </template>
-        <template v-else-if="!orgDetails">
-          <EmptyState />
-        </template>
-        <OrgProfileForm v-else @submit="this.editOrgProfile" :profile="profile" :submitting="this.status.updating"/>
+        <State :status="this.status" :empty="!this.profile">
+          <OrgProfileForm @submit="this.editOrgProfile" :profile="profile" :submitting="this.status.updating"/>
+        </State>
       </div>
     </div>
   </q-card>
@@ -25,10 +18,11 @@
   import Loader from 'components/common/Loader.vue';
   import ErrorState from 'components/common/ErrorState.vue';
   import EmptyState from 'components/common/EmptyState.vue';
+  import State from 'components/common/State.vue';
 
   export default Vue.extend({
     name: 'OrgProfileAdd',
-    components: { Loader, ErrorState, EmptyState, OrgProfileForm },
+    components: { State, OrgProfileForm },
     computed: {
       ...mapGetters('orgProfileModule', ['orgDetails', 'status']),
     },

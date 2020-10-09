@@ -30,28 +30,13 @@ const mutation: MutationTree<UserProfileStateInterface> = {
     Vue.set(state, 'status', { updating: false, error });
   },
 
-  userProfileFollowRequest(state) {
-    Vue.set(state, 'status', { following: true });
+  IncreaseUserFollowers(state) {
+    const { profile: { followers = 0 } = {} } = state;
+    Vue.set(state, 'profile', { ...state.profile, followers: followers + 1 });
   },
-
-  userProfileFollowSuccess(state) {
-    Vue.set(state, 'status', { following: false });
-  },
-
-  userProfileFollowFailed(state, error: string) {
-    Vue.set(state, 'status', { following: false, error });
-  },
-
-  userProfileConnectRequest(state) {
-    Vue.set(state, 'status', { following: true });
-  },
-
-  userProfileConnectSuccess(state) {
-    Vue.set(state, 'status', { following: false });
-  },
-
-  userProfileConnectFailed(state, error: string) {
-    Vue.set(state, 'status', { following: false, error });
+  DecreaseUserFollowers(state) {
+    const { profile: { followers = 0 } = {} } = state;
+    Vue.set(state, 'profile', { ...state.profile, followers: followers && followers - 1 });
   },
 };
 

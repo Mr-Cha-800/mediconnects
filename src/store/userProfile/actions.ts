@@ -13,6 +13,16 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     }).catch(error => commit('userProfileFailed', error));
   },
 
+  getPublicProfile: ({ commit }, {id}) => {
+    commit('userProfileRequest');
+    userProfile.getPublic(id).then(userDetails => {
+      commit('userProfileSuccess', userDetails);
+      if (userDetails && userDetails.followed) {
+        commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
+      }
+    }).catch(error => commit('userProfileFailed', error));
+  },
+
   updateProfile: ({ commit }, payload) => {
     commit('userProfileUpdateRequest');
     userProfile.update(payload).then(userDetails => {

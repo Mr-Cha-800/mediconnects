@@ -18,7 +18,8 @@
       <State :status="status" :empty="!getOrgs.length" >
         <q-list bordered>
           <template v-for="org in getOrgs">
-            <OrganizationTile :org="org" />
+            <OrganizationTile v-if="showPublicOrgs" :org="org" />
+            <PublicOrganizationTile v-else :org="org" />
             <q-separator/>
           </template>
         </q-list>
@@ -35,10 +36,11 @@
   import { mapActions, mapGetters } from 'vuex';
   import OrganizationTile from 'components/organizations/OrganizationTile.vue';
   import State from 'components/common/State.vue';
+  import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
 
   export default Vue.extend({
     name: 'Organization',
-    components: { State, OrganizationTile },
+    components: { State, OrganizationTile, PublicOrganizationTile },
     data() {
       return {
         activeOrg: 'account',
@@ -63,7 +65,10 @@
       this.getOrgsList(payload);
     },
     computed: {
-      ...mapGetters('orgProfileModule', ['getOrgs', 'status'])
+      ...mapGetters('orgProfileModule', ['getOrgs', 'status']),
+      showPublicOrgs(): boolean {
+        return this.activeOrg === 'account';
+      }
     },
     methods: {
       ...mapActions('orgProfileModule', ['getOrgsList']),

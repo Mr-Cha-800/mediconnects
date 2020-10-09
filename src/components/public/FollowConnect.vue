@@ -5,9 +5,11 @@
         no-caps
         color="primary"
         :loading="status.following"
-        :disable="status.following || status.followed"
-        @click="follow({entity: $props.entity, type: $props.type})">
-      <span v-if="status.followed">
+        :disable="status.following"
+        @click="status.followed ?
+        unFollow({entity: $props.entity}) :
+        follow({entity: $props.entity, type: $props.type})">
+      <span v-if="$props.followed || status.followed">
         <q-icon name="done" size="xs"/> Followed
       </span>
         <span v-else>
@@ -45,6 +47,9 @@
             type="textarea"
             v-model="message"
             label="Send a message"
+            ref="messageInput"
+            lazy-rules
+            :rules="[ val => !!val || 'Please type a message']"
           />
         </div>
 
@@ -59,6 +64,10 @@
         </div>
       </form>
     </div>
+    <div class="q-mt-sm flex row items-center" v-if="status.error">
+      <q-icon name="error_outline" color="negative" class="q-mr-sm"></q-icon>
+      <span class="text-negative text-body2">{{status.error}}</span>
+    </div>
   </div>
 
 </template>
@@ -66,42 +75,46 @@
 <script lang="ts">
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
-  import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
     name: 'FollowConnect',
-    data() {
-      return {
-        showMessage: false,
-        message: ''
-      };
-    },
     props: {
       type: {
-        type: String
+        type: String,
       },
       entity: {
         type: String
-      }
+      },
+    },
+    data() {
+      return {
+        showMessage: false,
+        message: '',
+      };
     },
     methods: {
-      ...mapActions('followConnectModule', ['follow', 'connect']),
+      ...mapActions('followConnectModule', ['follow', 'unFollow', 'connect']),
       onReset() {
         this.message = '';
         this.showMessage = false;
       },
       onSubmit() {
-        this.showMessage = false;
-        this.connect({
-          entity: this.$props.entity,
-          type: this.$props.type,
-          message: this.message
-        });
+        if ((this.$refs.messageInput as any).validate()) {
+          this.showMessage = false;
+          this.connect({
+            entity: this.$props.entity,
+            type: this.$props.type,
+            message: this.message
+          });
+        }
       },
     },
     computed: {
-      ...mapGetters('followConnectModule', ['status'])
-    }
+      ...mapGetters('followConnectModule', ['followConnectStatus']),
+      status(): any {
+        return this.followConnectStatus(this.$props.entity) || {}
+      },
+    },
   });
 </script>
 

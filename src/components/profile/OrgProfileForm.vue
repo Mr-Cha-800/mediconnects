@@ -45,7 +45,7 @@
     props: {
       profile: {
         type: Object,
-        default: {},
+        default: () => ({}),
       },
       submitting: {
         type: Boolean,
