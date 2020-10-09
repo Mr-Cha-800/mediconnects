@@ -8,11 +8,11 @@ import { Router } from 'src/router';
 
 const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   search: ({ commit }, payload: OrgProfileQueryInterface) => {
-    commit('ConnectRequestsRequest');
-    userProfile.search(payload).then(orgsList => {
-      commit('ConnectRequestsSuccess', orgsList);
+    commit('SearchRequestsRequest');
+    userProfile.search(payload).then(profileList => {
+      commit('SearchRequestsSuccess', profileList);
     }).catch(error => {
-      commit('ConnectRequestsSuccess', error);
+      commit('SearchRequestsSuccess', error);
     })
   },
   getProfile: ({ commit }) => {

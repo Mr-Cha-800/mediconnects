@@ -19,8 +19,8 @@ export const get = () =>
     .then(({ data }) => data);
 
 export const search = (params: OrgProfileQueryInterface) =>
-    axios.get<{ users: UserProfileInterface[] }>(`${API}/users`, { params })
-      .then(({ data: { users: [] } }) => users);
+    axios.get<{ profiles: UserProfileInterface[] }>(`${API}/users`, { params })
+      .then(({ data: { profiles: [] } }) => profiles);
 
 export const getPublic = (id: string) =>
   axios.get<UserProfileInterface>(`${API}/public/account/profile`)

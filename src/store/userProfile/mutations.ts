@@ -48,6 +48,17 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   },
   ConnectRequestsFailed(state, error: string) {
     Vue.set(state, 'status', {...state.status, loading: false, error });
+  },
+  SearchRequestsRequest(state) {
+    Vue.set(state, 'status', {...state.status, loading: true });
+  },
+
+  SearchRequestsSuccess(state, connectsRequests) {
+    Vue.set(state, 'status', {...state.status, loading: false });
+    Vue.set(state, 'connectsRequests', connectsRequests);
+  },
+  SearchRequestsFailed(state, error: string) {
+    Vue.set(state, 'status', {...state.status, loading: false, error });
   }
 };
 
