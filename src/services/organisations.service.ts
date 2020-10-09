@@ -16,8 +16,8 @@ export interface OrgSearchQueryInterface {
 }
 
 export const search = (params: OrgSearchQueryInterface) =>
-  axios.get<{ organizations: OrganizationInterface[] }>(`${API}/organizations`, { params })
-    .then(({ data: { organizations = [] } }) => organizations);
+  axios.get<{ profiles: OrganizationInterface[] }>(`${API}/organizations`, { params })
+    .then(({ data: { profiles = [] } }) => profiles);
 
 export const getById = (id: string) =>
   axios.get<OrganizationInterface>(`${API}/organizations/${id}`)

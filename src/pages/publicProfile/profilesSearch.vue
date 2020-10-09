@@ -3,6 +3,7 @@
     <q-card flat>
       <q-separator/>
       <q-list bordered >
+        {{userConnectsRequests}}
         <template v-for="connectRequest in this.userConnectsRequests"  >
           <ConnectRequestTile :connectRequest="connectRequest" />
           <q-separator/>
@@ -20,17 +21,9 @@
   export default Vue.extend({
     name: 'usersConnectRequests',
     components: { ConnectRequestTile, State },
-    data() {
-      return {}
-    },
-    created() {
-      this.getConnectRequests();
-    },
+
     computed: {
-      ...mapGetters('followConnectModule', ['userConnectsRequests', 'status']),
-    },
-    methods: {
-      ...mapActions('followConnectModule', ['getConnectRequests']),
+      ...mapGetters('userProfileModule', ['userConnectsRequests', 'status']),
     }
   });
 </script>

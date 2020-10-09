@@ -21,6 +21,7 @@ export interface UserProfileInterface {
 }
 
 export interface UserProfileStateInterface {
+  profiles: UserProfileInterface[],
   profile: UserProfileInterface;
   connectsRequests?: any[];
   status: {
@@ -31,6 +32,7 @@ export interface UserProfileStateInterface {
 }
 
 const state: UserProfileStateInterface = {
+  profiles: [],
   profile: {},
   status: {
     loading: false,

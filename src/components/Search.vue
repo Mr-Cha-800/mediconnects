@@ -1,9 +1,9 @@
 <template>
-  <q-input dark dense standout v-model="search"  @keydown.enter.prevent="submit">
+  <q-input dark dense standout v-model="searchh"  @keydown.enter.prevent="submit">
     <template v-slot:prepend>
        <q-spinner   v-if="loading" />
-      <q-icon v-if="search === ''" name="search" />
-      <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
+      <q-icon v-if="searchh === ''" name="search" />
+      <q-icon v-else name="clear" class="cursor-pointer" @click="searchh = ''" />
     </template>
      <q-btn-dropdown
       flat
@@ -37,16 +37,19 @@
 
 <script lang="ts">
   import Vue from 'vue';
+  import { mapActions, mapGetters } from 'vuex';
   export default Vue.extend({
     name: 'Search',
     data() {
       return {
-        search: '',
+        searchh: '',
         type: '',
         loading: false
       };
     },
     methods: {
+      ...mapActions('userProfileModule', ['search']),
+      ...mapActions('orgProfileModule', ['getOrgsList']),
       submit() {
         this.loading = true
         if(this.type === '') {
@@ -54,16 +57,32 @@
               color: 'red-4',
               textColor: 'white',
               icon: 'clear',
-              position: 'top',
+              position: 'left',
               message: 'Please Choose the type !'
             })
         this.loading = false
         }
         else if(this.type === 'profiles'){
-          this.$router.push({ name: 'profilesSearch', params: { q: this.search } })
+          this.search({
+            keyword : this.searchh,
+            scope: 'public'
+          }).then(response => {
+          this.$router.push({ name: 'profilesSearch', params: { q: this.searchh } })
+            this.loading = false
+          }).catch(error =>{
+            this.loading = false
+          })
         }
         else if(this.type === 'organizations'){
-          this.$router.push({ name: 'organizationSearch', params: { q: this.search } })
+          this.getOrgsList({
+            keyword : this.searchh,
+            scope: 'public'
+          }).then(response => {
+          this.$router.push({ name: 'organizationSearch', params: { q: this.searchh } })
+            this.loading = false
+          }).catch(error =>{
+            this.loading = false
+          })
         }
       }
    }

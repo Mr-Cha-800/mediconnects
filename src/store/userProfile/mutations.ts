@@ -38,6 +38,17 @@ const mutation: MutationTree<UserProfileStateInterface> = {
     const { profile: { followers = 0 } = {} } = state;
     Vue.set(state, 'profile', { ...state.profile, followers: followers && followers - 1 });
   },
+  ConnectRequestsRequest(state) {
+    Vue.set(state, 'status', {...state.status, loading: true });
+  },
+
+  ConnectRequestsSuccess(state, connectsRequests) {
+    Vue.set(state, 'status', {...state.status, loading: false });
+    Vue.set(state, 'connectsRequests', connectsRequests);
+  },
+  ConnectRequestsFailed(state, error: string) {
+    Vue.set(state, 'status', {...state.status, loading: false, error });
+  }
 };
 
 export default mutation;

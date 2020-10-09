@@ -2,24 +2,12 @@
   <div>
     <q-card flat>
       <div class="flex q-pa-md">
-        <q-btn
-          rounded
-          v-for="(orgCategory, orgKey) in orgCategories"
-          :outline="!isOrgActive(orgKey)"
-          :color="isOrgActive(orgKey) ? 'primary' : 'grey-8'"
-          :label="orgCategory.label"
-          @click="setOrgCategory(orgCategory.payload, orgKey)"
-          class="q-ml-sm"
-        />
-
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'OrgProfileAdd' }"/>
       </div>
       <q-separator/>
       <State :status="status" :empty="!getOrgs.length" >
         <q-list bordered>
           <template v-for="org in getOrgs">
-            <OrganizationTile v-if="showPublicOrgs" :org="org" />
-            <PublicOrganizationTile v-else :org="org" />
+            <OrganizationTile  :org="org" />
             <q-separator/>
           </template>
         </q-list>
@@ -60,25 +48,8 @@
         }
       };
     },
-    created() {
-      const { account: { payload = {} } = {} } = this.orgCategories;
-      this.getOrgsList(payload);
-    },
     computed: {
-      ...mapGetters('orgProfileModule', ['getOrgs', 'status']),
-      showPublicOrgs(): boolean {
-        return this.activeOrg === 'account';
-      }
-    },
-    methods: {
-      ...mapActions('orgProfileModule', ['getOrgsList']),
-      isOrgActive(orgKey: string) {
-        return orgKey === this.activeOrg;
-      },
-      setOrgCategory(payload: OrgSearchQueryInterface, orgKey: string) {
-        this.activeOrg = orgKey;
-        this.getOrgsList(payload);
-      }
+      ...mapGetters('orgProfileModule', ['getOrgs', 'status'])
     }
 
   });

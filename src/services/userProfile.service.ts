@@ -4,9 +4,23 @@ import { UserProfileInterface } from 'src/store/userProfile/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 import { EntityTypes } from 'src/types';
 
+export enum OrgSearchScopeEnum {
+  PUBLIC = 'public',
+  PART_OF = 'partof',
+  ACCOUNT = 'account',
+  FOLLOWING = 'following',
+}
+export interface OrgProfileQueryInterface {
+  keyword?: string;
+  scope?: OrgSearchScopeEnum;
+}
 export const get = () =>
   axios.get<UserProfileInterface>(`${API}/account/profile`)
     .then(({ data }) => data);
+
+export const search = (params: OrgProfileQueryInterface) =>
+    axios.get<{ users: UserProfileInterface[] }>(`${API}/users`, { params })
+      .then(({ data: { users: [] } }) => users);
 
 export const getPublic = (id: string) =>
   axios.get<UserProfileInterface>(`${API}/public/account/profile`)

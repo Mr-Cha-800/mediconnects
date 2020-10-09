@@ -4,7 +4,6 @@ import * as organizations from './../../services/organisations.service';
 import { OrgSearchQueryInterface } from 'src/services/organisations.service';
 import { OrganizationInterface, OrgProfileInterface } from 'src/store/orgProfile/state';
 import { Router } from 'src/router';
-
 const actions: ActionTree<OrgProfileInterface, StateInterface> = {
   getOrgsList: ({ commit }, payload: OrgSearchQueryInterface) => {
     commit('orgSearchRequest');
