@@ -35,9 +35,9 @@
   </q-input>
 </template>
 
-<script>
-
-  export default {
+<script lang="ts">
+  import Vue from 'vue';
+  export default Vue.extend({
     name: 'Search',
     data() {
       return {
@@ -67,7 +67,7 @@
         }
       }
    }
-  };
+  });
 </script>
 
 <style lang="scss" scoped>
