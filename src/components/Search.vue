@@ -1,91 +1,63 @@
 <template>
-  <q-input dark dense standout v-model="searchh"  @keydown.enter.prevent="submit">
+  <q-input dark dense standout v-model="keyword" @keydown.enter.prevent="submit">
     <template v-slot:prepend>
-       <q-spinner   v-if="loading" />
-      <q-icon v-if="searchh === ''" name="search" />
-      <q-icon v-else name="clear" class="cursor-pointer" @click="searchh = ''" />
+      <q-icon v-if="keyword === ''" name="search"/>
+      <q-icon v-else name="clear" class="cursor-pointer" @click="keyword = ''"/>
     </template>
-     <q-btn-dropdown
-      flat
-    >
-      <q-list>
-        <q-item clickable v-close-popup @click="type = 'profiles'">
-          <q-item-section avatar>
-            <q-avatar icon="groups" color="primary" text-color="white" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Profiles</q-item-label>
-          </q-item-section>
-        </q-item>
+    <q-btn flat>
+      <q-icon name="groups" v-if="type === entityTypes.USER" color="primary"></q-icon>
+      <q-icon name="apartment" v-else color="primary"></q-icon>
+      <q-menu>
+        <q-list>
+          <q-item clickable v-close-popup @click="type = entityTypes.USER">
+            <q-item-section avatar>
+              <q-avatar icon="groups" text-color="primary"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Profiles</q-item-label>
+            </q-item-section>
+          </q-item>
 
-        <q-item clickable v-close-popup @click="type = 'organizations'">
-          <q-item-section avatar>
-            <q-avatar icon="apartment" color="secondary" text-color="white" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Organizations</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-        <template v-slot:append>
-          <q-icon v-if="type === 'profiles' " name="groups" />
-          <q-icon v-if="type === 'organizations' " name="apartment" />
-        </template>
+          <q-item clickable v-close-popup @click="type = entityTypes.ORG">
+            <q-item-section avatar>
+              <q-avatar icon="apartment" text-color="primary"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Organizations</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
   </q-input>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import { mapActions, mapGetters } from 'vuex';
+  import { EntityTypes } from 'src/types';
+
   export default Vue.extend({
     name: 'Search',
     data() {
       return {
-        searchh: '',
-        type: '',
-        loading: false
+        keyword: '',
+        type: EntityTypes.USER,
+        showingList: false,
       };
     },
+    computed: {
+      entityTypes: () => EntityTypes,
+    },
     methods: {
-      ...mapActions('userProfileModule', ['search']),
-      ...mapActions('orgProfileModule', ['getOrgsList']),
-      submit() {
-        this.loading = true
-        if(this.type === '') {
-          this.$q.notify({
-              color: 'red-4',
-              textColor: 'white',
-              icon: 'clear',
-              position: 'left',
-              message: 'Please Choose the type !'
-            })
-        this.loading = false
+      submit(): any {
+        if (this.keyword && this.type === EntityTypes.USER) {
+          return this.$router.push({ name: 'ProfilesSearch', query: { q: this.keyword } }).catch();
         }
-        else if(this.type === 'profiles'){
-          this.search({
-            keyword : this.searchh,
-            scope: 'public'
-          }).then(response => {
-          this.$router.push({ name: 'profilesSearch', params: { q: this.searchh } })
-            this.loading = false
-          }).catch(error =>{
-            this.loading = false
-          })
-        }
-        else if(this.type === 'organizations'){
-          this.getOrgsList({
-            keyword : this.searchh,
-            scope: 'public'
-          }).then(response => {
-          this.$router.push({ name: 'organizationSearch', params: { q: this.searchh } })
-            this.loading = false
-          }).catch(error =>{
-            this.loading = false
-          })
+        if (this.keyword && this.type === EntityTypes.ORG) {
+          return this.$router.push({ name: 'OrganizationsSearch', query: { q: this.keyword } }).catch();
         }
       }
-   }
+    }
   });
 </script>
 

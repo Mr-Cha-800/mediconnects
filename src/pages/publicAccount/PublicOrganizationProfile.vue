@@ -2,7 +2,7 @@
   <div>
     <q-card flat>
       <State :status="status" :empty="!orgDetails">
-        <OrgProfileHeader :org="orgDetails" :public="true"/>
+        <OrgProfileHeader :org="orgDetails"/>
         <q-separator/>
         <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
         <q-separator/>

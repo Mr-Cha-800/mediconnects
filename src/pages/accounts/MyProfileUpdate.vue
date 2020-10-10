@@ -18,7 +18,7 @@
   import State from 'components/common/State.vue';
 
   export default Vue.extend({
-    name: 'UserProfileUpdate',
+    name: 'MyProfileUpdate',
     components: { State, UserProfileForm },
     watch: {
       profile: {

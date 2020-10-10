@@ -7,21 +7,24 @@ const routes: RouteConfig[] = [
     meta: { auth: true, },
     children: [
       { path: '', component: () => import('pages/feed/Index.vue'), name: 'home', meta: { auth: true } },
-      { path: '/profile', component: () => import('pages/accounts/UserProfile.vue'), name: 'userProfile', meta: { auth: true } },
-      { path: '/profile/update', component: () => import('pages/accounts/UserProfileUpdate.vue'), name: 'userProfileUpdate', meta: { auth: true } },
+      { path: '/profile', component: () => import('pages/accounts/MyProfile.vue'), name: 'MyProfile', meta: { auth: true } },
+      { path: '/profile/update', component: () => import('pages/accounts/MyProfileUpdate.vue'), name: 'MyProfileUpdate', meta: { auth: true } },
       { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue'), name: 'profileOrganizations', meta: { auth: true } },
-      { path: '/profile/organizations/add', component: () => import('pages/accounts/OrgProfileAdd.vue'), name: 'OrgProfileAdd', meta: { auth: true } },
-      { path: '/profile/organizations/:orgId', component: () => import('pages/accounts/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
-      { path: '/profile/organizations/:orgId/edit', component: () => import('pages/accounts/OrgProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true } },
+      { path: '/profile/organizations/add', component: () => import('pages/organizations/OrgProfileAdd.vue'), name: 'OrgProfileAdd', meta: { auth: true } },
+      { path: '/profile/organizations/:orgId', component: () => import('pages/organizations/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
+      { path: '/profile/organizations/:orgId/edit', component: () => import('pages/organizations/OrgProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true } },
+      { path: '/profile/organizations/:orgId/members', component: () => import('pages/organizations/OrganizationMembers.vue'), name: 'OrganizationMembers', meta: { auth: true } },
       { path: '/profile/requests', component: () => import('pages/accounts/UserConnectRequests.vue'), name: 'UserConnectRequests', meta: { auth: true } },
       { path: '/post', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
       { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
       { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
 
-      { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
+      { path: '/users/:userId', component: () => import('pages/accounts/UserProfile.vue'), name: 'UserProfile', meta: { auth: true } },
 
-      { path: '/public/organizations/:q', component: () => import('pages/publicProfile/organizationsSearch.vue'), name: 'organizationSearch', meta: { auth: true } },
-      { path: '/public/profiles/:q', component: () => import('pages/publicProfile/profilesSearch.vue'), name: 'profilesSearch', meta: { auth: true } },
+      { path: '/search/users', component: () => import('pages/search/ProfilesSearch.vue'), name: 'ProfilesSearch', meta: { auth: true } },
+      { path: '/search/organizations', component: () => import('pages/search/OrganizationsSearch.vue'), name: 'OrganizationsSearch', meta: { auth: true } },
+
+      { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
 
     ]
   },

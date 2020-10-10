@@ -20,7 +20,7 @@
         />
       </div>
     </q-item>
-    <q-item v-if="$props.public">
+    <q-item>
       <q-item-label caption>
         <FollowConnect :type="entity" :entity="org.id" />
       </q-item-label>
@@ -58,10 +58,6 @@
         type: Object,
         default: (): Record<string, unknown> => ({})
       },
-      public: {
-        type: Boolean,
-        default: (): boolean => false
-      }
     },
     components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
     computed: {

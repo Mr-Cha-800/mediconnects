@@ -2,13 +2,14 @@ import { GetterTree } from 'vuex';
 import { StateInterface } from '../index';
 import { UserProfileStateInterface } from './state';
 import { avatarMediaObject } from 'src/helpers/parseMediaOject';
-import { EntityTypes } from 'src/types';
 
 const getters: GetterTree<UserProfileStateInterface, StateInterface> = {
-  userConnectsRequests: ({ profiles }) =>
-  profiles.filter(({type}) => type === EntityTypes.USER) || [],
   profile: ({ profile }) => profile,
+  isMe: ({ profile: {id: myId} }) => (userId?: string): boolean => userId === myId,
+  user: ({ user }) => user,
+  users: ({ users }) => users,
   status: ({ status }) => status,
+  userStatus: ({ userStatus }) => userStatus,
   getAvatar: ({ profile: { avatar } }) => avatarMediaObject(avatar),
 };
 

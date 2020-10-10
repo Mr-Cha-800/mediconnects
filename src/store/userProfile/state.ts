@@ -21,19 +21,25 @@ export interface UserProfileInterface {
 }
 
 export interface UserProfileStateInterface {
-  profiles: UserProfileInterface[],
+  users: UserProfileInterface[],
   profile: UserProfileInterface;
-  connectsRequests?: any[];
+  user: UserProfileInterface;
   status: {
     loading: boolean;
     updating: boolean;
+    error?: string
+  };
+  userStatus: {
+    loading?: boolean;
     error?: string
   }
 }
 
 const state: UserProfileStateInterface = {
-  profiles: [],
+  users: [],
   profile: {},
+  user: {},
+  userStatus: {},
   status: {
     loading: false,
     updating: false,

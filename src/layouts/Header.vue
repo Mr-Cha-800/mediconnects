@@ -71,8 +71,8 @@
               <img :src="getAvatar">
             </q-avatar>
             <div class="text-weight-bold">{{profile.firstName}} {{profile.lastName}}</div>
-            <router-link exact :to="{name: 'userProfile'}" class="text-white">View Profile</router-link>
-            <router-link exact :to="{name: 'userProfileUpdate'}" class="text-white q-ml-md">Edit</router-link>
+            <router-link exact :to="{name: 'MyProfile'}" class="text-white">View Profile</router-link>
+            <router-link exact :to="{name: 'MyProfileUpdate'}" class="text-white q-ml-md">Edit</router-link>
           </div>
         </q-img>
 
@@ -144,13 +144,13 @@
     },
     methods: {
       ...mapActions('accountModule', ['logout']),
-      ...mapActions('userProfileModule', ['getProfile'])
+      ...mapActions('userProfileModule', ['getMyProfile'])
     },
     computed: {
       ...mapGetters('userProfileModule', ['profile', 'status', 'getAvatar'])
     },
     created() {
-      this.getProfile();
+      this.getMyProfile();
     }
   });
 </script>

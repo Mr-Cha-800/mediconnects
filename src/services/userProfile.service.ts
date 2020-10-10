@@ -2,28 +2,25 @@ import { API } from 'src/constants';
 import axios from 'axios';
 import { UserProfileInterface } from 'src/store/userProfile/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
-import { EntityTypes } from 'src/types';
 
-export enum OrgSearchScopeEnum {
+export enum UsersSearchScopeEnum {
   PUBLIC = 'public',
-  PART_OF = 'partof',
-  ACCOUNT = 'account',
   FOLLOWING = 'following',
 }
-export interface OrgProfileQueryInterface {
+export interface UsersSearchQueryInterface {
   keyword?: string;
-  scope?: OrgSearchScopeEnum;
+  scope?: UsersSearchScopeEnum;
 }
 export const get = () =>
   axios.get<UserProfileInterface>(`${API}/account/profile`)
     .then(({ data }) => data);
 
-export const search = (params: OrgProfileQueryInterface) =>
+export const search = (params: UsersSearchQueryInterface) =>
     axios.get<{ profiles: UserProfileInterface[] }>(`${API}/users`, { params })
-      .then(({ data: { profiles: [] } }) => profiles);
+      .then(({ data: { profiles = [] } }) => profiles);
 
 export const getPublic = (id: string) =>
-  axios.get<UserProfileInterface>(`${API}/public/account/profile`)
+  axios.get<UserProfileInterface>(`${API}/public/users/${id}?link=${id}`)
     .then(({ data }) => data);
 
 export const update = async ({ profile, avatar }: { profile: UserProfileInterface, avatar: File }) => {

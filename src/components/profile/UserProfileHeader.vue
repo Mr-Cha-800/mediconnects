@@ -3,7 +3,7 @@
     <q-item class="flex fit justify-start items-center">
       <div class="q-pr-lg q-pr-xl-md">
         <q-avatar size="15vh">
-          <q-img :src="getAvatar" height="100%"/>
+          <q-img :src="avatar" height="100%"/>
         </q-avatar>
       </div>
       <div class="self-center">
@@ -23,25 +23,16 @@
         />
       </div>
     </q-item>
-    <q-item>
+    <q-item v-if="!isMyProfile">
       <q-item-label caption>
         <FollowConnect :type="entity" :entity="profile.id" />
       </q-item-label>
     </q-item>
-    <q-item class="row">
+    <q-item class="row" v-if="!isMyProfile">
       <q-item-section class="col-12">
         <q-item-label caption>
-          <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.followers">Followers</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.following">Following</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.connections">Connections</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.reviews">Reviews</UserProfileSocialTags>
-        </q-item-label>
-        <q-item-label caption>
-          <UserProfileSocialTags :count="infoprofile.posts">Posts</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.helpful">Helpful</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.advice">Advice</UserProfileSocialTags>
-          <UserProfileSocialTags :count="infoprofile.reputation">Reputation</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.followers">Followers</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.tenants">Tenants</UserProfileSocialTags>
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -67,26 +58,29 @@
   import { mapGetters } from 'vuex';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
+  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
   export default Vue.extend({
     name: 'UserProfileHeader',
     components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
+    props: {
+      profile: {
+        type: Object,
+        default: (): Record<string, unknown> => ({})
+      },
+    },
     computed: {
-      ...mapGetters('userProfileModule', ['profile', 'getAvatar']),
-      entity: () => EntityTypes.USER,
+      ...mapGetters('userProfileModule', ['isMe']),
+      avatar(): string {
+        return avatarMediaObject(this.$props.profile.avatar);
+      },
+      entity: (): EntityTypes => EntityTypes.USER,
+      isMyProfile(): boolean {
+        return this.isMe(this.$props.profile.id);
+      }
     },
     data() {
       return {
-        infoprofile: {
-          followers: 10000,
-          following: 12000,
-          connections: 1000,
-          posts: 4000,
-          reviews: 54000,
-          helpful: 15000,
-          advice: 16000,
-          reputation: 100
-        },
         skill: null,
         prompt: false,
         Experience: true,

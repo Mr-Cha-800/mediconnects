@@ -1,5 +1,6 @@
 import { UserProfileInterface } from 'src/store/userProfile/state';
 import { EntityTypes } from 'src/types';
+import { OrganizationInterface } from 'src/store/orgProfile/state';
 
 export interface ConnectRequestInterface {
   id?: string;
@@ -8,6 +9,7 @@ export interface ConnectRequestInterface {
     message?: string;
   };
   createdBy: UserProfileInterface,
+  entity: UserProfileInterface | OrganizationInterface,
   recipient: {
     id?: string;
   }

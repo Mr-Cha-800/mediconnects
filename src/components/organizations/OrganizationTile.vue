@@ -15,12 +15,21 @@
       </q-item-label>
     </q-item-section>
     <q-item-section side>
-      <q-checkbox size="md" v-model="isSelected" color="primary" @click.stop="isSelected = !isSelected"/>
-    </q-item-section>
-    <q-item-section side>
-      <q-btn size="md" flat rounded color="primary" @click="(e) => {e.preventDefault(); $router.push({name: 'EditOrganization', params: { orgId: $props.org.id }})}">
-        <q-icon name="edit"></q-icon>
-      </q-btn>
+      <div class="text-grey-8 q-gutter-xs">
+        <q-checkbox size="md" v-model="isSelected" color="primary" @click.stop="isSelected = !isSelected"/>
+        <q-btn size="md" flat dense round icon="more_vert" @click="(e) => {e.preventDefault();}">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup :to="{name: 'EditOrganization', params: { orgId: $props.org.id }}">
+                <q-item-section>Edit Organization</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup :to="{name: 'OrganizationMembers', params: { orgId: $props.org.id }}">
+                <q-item-section>Members</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </div>
     </q-item-section>
   </q-item>
 </template>

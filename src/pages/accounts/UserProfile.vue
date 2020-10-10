@@ -1,11 +1,13 @@
 <template>
   <div>
     <q-card flat>
-      <UserProfileHeader />
-      <q-separator />
-      <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
-      <q-separator />
-      <ProfilePosting />
+      <State :status="status" :empty="!user">
+        <template>
+          <UserProfile :profile="user" />
+          <q-separator />
+          <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
+        </template>
+      </State>
     </q-card>
 
     <!--TODO: Add list of user posts-->
@@ -17,12 +19,23 @@
 
 <script lang="ts">
   import Vue from 'vue';
+  import { mapActions, mapGetters } from 'vuex';
+  import State from 'components/common/State.vue';
   import UserProfileHeader from 'components/profile/UserProfileHeader.vue';
-  import ProfilePosting from 'components/profile/ProfilePosting.vue';
 
   export default Vue.extend({
-    name: 'Profile',
-    components: { UserProfileHeader, ProfilePosting },
+    name: 'UserProfile',
+    components: { State, UserProfileHeader },
+    computed: {
+      ...mapGetters('userProfileModule', ['user', 'status']),
+    },
+    methods: {
+      ...mapActions('userProfileModule', ['getPublicProfile']),
+    },
+    beforeMount() {
+      const { $route: { params: {userId = ''} = {} } = {} } = this;
+      this.getPublicProfile(userId);
+    }
   });
 </script>
 

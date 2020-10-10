@@ -18,8 +18,7 @@
       <State :status="status" :empty="!getOrgs.length" >
         <q-list bordered>
           <template v-for="org in getOrgs">
-            <OrganizationTile v-if="showPublicOrgs" :org="org" />
-            <PublicOrganizationTile v-else :org="org" />
+            <OrganizationTile :org="org" />
             <q-separator/>
           </template>
         </q-list>
@@ -62,22 +61,19 @@
     },
     created() {
       const { account: { payload = {} } = {} } = this.orgCategories;
-      this.getOrgsList(payload);
+      this.search(payload);
     },
     computed: {
       ...mapGetters('orgProfileModule', ['getOrgs', 'status']),
-      showPublicOrgs(): boolean {
-        return this.activeOrg === 'account';
-      }
     },
     methods: {
-      ...mapActions('orgProfileModule', ['getOrgsList']),
+      ...mapActions('orgProfileModule', ['search']),
       isOrgActive(orgKey: string) {
         return orgKey === this.activeOrg;
       },
       setOrgCategory(payload: OrgSearchQueryInterface, orgKey: string) {
         this.activeOrg = orgKey;
-        this.getOrgsList(payload);
+        this.search(payload);
       }
     }
 

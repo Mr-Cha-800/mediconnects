@@ -2,44 +2,45 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { UserProfileStateInterface } from './state';
 import * as userProfile from './../../services/userProfile.service';
-import { OrgProfileQueryInterface } from './../../services/userProfile.service';
+import { UsersSearchQueryInterface } from 'src/services/userProfile.service';
 import * as AccountService from 'src/services/accounts.service';
 import { Router } from 'src/router';
 
 const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
-  search: ({ commit }, payload: OrgProfileQueryInterface) => {
+  search: ({ commit }, payload: UsersSearchQueryInterface) => {
     commit('SearchRequestsRequest');
     userProfile.search(payload).then(profileList => {
       commit('SearchRequestsSuccess', profileList);
     }).catch(error => {
-      commit('SearchRequestsSuccess', error);
+      commit('SearchRequestsFailed', error);
     })
   },
-  getProfile: ({ commit }) => {
-    commit('userProfileRequest');
+  getMyProfile: ({ commit }) => {
+    commit('MyProfileRequest');
     userProfile.get().then(userDetails => {
-      commit('userProfileSuccess', userDetails);
-    }).catch(error => commit('userProfileFailed', error));
+      commit('MyProfileSuccess', userDetails);
+    }).catch(error => commit('MyProfileFailed', error));
   },
+
   getPublicProfile: ({ commit }, {id}) => {
-    commit('userProfileRequest');
+    commit('UserProfileRequest');
     userProfile.getPublic(id).then(userDetails => {
-      commit('userProfileSuccess', userDetails);
+      commit('UserProfileSuccess', userDetails);
       if (userDetails && userDetails.followed) {
         commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
       }
-    }).catch(error => commit('userProfileFailed', error));
+    }).catch(error => commit('UserProfileFailed', error));
   },
 
   updateProfile: ({ commit }, payload) => {
-    commit('userProfileUpdateRequest');
+    commit('MyProfileUpdateRequest');
     userProfile.update(payload).then(userDetails => {
       // refresh the token, After Updating profile
       AccountService.refreshToken().then(user => {
-        commit('userProfileUpdateSuccess', userDetails);
+        commit('MyProfileUpdateSuccess', userDetails);
         Router.back();
-      }).catch(error => commit('userProfileUpdateFailed', error));
-    }).catch(error => commit('userProfileUpdateFailed', error));
+      }).catch(error => commit('MyProfileUpdateFailed', error));
+    }).catch(error => commit('MyProfileUpdateFailed', error));
   }
 };
 
