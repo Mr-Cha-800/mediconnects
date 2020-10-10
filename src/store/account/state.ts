@@ -5,6 +5,7 @@ export interface UserInterface {
 }
 export interface AccountInterface {
   status: {
+    loading?: boolean,
     loggedIn?: boolean,
     error?: string,
   },

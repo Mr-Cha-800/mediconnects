@@ -19,7 +19,14 @@
             <q-input type="password" outlined v-model="userLogin.password" label="Password" :rules="[validatePassword]" lazy-rules/>
           </div>
           <div class="col-12 q-my-lg">
-            <q-btn type="submit" color="primary" size="lg" class="full-width" label="Join" :loading="status.loading" :disable="status.loading"/>
+            <q-btn
+              type="submit"
+              color="primary"
+              size="lg"
+              class="full-width"
+              label="Join"
+              :loading="status.loading"
+              :disable="status.loading"/>
           </div>
           <div class="col-12 q-my-xs">
             <p class="text-center text-subtitle1">Already on MediConnects?

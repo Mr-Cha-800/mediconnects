@@ -3,7 +3,7 @@
     <q-card flat>
       <State :status="status" :empty="!user">
         <template>
-          <UserProfile :profile="user" />
+          <UserProfileHeader :profile="user" />
           <q-separator />
           <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
         </template>
@@ -30,11 +30,13 @@
       ...mapGetters('userProfileModule', ['user', 'status']),
     },
     methods: {
-      ...mapActions('userProfileModule', ['getPublicProfile']),
+      ...mapActions('userProfileModule', ['getUser']),
     },
     beforeMount() {
       const { $route: { params: {userId = ''} = {} } = {} } = this;
-      this.getPublicProfile(userId);
+      if (userId) {
+        this.getUser(userId);
+      }
     }
   });
 </script>

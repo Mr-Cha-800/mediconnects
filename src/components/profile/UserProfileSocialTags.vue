@@ -1,5 +1,5 @@
 <template>
-  <span class="text-body1 text-weight-bold">{{count}} <span class="text-body2 q-pr-md"><slot/></span></span>
+  <span class="text-body1 text-weight-bold">{{formattedCount}} <span class="text-body2 q-pr-md"><slot/></span></span>
 </template>
 <script lang="ts">
   import Vue from 'vue';
@@ -9,7 +9,15 @@
     props: {
       count: {
         type: Number,
-        required: true
+        required: false
+      }
+    },
+    computed: {
+      formattedCount(): string {
+        const num = this.$props.count || 0;
+        return num > 999 ?
+          `${(num / 1000).toFixed(1)}k` :
+          num.toString();
       }
     }
 

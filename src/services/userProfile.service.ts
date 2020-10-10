@@ -19,9 +19,9 @@ export const search = (params: UsersSearchQueryInterface) =>
     axios.get<{ profiles: UserProfileInterface[] }>(`${API}/users`, { params })
       .then(({ data: { profiles = [] } }) => profiles);
 
-export const getPublic = (id: string) =>
-  axios.get<UserProfileInterface>(`${API}/public/users/${id}?link=${id}`)
-    .then(({ data }) => data);
+export const user = (id: string) =>
+    axios.get<UserProfileInterface>(`${API}/users/${id}/profile`)
+      .then(({ data }) => data);
 
 export const update = async ({ profile, avatar }: { profile: UserProfileInterface, avatar: File }) => {
   let avatarMediaObject;

@@ -22,23 +22,13 @@
               </q-avatar>
             </q-btn>
           </div>
-          <div class="q-ml-sm-xs q-ml-md">
+          <div class="q-ml-sm-xs q-ml-md row">
             <Search/>
           </div>
-          <div class="q-ml-auto">
-            <div class="row">
-              <q-btn round dense flat color="white" size="14px" icon="chat_bubble_outline">
-                <q-badge align="bottom" color="red" text-color="white" floating>
-                  2
-                </q-badge>
-              </q-btn>
-
-              <q-btn round dense flat color="white" size="14px" icon="notifications">
-                <q-badge align="bottom" color="red" text-color="white" floating>
-                  2
-                </q-badge>
-              </q-btn>
-            </div>
+          <div class="q-ml-auto xxs-hide">
+            <q-btn round dense flat color="white" size="14px" icon="notifications">
+              <q-badge label="2" align="bottom" color="red" text-color="white" floating />
+            </q-btn>
           </div>
         </div>
       </div>
@@ -60,6 +50,9 @@
 
               <q-item-section>
                 {{menuItem.label}}
+              </q-item-section>
+              <q-item-section side v-if="menuItem.badge">
+                <q-badge :label="menuItem.badge" color="red" text-color="white" />
               </q-item-section>
             </q-item>
           </q-list>
@@ -137,7 +130,8 @@
           messages: {
             label: 'Messages',
             icon: 'message',
-            pathName: 'messages'
+            pathName: 'messages',
+            badge: '99+',
           }
         }
       };
@@ -156,4 +150,5 @@
 </script>
 
 <style lang="scss" scoped>
+
 </style>

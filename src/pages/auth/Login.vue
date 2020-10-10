@@ -20,7 +20,14 @@
             <q-input type="password" outlined v-model="userLogin.password" label="Password" :rules="[validatePassword]" lazy-rules/>
           </div>
           <div class="col-12 q-my-lg">
-            <q-btn type="submit" color="primary" size="lg" class="full-width" label="Login"/>
+            <q-btn
+              type="submit"
+              color="primary"
+              size="lg"
+              class="full-width"
+              label="Login"
+              :loading="status.loading"
+              :disable="status.loading"/>
           </div>
           <div class="col-12 q-my-xs">
             <p class="text-center text-subtitle1">New to MediConnects?
@@ -48,7 +55,7 @@
     name: 'PageLogin',
     data() {
       const userLogin: Login = {
-        email: 'admin11@admin.com',
+        email: 'admin0@admin.com',
         password: 'ReallySecure2020!'
       };
       return { userLogin };

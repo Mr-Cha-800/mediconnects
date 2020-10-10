@@ -15,21 +15,24 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
       commit('SearchRequestsFailed', error);
     })
   },
+
+  getUser: ({ commit }, id) => {
+    commit('UserProfileRequest');
+    userProfile.user(id).then(userDetails => {
+      commit('UserProfileSuccess', userDetails);
+      if (userDetails && userDetails.followed) {
+        commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
+      }
+    }).catch(error => {
+      commit('UserProfileFailed', error);
+    })
+  },
+
   getMyProfile: ({ commit }) => {
     commit('MyProfileRequest');
     userProfile.get().then(userDetails => {
       commit('MyProfileSuccess', userDetails);
     }).catch(error => commit('MyProfileFailed', error));
-  },
-
-  getPublicProfile: ({ commit }, {id}) => {
-    commit('UserProfileRequest');
-    userProfile.getPublic(id).then(userDetails => {
-      commit('UserProfileSuccess', userDetails);
-      if (userDetails && userDetails.followed) {
-        commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
-      }
-    }).catch(error => commit('UserProfileFailed', error));
   },
 
   updateProfile: ({ commit }, payload) => {

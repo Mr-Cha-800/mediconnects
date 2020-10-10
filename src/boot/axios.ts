@@ -23,12 +23,15 @@ export default boot(({ Vue, store }) => {
 
   axios.interceptors.response.use(
     response => response,
-    ({ response: { data: { message, code, ...rest } } }) => {
-      console.log(message, typeof code)
+    ({ response: { data: { message, code } } }) => {
       if (code === '406') {
-        return Router.push({name: 'userProfileUpdate'})
+        return Router.push({name: 'MyProfileUpdate'})
       }
-      throw message
+
+      if (code === '500') {
+        throw 'An unknown error has occurred';
+      }
+      throw message;
     }
   );
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

@@ -19,7 +19,7 @@ const routes: RouteConfig[] = [
       { path: '/groups', component: () => import('pages/Index.vue'), name: 'groups', meta: { auth: true } },
       { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
 
-      { path: '/users/:userId', component: () => import('pages/accounts/UserProfile.vue'), name: 'UserProfile', meta: { auth: true } },
+      { path: '/users/:userId/profile', component: () => import('pages/users/UserProfile.vue'), name: 'UserProfile', meta: { auth: true } },
 
       { path: '/search/users', component: () => import('pages/search/ProfilesSearch.vue'), name: 'ProfilesSearch', meta: { auth: true } },
       { path: '/search/organizations', component: () => import('pages/search/OrganizationsSearch.vue'), name: 'OrganizationsSearch', meta: { auth: true } },

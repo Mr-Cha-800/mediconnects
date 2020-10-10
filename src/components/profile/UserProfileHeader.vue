@@ -32,7 +32,10 @@
       <q-item-section class="col-12">
         <q-item-label caption>
           <UserProfileSocialTags :count="profile.followers">Followers</UserProfileSocialTags>
-          <UserProfileSocialTags :count="profile.tenants">Tenants</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.following">Following</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.connections">Connections</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.organizations">Organizations</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.posts">Posts</UserProfileSocialTags>
         </q-item-label>
       </q-item-section>
     </q-item>

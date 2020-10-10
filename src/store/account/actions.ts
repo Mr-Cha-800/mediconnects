@@ -31,7 +31,8 @@ const actions: ActionTree<AccountInterface, StateInterface> = {
       .then(
         (user) => {
           commit('registerSuccess', user);
-          return Router.push({name: 'userProfileUpdate'});
+          Router.push({name: 'home'})
+          return Router.push({name: 'MyProfileUpdate'});
         },
         error => {
           commit('registerFailure', error);

@@ -1,1 +1,6 @@
 // app global css in SCSS form
+@media (max-width: 380px) {
+  .xxs-hide {
+    display: none !important
+  }
+}

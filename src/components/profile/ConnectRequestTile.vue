@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-item>
+    <q-item :to="{name: 'UserProfile', params: { userId:  $props.connectRequest.createdBy.id}}">
       <q-item-section class="q-ml-none" avatar>
         <q-avatar size="6rem" square>
           <q-img
@@ -24,7 +24,7 @@
           <span class="text-body1 text-grey-6">{{$props.connectRequest.data.message}}</span>
         </q-item-label>
       </q-item-section>
-      <q-item-section side class="xs-hide">
+      <q-item-section side class="xs-hide" @click="(e) => {e.preventDefault();}">
         <q-btn
           no-caps
           size="md"
@@ -36,7 +36,7 @@
           Accept
         </q-btn>
       </q-item-section>
-      <q-item-section side class="xs-hide">
+      <q-item-section side class="xs-hide" @click="(e) => {e.preventDefault();}">
         <q-btn
           no-caps
           size="md"
@@ -50,7 +50,7 @@
         </q-btn>
       </q-item-section>
     </q-item>
-    <q-item class="xs">
+    <q-item class="xs" @click="(e) => {e.preventDefault();}">
       <q-item-section>
         <q-btn no-caps size="md" flat color="primary" @click="acceptConnect($props.connectRequest.id)">
           Accept
