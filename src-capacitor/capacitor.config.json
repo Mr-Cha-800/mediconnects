@@ -1,0 +1,7 @@
+{
+  "appId": "com.mediconnects.app",
+  "appName": "MediConnects",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

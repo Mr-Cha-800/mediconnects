@@ -81,7 +81,7 @@
     props: {
       connectRequest: {
         type: Object,
-        default: () => ({})
+        default: (): Record<string, unknown> => ({})
       }
     },
     data() {
@@ -89,10 +89,10 @@
     },
     computed: {
       ...mapGetters('followConnectModule', ['requestStatus']),
-      status() {
+      status(): Record<string, unknown> {
         return this.requestStatus(this.$props.connectRequest.id) || {}
       },
-      avatar() {
+      avatar(): string {
         return avatarMediaObject(this.$props.connectRequest.createdBy.avatar);
       }
     },

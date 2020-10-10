@@ -4,7 +4,7 @@
       <q-separator/>
       <q-list bordered >
         <template v-for="connectRequest in this.userConnectsRequests"  >
-          <ConnectRequestTile :connectRequest="connectRequest" />
+          <ConnectRequestTile :key="connectRequest.id" :connectRequest="connectRequest" />
           <q-separator/>
         </template>
       </q-list>

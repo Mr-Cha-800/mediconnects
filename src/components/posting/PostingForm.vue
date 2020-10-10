@@ -127,11 +127,11 @@
     props: {
       profile: {
         type: Object,
-        default: () => ({}),
+        default: (): Record<string, unknown> => ({}),
       },
       submitting: {
         type: Boolean,
-        default: () => false,
+        default: (): boolean => false,
       }
     },
     data() {
@@ -161,21 +161,21 @@
     },
     methods: {
       validateRequired: validateRequired,
-      submitProfile() {
+      submitProfile(): void {
         if (this.vUpdateForm.validate()) {
           this.$emit('submit', { profile: this.$props.profile });
         }
       },
-      selectedImage(file: File) {
+      selectedImage(file: File): void {
         const reader = new FileReader();
         this.videoStream = null;
-        reader.onload = ({ target: { result }}: ProgressEvent) => this.imageStream = result;
+        reader.onload = ({ target: { result }}: any) => this.imageStream = result;
         reader.readAsDataURL(file);
       },
-      selectedVideo(file: File) {
+      selectedVideo(file: File): void {
         const reader = new FileReader();
         this.imageStream = null;
-        reader.onload = ({ target: { result }}: ProgressEvent) => this.videoStream = result;
+        reader.onload = ({ target: { result }}: any) => this.videoStream = result;
         reader.readAsDataURL(file);
       }
     },

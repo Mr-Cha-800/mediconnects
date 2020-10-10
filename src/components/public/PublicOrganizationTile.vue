@@ -18,7 +18,6 @@
       <q-checkbox size="md" v-model="isSelected" color="primary" @click.stop="isSelected = !isSelected"/>
     </q-item-section>
     <q-item-section side>
-      </q-btn>
     </q-item-section>
   </q-item>
 </template>

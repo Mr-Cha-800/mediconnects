@@ -45,11 +45,11 @@
     props: {
       profile: {
         type: Object,
-        default: () => ({}),
+        default: (): Record<string, unknown> => ({}),
       },
       submitting: {
         type: Boolean,
-        default: () => false,
+        default: (): boolean => false,
       }
     },
     data() {
@@ -62,21 +62,21 @@
       vUpdateForm(): VForm {
         return this.$refs.updateForm as VForm
       },
-      propAvatar() {
+      propAvatar(): string {
         return avatarMediaObject(this.$props.profile.avatar);
       },
     },
     methods: {
       validateRequired: validateRequired,
-      submitProfile() {
+      submitProfile(): void {
         if (this.vUpdateForm.validate()) {
           this.$emit('submit', { profile: this.$props.profile, avatar: this.avatar });
         }
       },
-      selectedAvatar(file: File) {
+      selectedAvatar(file: File): void {
         const reader = new FileReader();
 
-        reader.onload = ({ target: { result }}: ProgressEvent) => this.avatarImg = result;
+        reader.onload = ({ target: { result }}: any) => this.avatarImg = result;
         reader.readAsDataURL(file);
       }
     },

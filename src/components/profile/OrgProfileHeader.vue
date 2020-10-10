@@ -20,8 +20,8 @@
         />
       </div>
     </q-item>
-    <q-item>
-      <q-item-label caption v-if="$props.public">
+    <q-item v-if="$props.public">
+      <q-item-label caption>
         <FollowConnect :type="entity" :entity="org.id" />
       </q-item-label>
     </q-item>
@@ -56,19 +56,19 @@
     props: {
       org: {
         type: Object,
-        default: () => ({})
+        default: (): Record<string, unknown> => ({})
       },
       public: {
         type: Boolean,
-        default: () => false
+        default: (): boolean => false
       }
     },
     components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
     computed: {
-      avatar() {
+      avatar(): string {
         return avatarMediaObject(this.$props.org.avatar);
       },
-      entity: () => EntityTypes.ORG,
+      entity: (): EntityTypes => EntityTypes.ORG,
     },
     data() {
       return {

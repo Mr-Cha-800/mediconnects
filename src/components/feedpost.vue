@@ -33,7 +33,7 @@
         </p>
         <p>
           <q-icon color="grey" class="" name="mode_comment"/>
-          2 Shares </q-btn></p>
+          2 Shares </p>
         <p>
           <q-icon color="grey" class="" name="share"/>
           1.2k Views
@@ -87,7 +87,7 @@
 
       </q-item>
       <q-item>
-        <q-item-label style="text-body1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore non nemo amet
+        <q-item-label class="text-body1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore non nemo amet
           molestias? At magni, soluta placeat maiores totam, dignissimos
         </q-item-label>
       </q-item>

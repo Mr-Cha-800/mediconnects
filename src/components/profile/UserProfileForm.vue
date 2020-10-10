@@ -47,7 +47,7 @@
     props: {
       profile: {
         type: Object,
-        default: () => ({}),
+        default: (): Record<string, unknown> => ({}),
       }
     },
     data() {
@@ -65,15 +65,15 @@
     methods: {
       ...mapActions('userProfileModule', ['updateProfile']),
       validateRequired: validateRequired,
-      submitProfile() {
+      submitProfile(): void {
         if (this.vUpdateForm.validate()) {
           this.updateProfile({ profile: this.$props.profile, avatar: this.avatar });
         }
       },
-      selectedAvatar(file: File) {
+      selectedAvatar(file: File): void {
         const reader = new FileReader();
 
-        reader.onload = ({ target: { result }}: ProgressEvent) => this.avatarImg = result;
+        reader.onload = ({ target: { result }}: any) => this.avatarImg = result;
         reader.readAsDataURL(file);
       }
     },
