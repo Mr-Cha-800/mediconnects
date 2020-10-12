@@ -12,25 +12,14 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
-  import { OrgSearchScopeEnum } from 'src/services/organisations.service';
 
   export default Vue.extend({
     name: 'OrganizationsSearch',
     components: { State },
-    methods: {
-      ...mapActions('orgProfileModule', ['search'])
-    },
     computed: {
       ...mapGetters('orgProfileModule', ['getOrgs', 'status'])
     },
-    created() {
-      const { $route: { query: { q: keyword = '' } = {} } = {} } = this;
-      this.search({
-        keyword,
-        scope: OrgSearchScopeEnum.PUBLIC
-      });
-    }
   });
 </script>

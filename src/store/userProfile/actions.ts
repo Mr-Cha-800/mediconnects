@@ -44,7 +44,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
         Router.back();
       }).catch(error => commit('MyProfileUpdateFailed', error));
     }).catch(error => commit('MyProfileUpdateFailed', error));
-  }
+  },
 };
 
 export default actions;

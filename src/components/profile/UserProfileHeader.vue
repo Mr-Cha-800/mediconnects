@@ -49,7 +49,7 @@
 
     <q-item>
       <q-item-section>
-        <UserProfileSkillsTags/>
+        <UserProfileSections :user-sections="profile.sections"/>
       </q-item-section>
     </q-item>
   </div>
@@ -57,15 +57,15 @@
 <script lang="ts">
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
-  import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
   import { mapGetters } from 'vuex';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import UserProfileSections from 'components/profile/UserProfileSections.vue';
 
   export default Vue.extend({
     name: 'UserProfileHeader',
-    components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
+    components: { UserProfileSocialTags, UserProfileSections, FollowConnect },
     props: {
       profile: {
         type: Object,

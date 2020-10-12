@@ -12,25 +12,14 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
-  import { UsersSearchScopeEnum } from 'src/services/userProfile.service';
 
   export default Vue.extend({
     name: 'ProfilesSearch',
     components: { State },
-    methods: {
-      ...mapActions('userProfileModule', ['search'])
-    },
     computed: {
       ...mapGetters('userProfileModule', ['users', 'userStatus'])
-    },
-    created() {
-      const { $route: { query: { q: keyword = '' } = {} } = {} } = this;
-      this.search({
-        keyword,
-        scope: UsersSearchScopeEnum.PUBLIC
-      });
     }
   });
 </script>

@@ -33,7 +33,7 @@ const createObject = () =>
     .then(({ data: { id = '' } }) => id);
 
 const createChunks = (file: File): Blob[] => {
-  let size = 2048, chunks = Math.ceil(file.size / size);
+  let size = 2048 * 5, chunks = Math.ceil(file.size / size);
   const chunkedFile = [];
 
   for (let i = 0; i < chunks; i++) {

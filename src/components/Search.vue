@@ -35,6 +35,9 @@
 <script lang="ts">
   import Vue from 'vue';
   import { EntityTypes } from 'src/types';
+  import { mapActions } from 'vuex';
+  import { UsersSearchScopeEnum } from 'src/services/userProfile.service';
+  import { OrgSearchScopeEnum } from 'src/services/organisations.service';
 
   export default Vue.extend({
     name: 'Search',
@@ -49,14 +52,28 @@
       entityTypes: () => EntityTypes,
     },
     methods: {
+      searchProfile: mapActions('userProfileModule', ['search']).search,
+      searchOrg: mapActions('orgProfileModule', ['search']).search,
       submit(): any {
         if (this.keyword && this.type === EntityTypes.USER) {
+          this.searchProfile({
+            keyword: this.keyword,
+            scope: UsersSearchScopeEnum.PUBLIC
+          });
           return this.$router.push({ name: 'ProfilesSearch', query: { q: this.keyword } }).catch();
         }
         if (this.keyword && this.type === EntityTypes.ORG) {
+          this.searchOrg({
+            keyword: this.keyword,
+            scope: OrgSearchScopeEnum.PUBLIC
+          });
           return this.$router.push({ name: 'OrganizationsSearch', query: { q: this.keyword } }).catch();
         }
       }
+    },
+    mounted() {
+      const { $route: { query: { q: keyword = '' } = {} } = {} } = this;
+      this.keyword = `${keyword}`;
     }
   });
 </script>

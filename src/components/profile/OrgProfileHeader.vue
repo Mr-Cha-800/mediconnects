@@ -46,7 +46,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
-  import UserProfileSkillsTags from 'components/profile/UserProfileSkillsTags.vue';
+  import UserProfileSkillsTags from 'components/profile/UserProfileSections.vue';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
