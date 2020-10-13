@@ -2,9 +2,9 @@
   <State :status="status" :empty="!userConnectsRequests.length">
     <q-card flat>
       <q-separator/>
-      <q-list bordered >
-        <template v-for="connectRequest in this.userConnectsRequests"  >
-          <ConnectRequestTile :key="connectRequest.id" :connectRequest="connectRequest" />
+      <q-list bordered>
+        <template v-for="connectRequest in this.userConnectsRequests">
+          <ConnectRequestTile :key="connectRequest.id" :connectRequest="connectRequest"/>
           <q-separator/>
         </template>
       </q-list>
@@ -21,16 +21,16 @@
     name: 'usersConnectRequests',
     components: { ConnectRequestTile, State },
     data() {
-      return {}
+      return {};
     },
     created() {
       this.getConnectRequests();
     },
     computed: {
-      ...mapGetters('followConnectModule', ['userConnectsRequests', 'status']),
+      ...mapGetters('followConnectModule', ['userConnectsRequests', 'status'])
     },
     methods: {
-      ...mapActions('followConnectModule', ['getConnectRequests']),
+      ...mapActions('followConnectModule', ['getConnectRequests'])
     }
   });
 </script>

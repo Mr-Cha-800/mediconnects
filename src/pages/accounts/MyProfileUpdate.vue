@@ -1,13 +1,13 @@
 <template>
-  <q-card flat>
-    <div class="row">
-      <div class="col-xs-12 col-md-8 offset-md-2">
-        <State :status="status">
+  <State :status="status">
+    <q-card flat>
+      <div class="row">
+        <div class="col-xs-12 col-md-8 offset-md-2">
           <UserProfileForm :profile="this.userProfile"/>
-        </State>
+        </div>
       </div>
-    </div>
-  </q-card>
+    </q-card>
+  </State>
 
 </template>
 
@@ -23,21 +23,21 @@
     watch: {
       profile: {
         handler(newValue) {
-          this.userProfile = {...newValue};
+          this.userProfile = { ...newValue };
         }
       }
     },
-    data(){
+    data() {
       return {
-        userProfile: {},
-      }
+        userProfile: {}
+      };
     },
     created() {
       this.userProfile = { ...this.profile };
     },
     computed: {
-      ...mapGetters('userProfileModule', ['profile', 'status']),
-    },
+      ...mapGetters('userProfileModule', ['profile', 'status'])
+    }
   });
 </script>
 

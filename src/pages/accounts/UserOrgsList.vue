@@ -18,7 +18,8 @@
       <State :status="status" :empty="!getOrgs.length" >
         <q-list bordered>
           <template v-for="org in getOrgs">
-            <OrganizationTile :org="org" />
+            <OrganizationTile v-if="activeOrg === 'account'" :org="org" />
+            <PublicOrganizationTile v-else :org="org" />
             <q-separator/>
           </template>
         </q-list>

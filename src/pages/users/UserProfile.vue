@@ -1,20 +1,19 @@
 <template>
-  <div>
+  <State :status="status" :empty="!user">
     <q-card flat>
-      <State :status="status" :empty="!user">
         <template>
           <UserProfileHeader :profile="user" />
           <q-separator />
           <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
         </template>
-      </State>
+
     </q-card>
 
     <!--TODO: Add list of user posts-->
     <q-card flat class="q-mt-md flex" style="height: 400px">
       Posts Goes Here
     </q-card>
-  </div>
+  </State>
 </template>
 
 <script lang="ts">

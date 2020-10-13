@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :to="{ name: 'PublicOrganizationProfile', params: { orgId: $props.org.id } }">
+  <q-item clickable :to="{ name: 'organizationProfile', params: { orgId: $props.org.id } }">
     <q-item-section class="q-ml-none" avatar>
       <q-avatar size="6rem" square>
         <q-img
@@ -12,6 +12,9 @@
       </q-item-label>
       <q-item-label caption lines="1">
         <span class="text-body1 text-grey-6">{{$props.org.description}}</span>
+      </q-item-label>
+      <q-item-label caption lines="1">
+        <span class="text-body2 text-grey-6">{{$props.org.followers}} Followers, {{$props.org.tenants}} Tenants</span>
       </q-item-label>
     </q-item-section>
     <q-item-section side>

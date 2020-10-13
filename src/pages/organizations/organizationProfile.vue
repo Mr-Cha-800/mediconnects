@@ -1,16 +1,7 @@
 <template>
-  <div>
+  <State :status="status" :empty="!orgDetails">
     <q-card flat>
-      <template v-if="status.loading">
-        <Loader />
-      </template>
-      <template v-else-if="status.error">
-        <ErrorState>{{status.error}}</ErrorState>
-      </template>
-      <template v-else-if="!orgDetails">
-        <EmptyState />
-      </template>
-      <template v-else>
+      <template>
         <OrgProfileHeader :org="orgDetails" />
         <q-separator />
         <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
@@ -23,7 +14,7 @@
     <q-card flat class="q-mt-md flex" style="height: 400px">
       Posts Goes Here
     </q-card>
-  </div>
+  </State>
 </template>
 
 <script lang="ts">
@@ -34,10 +25,11 @@
   import Loader from 'components/common/Loader.vue';
   import ErrorState from 'components/common/ErrorState.vue';
   import EmptyState from 'components/common/EmptyState.vue';
+  import State from 'components/common/State.vue';
 
   export default Vue.extend({
     name: 'Profile',
-    components: { Loader, ErrorState, EmptyState, OrgProfileHeader, ProfilePosting },
+    components: { State, OrgProfileHeader, ProfilePosting },
     computed: {
       ...mapGetters('orgProfileModule', ['orgDetails', 'status']),
     },

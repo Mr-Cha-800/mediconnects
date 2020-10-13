@@ -10,10 +10,10 @@
               flat
               round
               icon="arrow_back"
+              class="xs-hide sm-hide q-mr-xs"
             />
             <q-btn
               round
-              v-if="$route.name === 'home' "
               flat
               @click="sideMenu = !sideMenu"
             >
@@ -22,10 +22,10 @@
               </q-avatar>
             </q-btn>
           </div>
-          <div class="q-ml-sm-xs q-ml-md row">
+          <div class="q-ml-xs-xs q-ml-md row">
             <Search/>
           </div>
-          <div class="q-ml-auto xxs-hide">
+          <div class="q-ml-auto xs-hide">
             <q-btn round dense flat color="white" size="14px" icon="notifications">
               <q-badge label="2" align="bottom" color="red" text-color="white" floating />
             </q-btn>

@@ -1,14 +1,14 @@
 <template>
-  <q-card flat>
-    <State :status="userStatus" :empty="!users.length">
+  <State :status="userStatus" :empty="!users.length">
+    <q-card flat>
       <q-list bordered>
         <template v-for="user in users">
           {{user}}
           <q-separator/>
         </template>
       </q-list>
-    </State>
-  </q-card>
+    </q-card>
+  </State>
 </template>
 <script lang="ts">
   import Vue from 'vue';

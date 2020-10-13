@@ -68,7 +68,7 @@
         this.inputDialog = false
         this.addTenant({
           groupId: this.$route.params.groupName,
-          name: this.groupName,
+          name: 'this.groupName',
           scope: 'account'
         }).then(response => {
           console.log(response.data)

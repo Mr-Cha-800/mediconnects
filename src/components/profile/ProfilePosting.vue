@@ -110,7 +110,7 @@
           quality: 90,
           allowEditing: true,
           resultType: CameraResultType.Uri,
-          source: CameraSource.Photos
+          source: CameraSource.Camera
         }).catch((e) => ({ webPath: '' }));
         this.sourceStream = image.webPath || '';
       },
