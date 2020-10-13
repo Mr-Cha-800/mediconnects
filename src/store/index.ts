@@ -5,6 +5,7 @@ import userProfileModule from 'src/store/userProfile';
 import orgProfileModule from 'src/store/orgProfile';
 import followConnectModule from 'src/store/followConnect';
 import postingModule from 'src/store/posting';
+import GroupsModule from 'src/store/groups'
 
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
@@ -26,7 +27,8 @@ export default store(function ({ Vue }) {
       userProfileModule,
       orgProfileModule,
       followConnectModule,
-      postingModule
+      postingModule,
+      GroupsModule
     },
 
     // enable strict mode (adds overhead!)
