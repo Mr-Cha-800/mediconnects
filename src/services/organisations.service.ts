@@ -2,6 +2,7 @@ import { API } from 'src/constants';
 import axios from 'axios';
 import { OrganizationInterface } from 'src/store/orgProfile/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
+import { UserProfileInterface } from 'src/store/userProfile/state';
 
 export enum OrgSearchScopeEnum {
   PUBLIC = 'public',
@@ -22,6 +23,10 @@ export const search = (params: OrgSearchQueryInterface) =>
 export const getById = (id: string) =>
   axios.get<OrganizationInterface>(`${API}/organizations/${id}`)
   .then(({ data }) => data);
+
+export const getMembers = (id: string) =>
+  axios.get<{ members: UserProfileInterface[] }>(`${API}/organizations/${id}/members`)
+  .then(({ data: { members } }) => members);
 
 export const getPublicById = (id: string) =>
   axios.get<OrganizationInterface>(`${API}/public/organizations/${id}?link=${id}`)

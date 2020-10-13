@@ -7,8 +7,8 @@
       <q-separator/>
       <State :status="status" :empty="!groups.length" >
         <q-list bordered>
-          <template v-for="org in groups">
-            <GroupTile :org="org" />
+          <template v-for="group in groups">
+            <GroupTile :group="group" />
             <q-separator/>
           </template>
         </q-list>

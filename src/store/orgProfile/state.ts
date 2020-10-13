@@ -13,6 +13,7 @@ export interface OrganizationInterface {
 export interface OrgProfileInterface {
   orgs: OrganizationInterface[],
   org: OrganizationInterface,
+  orgMembers: any[],
   status: {
     loading: boolean,
     error?: string
@@ -22,6 +23,7 @@ export interface OrgProfileInterface {
 const state: OrgProfileInterface = {
   orgs: [],
   org: {},
+  orgMembers: [],
   status: {
     loading: false,
   }

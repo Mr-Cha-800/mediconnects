@@ -4,6 +4,7 @@ import { OrgProfileInterface } from './state';
 
 const getters: GetterTree<OrgProfileInterface, StateInterface> = {
   getOrgs: ({ orgs }) => orgs || [],
+  orgMembers: ({ orgMembers }) => orgMembers || [],
   orgDetails: ({ org }) => org || {},
   status: ({ status }) => status || {},
 };

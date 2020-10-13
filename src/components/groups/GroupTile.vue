@@ -9,15 +9,18 @@
     </q-item-section>
     <q-item-section>
       <q-item-label lines="1">
-        <span class="text-h4 text-grey-6">{{$props.org.name}}</span>
+        <span class="text-h4 text-grey-6">{{$props.group.name}}</span>
+      </q-item-label>
+      <q-item-label lines="1">
+        <span class="text-body1 text-grey-6">{{$props.group.description}}</span>
       </q-item-label>
     </q-item-section>
     <q-item-section>
       <q-item-label caption lines="1">
-        <span class="text-body1 text-grey-6">{{$props.org.tenants}} Tenants</span>
+        <span class="text-body1 text-grey-6">{{$props.group.tenants}} Tenants</span>
       </q-item-label>
       <q-item-label caption lines="1">
-        <span class="text-body2 text-grey-6">Created By: {{$props.org.createdBy.firstName}} {{$props.org.createdBy.lastName}}</span>
+        <span class="text-body2 text-grey-6">Created By: {{$props.group.createdBy.firstName}} {{$props.group.createdBy.lastName}}</span>
       </q-item-label>
     </q-item-section>
     <q-item-section side>
@@ -25,13 +28,13 @@
         <q-btn size="md" flat dense round icon="more_vert" @click="(e) => {e.preventDefault();}">
           <q-menu>
             <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup :to="{name: 'groupEdit', params: { groupId: $props.org.id }}">
+              <q-item clickable v-close-popup :to="{name: 'groupEdit', params: { groupId: $props.group.id }}">
                 <q-item-section>Edit Group</q-item-section>
               </q-item>
               <q-item clickable v-close-popup @click="deletegroupp">
                 <q-item-section>Delete group</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup :to="{ name: 'groupTenants', params: { groupId: org.id, groupName: org.name } }">
+              <q-item clickable v-close-popup :to="{ name: 'groupTenants', params: { groupId: group.id, groupName: group.name } }">
                 <q-item-section>Group Tenants</q-item-section>
               </q-item>
             </q-list>
@@ -52,7 +55,7 @@
     name: 'OrganizationTile',
     components: {  },
     props: {
-      org: {
+      group: {
         type: Object,
         default: () => ({})
       }
@@ -63,7 +66,7 @@
     },
     computed: {
       avatar() {
-        return avatarMediaObject(this.$props.org.avatar);
+        return avatarMediaObject(this.$props.group.avatar);
       }
     },
     methods: {
