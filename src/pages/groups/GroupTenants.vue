@@ -45,7 +45,7 @@
   import State from 'components/common/State.vue';
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
   export default Vue.extend({
-    name: 'Organization',
+    name: 'groupTenants',
     components: { State, TenantsTile, PublicOrganizationTile },
     data() {
       return {
@@ -55,15 +55,15 @@
       };
     },
     created() {
-      this.getgroupp({
+      this.getGroup({
         scope: 'account'
       })
     },
     computed: {
-      ...mapGetters('GroupsModule', ['getGroups', 'status']),
+      ...mapGetters('GroupsModule', ['group', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addTenant', 'getgroupp']),
+      ...mapActions('GroupsModule', ['addTenant', 'getGroup']),
       addtenant(){
         this.inputDialog = false
         this.addTenant({

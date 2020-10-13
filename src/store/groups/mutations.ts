@@ -1,66 +1,45 @@
 import { MutationTree } from 'vuex';
-import { GroupsStateInterface } from './state';
+import { GroupsInterface, GroupsStateInterface } from './state';
 import Vue from 'vue';
 
 const mutation: MutationTree<GroupsStateInterface> = {
-  getGroupRequest(state) {
+  getGroupsRequest(state) {
     Vue.set(state, 'groups', []);
     Vue.set(state, 'status', { loading: true });
   },
-  getGroupSuccess(state, groupsList: GroupsStateInterface[]) {
+  getGroupsSuccess(state, groupsList: GroupsInterface[]) {
     Vue.set(state, 'groups', groupsList);
     Vue.set(state, 'status', { loading: false });
   },
-  getGroupFailed(state, error: string) {
+  getGroupsFailed(state, error: string) {
     Vue.set(state, 'groups', []);
-    console.log('error', error);
     Vue.set(state, 'status', { loading: false, error });
   },
 
-  groupAddRequest(state) {
+  groupEditRequest(state) {
     Vue.set(state, 'status', { updating: true });
   },
 
-  groupAddSuccess(state) {
+  groupAddSuccess(state, group: GroupsInterface) {
     Vue.set(state, 'status', { updating: false });
+    Vue.set(state, 'groups', [...state.groups, group]);
   },
 
-  groupAddFailed(state, error: string) {
-    Vue.set(state, 'status', { updating: false, error });
-  },
-
-
-
-
-
-
-
-
-
-
-  orgByIdRequest(state) {
-    Vue.set(state, 'groups', {});
-    Vue.set(state, 'status', { loading: true });
-  },
-  orgByIdSuccess(state, org: GroupsStateInterface) {
-    Vue.set(state, 'groups', org);
-    Vue.set(state, 'status', { loading: false });
-  },
-  orgByIdFailed(state, error: string) {
-    Vue.set(state, 'groups', {});
-    Vue.set(state, 'status', { loading: false, error });
-  },
-
-
-  orgProfileEditRequest(state) {
-    Vue.set(state, 'status', { updating: true });
-  },
-
-  orgProfileEditSuccess(state) {
+  groupUpdateSuccess(state, updatedGroup: GroupsInterface) {
     Vue.set(state, 'status', { updating: false });
+    const updatedGroups = state.groups.map(group => {
+      return (group.id === updatedGroup.id) ? {...updatedGroup} : group
+    });
+    Vue.set(state, 'groups', [...updatedGroups]);
   },
 
-  orgProfileEditFailed(state, error: string) {
+  groupDeleteSuccess(state, group: GroupsInterface) {
+    Vue.set(state, 'status', { updating: false });
+    const updatedGroups = state.groups.filter(({id}) => group.id !== id);
+    Vue.set(state, 'groups', [...state.groups, group]);
+  },
+
+  groupEditFailed(state, error: string) {
     Vue.set(state, 'status', { updating: false, error });
   },
 

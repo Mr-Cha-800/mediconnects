@@ -3,8 +3,8 @@ import { StateInterface } from '../index';
 import { GroupsStateInterface } from './state';
 
 const getters: GetterTree<GroupsStateInterface, StateInterface> = {
-  getGroups: ({ groups }) => groups || [],
-  getGroup: ({ group }) => group || {},
+  groups: ({ groups }) => groups || [],
+  group: ({ group }) => group || {},
   status: ({ status }) => status || {},
 };
 

@@ -1,54 +1,40 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import * as groups from './../../services/groups.service';
-import { OrgSearchQueryInterface } from 'src/services/organisations.service';
-import { GroupsInterface, GroupsStateInterface } from 'src/store/groups/state';
-import { Router } from 'src/router';
+import { GroupsStateInterface } from 'src/store/groups/state';
 const actions: ActionTree<GroupsStateInterface, StateInterface> = {
 
-  addGroup: ({ commit, dispatch }, payload) => {
-    commit('groupAddRequest');
+  addGroup: ({ commit }, payload) => {
+    commit('groupEditRequest');
     groups.create(payload).then(() => {
-      // to Avoid refresh when adding
-     /* groups.getGroups(payload).then(response => {
-        commit('getGroupSuccess', response);
-      }) */
-      // to refresh when adding
-      dispatch('getgroupp', {
-        scope:'account'
-      })
-    }).catch(error => {
-      commit('groupAddFailed', error);
-    })
-  },
-  getgroupp: ({ commit }, payload) => {
-    commit('getGroupRequest');
-    groups.getGroups(payload).then(response => {
-      commit('getGroupSuccess', response);
-    }).catch(error => {
-      commit('getGroupFailed', error);
-    })
-  },
-  updategroup: ({ commit }, payload) => {
-    commit('groupAddRequest');
-    groups.updatee(payload).then(() => {
       commit('groupAddSuccess');
     }).catch(error => {
-      console.log(error)
-      commit('groupAddFailed', error);
+      commit('groupEditFailed', error);
     })
   },
-  deletegroup: ({ commit, dispatch }, payload) => {
-    commit('groupAddRequest');
-    groups.deletee(payload).then(response => {
-      groups.getGroups({
-        scope: 'account'
-      }).then(response => {
-        commit('getGroupSuccess', response);
-      })
+  getGroups: ({ commit }, payload) => {
+    commit('getGroupsRequest');
+    groups.getGroups(payload).then(response => {
+      commit('getGroupsSuccess', response);
+    }).catch(error => {
+      commit('getGroupsFailed', error);
+    })
+  },
+  updateGroup: ({ commit }, payload) => {
+    commit('groupEditRequest');
+    groups.update(payload).then(() => {
+      commit('groupUpdateSuccess', payload);
+    }).catch(error => {
+      commit('groupEditFailed', error);
+    })
+  },
+  deleteGroup: ({ commit, dispatch }, payload) => {
+    commit('groupEditRequest');
+    groups.remove(payload).then(response => {
+      commit('groupDeleteSuccess', payload);
     }).catch(error => {
       console.log(error)
-      commit('groupAddFailed', error);
+      commit('groupEditFailed', error);
     })
   },
   // tenants not yet ready

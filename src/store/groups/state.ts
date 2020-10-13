@@ -1,4 +1,3 @@
-import { EntityTypes } from 'src/types';
 
 export interface GroupsInterface {
   id?: string;

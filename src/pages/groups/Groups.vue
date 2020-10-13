@@ -6,9 +6,9 @@
       </div>
       <q-separator/>
 
-      <State :status="status" :empty="!getGroups.length" >
+      <State :status="status" :empty="!groups.length" >
         <q-list bordered>
-          <template v-for="org in getGroups">
+          <template v-for="org in groups">
             <GroupTile :org="org" />
             <q-separator/>
           </template>
@@ -43,7 +43,7 @@
   import State from 'components/common/State.vue';
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
   export default Vue.extend({
-    name: 'Organization',
+    name: 'Groups',
     components: { State, GroupTile, PublicOrganizationTile },
     data() {
       return {
@@ -52,15 +52,15 @@
       };
     },
     created() {
-      this.getgroupp({
+      this.getGroups({
         scope: 'account'
       })
     },
     computed: {
-      ...mapGetters('GroupsModule', ['getGroups', 'status']),
+      ...mapGetters('GroupsModule', ['groups', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addGroup', 'getgroupp']),
+      ...mapActions('GroupsModule', ['addGroup', 'getGroups']),
       creategroup(){
         this.inputDialog= false
         this.addGroup({

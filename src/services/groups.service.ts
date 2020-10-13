@@ -1,37 +1,32 @@
 import { API } from 'src/constants';
 import axios from 'axios';
 import { GroupsStateInterface, GroupsInterface } from 'src/store/groups/state';
-import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 
-export enum OrgSearchScopeEnum {
-  PUBLIC = 'public',
+export enum GroupsSearchScopeEnum {
   PART_OF = 'partof',
   ACCOUNT = 'account',
-  FOLLOWING = 'following',
 }
 
-export interface OrgSearchQueryInterface {
-  scope?: OrgSearchScopeEnum;
+export interface GroupsSearchQueryInterface {
+  scope?: GroupsSearchScopeEnum;
+  keyword?: string;
 }
 export interface UpdateQueryInterface {
   id?: string;
   name?: string;
 }
-export const create = async ( name:string ) => {
-  await axios.post<GroupsStateInterface>(`${API}/groups`, name)
+export const create = ( name:string ) =>
+  axios.post<GroupsStateInterface>(`${API}/groups`, name)
   .then(({ data }) => data);
-};
 
- export const getGroups = async (params: OrgSearchQueryInterface) =>
-  await  axios.get<{ groups: GroupsInterface[] }>(`${API}/groups`, { params })
+ export const getGroups = (params: GroupsSearchQueryInterface) =>
+  axios.get<{ groups: GroupsInterface[] }>(`${API}/groups`, { params })
     .then(({ data: { groups = [] } }) => groups);
 
-export const updatee = async ( payload: UpdateQueryInterface ) => {
-  axios.put<GroupsStateInterface>(`${API}/groups/${payload.id}`, payload.name)
+export const update = ({ id, name }: UpdateQueryInterface ) =>
+  axios.put<GroupsStateInterface>(`${API}/groups/${id}`, name)
   .then(({ data }) => data);
-};
 
-export const deletee = async (payload: UpdateQueryInterface) => {
-  await   axios.delete(`${API}/groups/${payload.id}`)
+export const remove = ({ id }: UpdateQueryInterface) =>
+  axios.delete(`${API}/groups/${id}`)
   .then(({ data }) => data);
-};
