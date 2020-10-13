@@ -43,6 +43,19 @@ const mutation: MutationTree<GroupsStateInterface> = {
     Vue.set(state, 'status', { updating: false, error });
   },
 
+
+  orgByIdRequest(state) {
+    Vue.set(state, 'group', {});
+    Vue.set(state, 'status', { loading: true });
+  },
+  orgByIdSuccess(state, group: GroupsInterface) {
+    Vue.set(state, 'group', group);
+    Vue.set(state, 'status', { loading: false });
+  },
+  orgByIdFailed(state, error: string) {
+    Vue.set(state, 'group', {});
+    Vue.set(state, 'status', { loading: false, error });
+  },
 };
 
 export default mutation;

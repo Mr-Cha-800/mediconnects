@@ -2,6 +2,8 @@
 export interface GroupsInterface {
   id?: string;
   name?: string;
+  description?: string;
+  avatar?: MediaObject;
   tenants?: number
 }
 

@@ -22,11 +22,21 @@
     </q-item-section>
     <q-item-section side>
       <div class="text-grey-8 q-gutter-xs">
-        <q-btn round flat color="primary" @click="$router.push({ name: 'groupTenants', params: { groupId: org.id, groupName: org.name } })" icon="groups">
-            <q-tooltip>Tenants</q-tooltip>
+        <q-btn size="md" flat dense round icon="more_vert" @click="(e) => {e.preventDefault();}">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup :to="{name: 'groupEdit', params: { groupId: $props.org.id }}">
+                <q-item-section>Edit Group</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="deletegroupp">
+                <q-item-section>Delete group</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup :to="{ name: 'groupTenants', params: { groupId: org.id, groupName: org.name } }">
+                <q-item-section>Group Tenants</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </q-btn>
-        <UpdateGroup  :id="$props.org.id" :name="$props.org.name"/>
-        <DeleteGroup  :id="$props.org.id"/>
       </div>
     </q-item-section>
   </q-item>
@@ -38,11 +48,9 @@
 <script>
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import { mapActions } from 'vuex';
-  import DeleteGroup from 'components/groups/DeleteGroup.vue';
-  import UpdateGroup from 'components/groups/UpdateGroup.vue';
   export default {
     name: 'OrganizationTile',
-    components: { DeleteGroup, UpdateGroup },
+    components: {  },
     props: {
       org: {
         type: Object,
@@ -56,6 +64,14 @@
     computed: {
       avatar() {
         return avatarMediaObject(this.$props.org.avatar);
+      }
+    },
+    methods: {
+      ...mapActions('GroupsModule', ['deleteGroup']),
+      deletegroupp(){
+        this.deleteGroup({
+          id: this.org.id
+        })
       }
     }
   };

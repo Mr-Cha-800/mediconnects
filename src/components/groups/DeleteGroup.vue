@@ -33,9 +33,9 @@ export default Vue.extend({
       }
     },
     methods: {
-      ...mapActions('GroupsModule', ['deletegroup']),
+      ...mapActions('GroupsModule', ['deleteGroup']),
       deletegroupp(){
-        this.deletegroup({
+        this.deleteGroup({
           id: this.id
         })
       }

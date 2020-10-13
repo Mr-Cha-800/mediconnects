@@ -6,9 +6,9 @@
         <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" @click="inputDialog = true"/>
       </div>
       <q-separator/>
-      <State :status="status" :empty="!getGroups.length" >
+      <State :status="status" :empty="!group.length" >
         <q-list bordered>
-          <template v-for="org in getGroups">
+          <template v-for="org in group">
             <TenantsTile :org="org" />
             <q-separator/>
           </template>
@@ -55,7 +55,7 @@
       };
     },
     created() {
-      this.getGroup({
+      this.getGroups({
         scope: 'account'
       })
     },
@@ -63,7 +63,7 @@
       ...mapGetters('GroupsModule', ['group', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addTenant', 'getGroup']),
+      ...mapActions('GroupsModule', ['addTenant', 'getGroups']),
       addtenant(){
         this.inputDialog = false
         this.addTenant({
