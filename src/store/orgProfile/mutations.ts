@@ -1,6 +1,7 @@
 import { MutationTree } from 'vuex';
 import { OrgProfileInterface } from './state';
 import Vue from 'vue';
+import { UserProfileInterface } from 'src/store/userProfile/state';
 
 const mutation: MutationTree<OrgProfileInterface> = {
   orgSearchRequest(state) {
@@ -27,6 +28,19 @@ const mutation: MutationTree<OrgProfileInterface> = {
   },
   orgByIdFailed(state, error: string) {
     Vue.set(state, 'org', {});
+    Vue.set(state, 'status', { loading: false, error });
+  },
+
+  orgMembersRequest(state) {
+    Vue.set(state, 'orgMembers', []);
+    Vue.set(state, 'status', { loading: true });
+  },
+  orgMembersSuccess(state, orgMembers: UserProfileInterface[]) {
+    Vue.set(state, 'orgMembers', orgMembers);
+    Vue.set(state, 'status', { loading: false });
+  },
+  orgMembersFailed(state, error: string) {
+    Vue.set(state, 'orgMembers', {});
     Vue.set(state, 'status', { loading: false, error });
   },
 

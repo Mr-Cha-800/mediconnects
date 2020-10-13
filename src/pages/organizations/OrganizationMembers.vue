@@ -25,7 +25,7 @@
       </template>
 
       <template v-if="isMembersType(membersTypes.joined)">
-        <State :status="status" :empty="!connectRequests.length">
+        <State :status="joinedStatus" :empty="!joinedStatus.length">
           <q-list bordered>
             <template v-for="joinedMember in joinedMembers">
               {{joinedMember.id}}
@@ -61,18 +61,22 @@
       const { $route: { params: { orgId = '' } = {} } = {} } = this;
       this.orgId = orgId;
       this.getConnectRequests();
+      this.getOrgMembers(orgId);
     },
     computed: {
       ...mapGetters('followConnectModule', ['orgConnectsRequests', 'status']),
+      ...mapGetters('orgProfileModule', ['orgMembers']),
+      joinedStatus: mapGetters('orgProfileModule', ['status']).status,
       connectRequests(): ConnectRequestInterface[] {
         return this.orgConnectsRequests(this.orgId);
       },
       joinedMembers(): ConnectRequestInterface[] {
-        return [];
+        return this.orgMembers;
       }
     },
     methods: {
       ...mapActions('followConnectModule', ['getConnectRequests']),
+      ...mapActions('orgProfileModule', ['getOrgMembers']),
       isMembersType(key: string) {
         return key === this.activeType;
       },

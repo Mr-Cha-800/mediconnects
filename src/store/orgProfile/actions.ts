@@ -22,6 +22,15 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
     })
   },
 
+  getOrgMembers: ({ commit }, id: string) => {
+    commit('orgMembersRequest');
+    organizations.getMembers(id).then(org => {
+      commit('orgMembersSuccess', org);
+    }).catch(error => {
+      commit('orgMembersFailed', error);
+    })
+  },
+
   getPublicOrg: ({ commit }, id: string) => {
     commit('orgByIdRequest');
     organizations.getPublicById(id).then(org => {
