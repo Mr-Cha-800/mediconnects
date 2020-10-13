@@ -1,6 +1,6 @@
 import { API } from 'src/constants';
 import axios from 'axios';
-import { GroupsStateInterface, GroupsInterface } from 'src/store/groups/state';
+import { GroupsStateInterface, GroupsInterface, TenantsInterface } from 'src/store/groups/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 
 export enum GroupsSearchScopeEnum {
@@ -30,6 +30,11 @@ axios.post<GroupsStateInterface>(`${API}/groups`, profile)
  export const getGroups = (params: GroupsSearchQueryInterface) =>
   axios.get<{ groups: GroupsInterface[] }>(`${API}/groups`, { params })
     .then(({ data: { groups = [] } }) => groups);
+
+
+ export const getTenants = (id: string) =>
+  axios.get<{ tenants: TenantsInterface[] }>(`${API}/groups/${id}/tenants`)
+    .then(({ data: { tenants = [] } }) => tenants);
 
 
 export const getById = (id: string) =>

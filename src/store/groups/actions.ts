@@ -60,6 +60,14 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
       commit('groupAddFailed', error);
     })
   },
+  getTenants: ({ commit }, payload) => {
+    commit('getGroupsRequest');
+    groups.getTenants(payload).then(response => {
+      commit('getGroupsSuccess', response);
+    }).catch(error => {
+      commit('getGroupsFailed', error);
+    })
+  },
 };
 
 export default actions;

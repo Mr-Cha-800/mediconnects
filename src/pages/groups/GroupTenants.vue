@@ -2,13 +2,32 @@
   <div>
     <q-card flat>
       <div class="flex q-pa-md">
-      <div class="text-h6">Tanants of the group "{{this.$route.params.groupName}}" </div>
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" @click="inputDialog = true"/>
+        <div class="q-gutter-md row">
+          <q-select
+            v-model="model"
+            use-input
+            hide-selected
+            fill-input
+            hint="Search users"
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+        <q-btn  rounded class="q-ml-auto" color="primary" icon="done" @click="inputDialog = true"/>
       </div>
       <q-separator/>
-      <State :status="status" :empty="!group.length" >
+      <State :status="status" :empty="!tenants.length" >
         <q-list bordered>
-          <template v-for="org in group">
+          <template v-for="org in tenants">
             <TenantsTile :org="org" />
             <q-separator/>
           </template>
@@ -39,6 +58,9 @@
   </div>
 </template>
 <script lang="ts">
+const stringOptions = [
+  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+]
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
   import TenantsTile from 'components/groups/TenantsTile.vue';
@@ -51,19 +73,19 @@
       return {
       inputDialog: false,
       tenantName: null,
-      type: null
+      type: null,
+      model: null,
+      options: stringOptions
       };
     },
     created() {
-      this.getGroups({
-        scope: 'account'
-      })
+      this.getTenants(this.$route.params.groupId)
     },
     computed: {
-      ...mapGetters('GroupsModule', ['group', 'status']),
+      ...mapGetters('GroupsModule', ['tenants', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addTenant', 'getGroups']),
+      ...mapActions('GroupsModule', ['addTenant', 'getTenants']),
       addtenant(){
         this.inputDialog = false
         this.addTenant({
@@ -75,7 +97,20 @@
         }).catch(error => {
           console.log(error)
         })
+      },
+
+    filterFn (val, update) {
+      if (val === '') {
+        update(() => {
+          this.options = stringOptions
+        })
+        return
       }
+      update(() => {
+        const needle = val.toLowerCase()
+        this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
+      })
+    }
     }
 
   });

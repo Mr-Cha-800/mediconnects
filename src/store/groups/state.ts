@@ -7,8 +7,13 @@ export interface GroupsInterface {
   tenants?: number
 }
 
+export interface TenantsInterface {
+  id?: string;
+  name?: string;
+}
 export interface GroupsStateInterface {
   groups: GroupsInterface[],
+  tenants: TenantsInterface[],
   group: GroupsInterface,
   status: {
     loading: boolean,
@@ -18,10 +23,12 @@ export interface GroupsStateInterface {
 
 const state: GroupsStateInterface = {
   groups: [],
+  tenants: [],
   group: {},
   status: {
     loading: false,
   }
 };
+
 
 export default state;
