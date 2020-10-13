@@ -1,5 +1,5 @@
 <template>
-  <q-input dark dense standout v-model="keyword" @keydown.enter.prevent="submit">
+  <q-input dense outlined square standout v-model="keyword" placeholder="Search" class="bg-white col" @keydown.enter.prevent="submit">
     <template v-slot:prepend>
       <q-icon v-if="keyword === ''" name="search"/>
       <q-icon v-else name="clear" class="cursor-pointer" @click="keyword = ''"/>
@@ -55,19 +55,21 @@
       searchProfile: mapActions('userProfileModule', ['search']).search,
       searchOrg: mapActions('orgProfileModule', ['search']).search,
       submit(): any {
-        if (this.keyword && this.type === EntityTypes.USER) {
+        const keyword = this.keyword;
+        this.keyword = '';
+        if (keyword && this.type === EntityTypes.USER) {
           this.searchProfile({
-            keyword: this.keyword,
+            keyword,
             scope: UsersSearchScopeEnum.PUBLIC
           });
-          return this.$router.push({ name: 'ProfilesSearch', query: { q: this.keyword } }).catch();
+          return this.$router.push({ name: 'ProfilesSearch', query: { q: keyword } }).catch();
         }
-        if (this.keyword && this.type === EntityTypes.ORG) {
+        if (keyword && this.type === EntityTypes.ORG) {
           this.searchOrg({
-            keyword: this.keyword,
+            keyword,
             scope: OrgSearchScopeEnum.PUBLIC
           });
-          return this.$router.push({ name: 'OrganizationsSearch', query: { q: this.keyword } }).catch();
+          return this.$router.push({ name: 'OrganizationsSearch', query: { q: keyword } }).catch();
         }
       }
     },

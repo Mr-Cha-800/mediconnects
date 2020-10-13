@@ -3,7 +3,7 @@
     <q-card flat>
       <q-list bordered>
         <template v-for="user in users">
-          {{user}}
+          <PublicUsersTile :user="user" />
           <q-separator/>
         </template>
       </q-list>
@@ -14,10 +14,11 @@
   import Vue from 'vue';
   import { mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
+  import PublicUsersTile from 'components/public/PublicUsersTile.vue';
 
   export default Vue.extend({
     name: 'ProfilesSearch',
-    components: { State },
+    components: { State, PublicUsersTile },
     computed: {
       ...mapGetters('userProfileModule', ['users', 'userStatus'])
     }

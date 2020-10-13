@@ -38,7 +38,7 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
     commit('orgProfileAddRequest');
     organizations.add(payload).then(() => {
       commit('orgProfileAddSuccess');
-      Router.back();
+      return Router.push({name: 'profileOrganizations'});
     }).catch(error => {
       commit('orgProfileAddFailed', error);
     })
@@ -48,7 +48,7 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
     commit('orgProfileEditRequest');
     organizations.edit(payload).then(() => {
       commit('orgProfileEditSuccess');
-      Router.back();
+      return Router.push({name: 'profileOrganizations'});
     }).catch(error => {
       commit('orgProfileEditFailed', error);
     })

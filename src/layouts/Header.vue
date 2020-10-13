@@ -1,98 +1,108 @@
 <template>
-  <q-header elevated>
-    <q-toolbar class="row">
-      <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-        <div class="flex items-center">
-          <div>
-            <q-btn
-              v-if="$route.name !== 'home' "
-              @click="$router.back()"
-              flat
-              round
-              icon="arrow_back"
-              class="xs-hide sm-hide q-mr-xs"
-            />
-            <q-btn
-              round
-              flat
-              @click="sideMenu = !sideMenu"
-            >
-              <q-avatar size="40px">
-                <img :src="getAvatar">
-              </q-avatar>
-            </q-btn>
-          </div>
-          <div class="q-ml-xs-xs q-ml-md row">
-            <Search/>
-          </div>
-          <div class="q-ml-auto xs-hide">
-            <q-btn round dense flat color="white" size="14px" icon="notifications">
-              <q-badge label="2" align="bottom" color="red" text-color="white" floating />
-            </q-btn>
-          </div>
+  <div>
+    <q-header elevated class="q-py-xs" height-hint="58">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          @click="sideMenu = !sideMenu"
+          aria-label="Menu"
+          icon="menu"
+        />
+
+        <q-btn flat no-caps no-wrap class="q-ml-xs" v-if="$q.screen.gt.xs">
+          <q-toolbar-title shrink class="text-weight-bold">
+            MediConnects
+          </q-toolbar-title>
+        </q-btn>
+
+        <q-space/>
+
+        <div class="YL__toolbar-input-container row no-wrap">
+          <Search/>
         </div>
-      </div>
 
-      <q-drawer v-model="sideMenu" side="left" behavior="mobile">
-        <q-scroll-area style="height: calc(100% - 12rem); margin-top: 12rem;">
-          <q-list padding class="text-grey-8">
-            <q-item
-              v-for="menuItem in menuItems"
-              :active="$route.name === menuItem.pathName"
-              clickable
-              v-ripple
-              exact
-              :to="{ name: menuItem.pathName }"
-            >
-              <q-item-section avatar>
-                <q-icon :name="menuItem.icon"/>
-              </q-item-section>
+        <q-space/>
 
-              <q-item-section>
-                {{menuItem.label}}
-              </q-item-section>
-              <q-item-section side v-if="menuItem.badge">
-                <q-badge :label="menuItem.badge" color="red" text-color="white" />
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-scroll-area>
-
-        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 12rem">
-          <div class="absolute-bottom bg-transparent">
-            <q-avatar size="5rem" class="q-mb-sm">
+        <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn round dense flat icon="message">
+            <q-tooltip>Messages</q-tooltip>
+          </q-btn>
+          <q-btn round dense flat icon="notifications">
+            <q-badge color="red" text-color="white" floating>
+              2
+            </q-badge>
+            <q-tooltip>Notifications</q-tooltip>
+          </q-btn>
+          <q-btn round flat exact :to="{name: 'MyProfile'}" v-if="$q.screen.gt.sm">
+            <q-avatar size="26px">
               <img :src="getAvatar">
             </q-avatar>
-            <div class="text-weight-bold">{{profile.firstName}} {{profile.lastName}}</div>
-            <router-link exact :to="{name: 'MyProfile'}" class="text-white">View Profile</router-link>
-            <router-link exact :to="{name: 'MyProfileUpdate'}" class="text-white q-ml-md">Edit</router-link>
-          </div>
-        </q-img>
+            <q-tooltip>Account</q-tooltip>
+          </q-btn>
+        </div>
+      </q-toolbar>
+    </q-header>
 
-        <q-item
-          clickable
-          v-ripple
-          class="absolute-bottom text-grey-8"
-          @click="logout()"
-        >
-          <q-item-section avatar>
-            <q-icon name="power_settings_new"/>
-          </q-item-section>
+    <q-drawer v-model="sideMenu" side="left" behavior="mobile">
+      <q-scroll-area style="height: calc(100% - 12rem); margin-top: 12rem;">
+        <q-list padding class="text-grey-8">
+          <q-item
+            v-for="menuItem in menuItems"
+            :active="$route.name === menuItem.pathName"
+            clickable
+            v-ripple
+            exact
+            :to="{ name: menuItem.pathName }"
+          >
+            <q-item-section avatar>
+              <q-icon :name="menuItem.icon"/>
+            </q-item-section>
 
-          <q-item-section>
-            Logout
-          </q-item-section>
-        </q-item>
-      </q-drawer>
+            <q-item-section>
+              {{menuItem.label}}
+            </q-item-section>
+            <q-item-section side v-if="menuItem.badge">
+              <q-badge :label="menuItem.badge" color="red" text-color="white"/>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
 
-    </q-toolbar>
-<!--    <q-bar class="bg-red-7">
+      <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 12rem">
+        <div class="absolute-bottom bg-transparent">
+          <q-avatar size="5rem" class="q-mb-sm">
+            <img :src="getAvatar">
+          </q-avatar>
+          <div class="text-weight-bold">{{profile.firstName}} {{profile.lastName}}</div>
+          <router-link exact :to="{name: 'MyProfile'}" class="text-white">View Profile</router-link>
+          <router-link exact :to="{name: 'MyProfileUpdate'}" class="text-white q-ml-md">Edit</router-link>
+        </div>
+      </q-img>
+
+      <q-item
+        clickable
+        v-ripple
+        class="absolute-bottom text-grey-8"
+        @click="logout()"
+      >
+        <q-item-section avatar>
+          <q-icon name="power_settings_new"/>
+        </q-item-section>
+
+        <q-item-section>
+          Logout
+        </q-item-section>
+      </q-item>
+    </q-drawer>
+    <!--<q-bar class="bg-red-7">
       <div class="col text-center text-white">
         <q-icon name="warning" class="text-white"/>
         NEWS ALERT
       </div>
     </q-bar>-->
-  </q-header>
+  </div>
 </template>
 
 <script lang="ts">
@@ -105,6 +115,7 @@
     components: { Search },
     data() {
       return {
+        search: '',
         sideMenu: false,
         menuItems: {
           home: {
@@ -131,7 +142,7 @@
             label: 'Messages',
             icon: 'message',
             pathName: 'messages',
-            badge: '99+',
+            badge: '99+'
           }
         }
       };
@@ -149,6 +160,26 @@
   });
 </script>
 
-<style lang="scss" scoped>
+<style lang="sass">
+  .YL
+    &__toolbar-input-container
+      min-width: 100px
+      width: 55%
 
+    &__toolbar-input-btn
+      border-radius: 0
+      border-style: solid
+      border-width: 1px 1px 1px 0
+      border-color: rgba(0, 0, 0, .24)
+      max-width: 60px
+      width: 100%
+
+    &__drawer-footer-link
+      color: inherit
+      text-decoration: none
+      font-weight: 500
+      font-size: .75rem
+
+      &:hover
+        color: #000
 </style>

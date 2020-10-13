@@ -41,7 +41,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
       // refresh the token, After Updating profile
       AccountService.refreshToken().then(user => {
         commit('MyProfileUpdateSuccess', userDetails);
-        Router.back();
+        return Router.push({name: 'MyProfile'});
       }).catch(error => commit('MyProfileUpdateFailed', error));
     }).catch(error => commit('MyProfileUpdateFailed', error));
   },

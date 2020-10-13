@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <Footer v-if="!$route.meta.noFooter"/>
     <Header/>
     <div class="row">

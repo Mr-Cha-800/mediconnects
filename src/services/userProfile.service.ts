@@ -16,8 +16,8 @@ export const get = () =>
     .then(({ data }) => data);
 
 export const search = (params: UsersSearchQueryInterface) =>
-    axios.get<{ profiles: UserProfileInterface[] }>(`${API}/users`, { params })
-      .then(({ data: { profiles = [] } }) => profiles);
+    axios.get<{ users: UserProfileInterface[] }>(`${API}/users`, { params })
+      .then(({ data: { users = [] } }) => users);
 
 export const user = (id: string) =>
     axios.get<UserProfileInterface>(`${API}/users/${id}/profile`)

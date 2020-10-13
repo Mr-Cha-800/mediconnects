@@ -29,6 +29,11 @@
     components: { UserProfileHeader, ProfilePosting, State },
     computed: {
       ...mapGetters('userProfileModule', ['profile', 'status'])
+    },
+    mounted() {
+      if (this.profile && !this.profile.firstName) {
+        return this.$router.push({name: 'MyProfileUpdate'});
+      }
     }
   });
 </script>
