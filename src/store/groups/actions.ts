@@ -2,12 +2,15 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import * as groups from './../../services/groups.service';
 import { GroupsStateInterface } from 'src/store/groups/state';
+import { Router } from 'src/router';
 const actions: ActionTree<GroupsStateInterface, StateInterface> = {
 
-  addGroup: ({ commit }, payload) => {
+  addGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
     groups.create(payload).then(() => {
       commit('groupAddSuccess');
+      dispatch('getGroups')
+      Router.back();
     }).catch(error => {
       commit('groupEditFailed', error);
     })
@@ -20,10 +23,20 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
       commit('getGroupsFailed', error);
     })
   },
-  updateGroup: ({ commit }, payload) => {
+  getGroup: ({ commit }, id: string) => {
+    commit('orgByIdRequest');
+    groups.getById(id).then(response => {
+      commit('orgByIdSuccess', response);
+    }).catch(error => {
+      commit('orgByIdFailed', error);
+    })
+  },
+  updateGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
     groups.update(payload).then(() => {
       commit('groupUpdateSuccess', payload);
+      dispatch('getGroups')
+      Router.back();
     }).catch(error => {
       commit('groupEditFailed', error);
     })
@@ -32,6 +45,7 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
     commit('groupEditRequest');
     groups.remove(payload).then(response => {
       commit('groupDeleteSuccess', payload);
+      dispatch('getGroups')
     }).catch(error => {
       console.log(error)
       commit('groupEditFailed', error);

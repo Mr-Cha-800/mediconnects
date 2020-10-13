@@ -2,10 +2,9 @@
   <div>
     <q-card flat>
       <div class="flex q-pa-md">
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" @click="inputDialog = true"/>
+        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'groupAdd' }"/>
       </div>
       <q-separator/>
-
       <State :status="status" :empty="!groups.length" >
         <q-list bordered>
           <template v-for="org in groups">
@@ -17,22 +16,6 @@
     </q-card>
     <q-bar class="bg-grey-4" style="height:50px">
     </q-bar>
-    <q-dialog v-model="inputDialog" persistent>
-      <q-card style="min-width: 350px">
-        <q-card-section>
-          <div class="text-h6">Create a group</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <q-input dense v-model="groupName" autofocus @keyup.enter="creategroup" />
-        </q-card-section>
-
-        <q-card-actions align="right" class="text-primary">
-          <q-btn no-caps flat label="Cancel" v-close-popup />
-          <q-btn no-caps flat @click="creategroup" label="Create" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -47,8 +30,6 @@
     components: { State, GroupTile, PublicOrganizationTile },
     data() {
       return {
-      inputDialog: false,
-      groupName: ''
       };
     },
     created() {
@@ -60,18 +41,7 @@
       ...mapGetters('GroupsModule', ['groups', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addGroup', 'getGroups']),
-      creategroup(){
-        this.inputDialog= false
-        this.addGroup({
-          name: this.groupName,
-          scope: 'account'
-        }).then(response => {
-          this.groupName = ''
-        }).catch(error => {
-          console.log(error)
-        })
-      }
+      ...mapActions('GroupsModule', ['addGroup', 'getGroups'])
     }
 
   });
