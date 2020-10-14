@@ -73,7 +73,7 @@
       ...mapActions('GroupsModule', ['deleteGroup']),
       deletegroupp(){
         this.deleteGroup({
-          id: this.org.id
+          id: this.group.id
         })
       }
     }
