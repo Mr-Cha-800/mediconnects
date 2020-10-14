@@ -3,17 +3,18 @@ import { StateInterface } from '../index';
 import * as groups from './../../services/groups.service';
 import { GroupsStateInterface } from 'src/store/groups/state';
 import { Router } from 'src/router';
+
 const actions: ActionTree<GroupsStateInterface, StateInterface> = {
 
   addGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
     groups.create(payload).then(() => {
       commit('groupAddSuccess');
-      dispatch('getGroups')
+      dispatch('getGroups');
       Router.back();
     }).catch(error => {
       commit('groupEditFailed', error);
-    })
+    });
   },
   getGroups: ({ commit }, payload) => {
     commit('getGroupsRequest');
@@ -21,7 +22,7 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
       commit('getGroupsSuccess', response);
     }).catch(error => {
       commit('getGroupsFailed', error);
-    })
+    });
   },
   getGroup: ({ commit }, id: string) => {
     commit('orgByIdRequest');
@@ -29,46 +30,45 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
       commit('orgByIdSuccess', response);
     }).catch(error => {
       commit('orgByIdFailed', error);
-    })
+    });
   },
   updateGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
     groups.update(payload).then(() => {
       commit('groupUpdateSuccess', payload);
-      dispatch('getGroups')
+      dispatch('getGroups');
       Router.back();
     }).catch(error => {
       commit('groupEditFailed', error);
-    })
+    });
   },
   deleteGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
     groups.remove(payload).then(response => {
       commit('groupDeleteSuccess', payload);
-      dispatch('getGroups')
+      dispatch('getGroups');
     }).catch(error => {
-      console.log(error)
+      console.log(error);
       commit('groupEditFailed', error);
-    })
+    });
   },
   // tenants add not yet ready, causing 500 error
-  addTenant: ({ commit, dispatch }, payload) => {
+  addTenant: ({ commit, dispatch }, { groupId, payload }) => {
     // commit('groupAddRequest');
-    groups.addTenanttoGroup(payload.groupId, payload.payload).then(response=> {
-console.log(response)
+    groups.addTenanttoGroup(groupId, payload).then(response => {
     }).catch(error => {
-     // commit('groupAddFailed', error);
-    })
+      // commit('groupAddFailed', error);
+    });
   },
   deleteTenant: ({ commit, dispatch }, payload) => {
     // commit('groupEditRequest');
     groups.removeTenant(payload.idGroup, payload.idTenant).then(response => {
-     // commit('groupDeleteSuccess', payload);
-      dispatch('getGroups')
+      // commit('groupDeleteSuccess', payload);
+      dispatch('getGroups');
     }).catch(error => {
-      console.log(error)
-    //  commit('groupEditFailed', error);
-    })
+      console.log(error);
+      //  commit('groupEditFailed', error);
+    });
   },
   // this works
   getTenants: ({ commit }, payload) => {
@@ -77,8 +77,8 @@ console.log(response)
       commit('getGroupsSuccess', response);
     }).catch(error => {
       commit('getGroupsFailed', error);
-    })
-  },
+    });
+  }
 };
 
 export default actions;

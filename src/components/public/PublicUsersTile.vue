@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :to="{ name: 'UserProfile', params: { orgId: $props.user.id } }">
+  <q-item clickable :to="{ name: 'UserProfile', params: { userId: $props.user.id } }">
     <q-item-section class="q-ml-none" avatar>
       <q-avatar size="6rem" square>
         <q-img
@@ -14,11 +14,9 @@
         <span class="text-body1 text-grey-6">{{$props.user.description}}</span>
       </q-item-label>
       <q-item-label caption lines="1">
-        <span class="text-body2 text-grey-6">{{$props.user.followers}} Followers, {{$props.user.posts}} Posts</span>
+        <span class="text-body2 text-grey-6" v-if="$props.user.followers">{{$props.user.followers}} Followers,</span>
+        <span class="text-body2 text-grey-6" v-if="$props.user.posts">{{$props.user.posts}} Posts</span>
       </q-item-label>
-    </q-item-section>
-    <q-item-section side>
-      <q-checkbox size="md" v-model="isSelected" color="primary" @click.stop="isSelected = !isSelected"/>
     </q-item-section>
     <q-item-section side>
     </q-item-section>

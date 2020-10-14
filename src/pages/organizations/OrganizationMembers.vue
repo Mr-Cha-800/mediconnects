@@ -25,10 +25,10 @@
       </template>
 
       <template v-if="isMembersType(membersTypes.joined)">
-        <State :status="joinedStatus" :empty="!joinedStatus.length">
+        <State :status="joinedStatus" :empty="!joinedMembers.length">
           <q-list bordered>
             <template v-for="joinedMember in joinedMembers">
-              {{joinedMember.id}}
+              <PublicUsersTile :user="joinedMember" />
               <q-separator/>
             </template>
           </q-list>
@@ -43,10 +43,11 @@
   import State from 'components/common/State.vue';
   import { ConnectRequestInterface } from 'src/store/followConnect/state';
   import ConnectRequestTile from 'components/profile/ConnectRequestTile.vue';
+  import PublicUsersTile from 'components/public/PublicUsersTile.vue';
 
   export default Vue.extend({
     name: 'OrganizationMembers',
-    components: { State, ConnectRequestTile },
+    components: { State, ConnectRequestTile, PublicUsersTile },
     data() {
       return {
         orgId: '',
@@ -61,7 +62,6 @@
       const { $route: { params: { orgId = '' } = {} } = {} } = this;
       this.orgId = orgId;
       this.getConnectRequests();
-      this.getOrgMembers(orgId);
     },
     computed: {
       ...mapGetters('followConnectModule', ['orgConnectsRequests', 'status']),
@@ -82,6 +82,11 @@
       },
       setMembersType(orgKey: string) {
         this.activeType = orgKey;
+        if (this.isMembersType(this.membersTypes.joined)) {
+          this.getOrgMembers(this.orgId);
+        } else if (this.isMembersType(this.membersTypes.pending)) {
+          this.getConnectRequests();
+        }
       }
     }
   });

@@ -1,134 +1,96 @@
 <template>
-  <div class="flex q-pa-md">
-        <div class="q-gutter-md row">
-        <q-btn flat>
-        <q-icon name="groups" v-if="type === 'user'" color="primary"></q-icon>
-        <q-icon name="apartment" v-else color="primary"></q-icon>
-        <q-menu>
-            <q-list>
-            <q-item clickable v-close-popup @click="type ='user'">
-                <q-item-section avatar>
-                <q-avatar icon="groups" text-color="primary"/>
-                </q-item-section>
-                <q-item-section>
-                <q-item-label>Profiles</q-item-label>
-                </q-item-section>
-            </q-item>
+  <div>
+    <q-select
+      v-model="selectedUser"
+      use-input
+      clearable
+      hide-selected
+      fill-input
+      input-debounce="300"
+      :options="options"
+      :option-label="user => user ? `${user.firstName} ${user.lastName}` : ''"
+      @filter="filterFn"
+      :loading="loading"
+      input-class="q-px-md"
+    >
+      <template v-slot:append>
+        <q-btn flat icon="check" size="md" @click="addUserTenant" :disable="!selectedUser" />
+      </template>
+      <template v-slot:no-option>
+        <q-item>
+          <q-item-section class="text-italic text-grey">
+            No Data
+          </q-item-section>
+        </q-item>
+      </template>
+      <template v-slot:option="scope">
+        <q-item
+          v-bind="scope.itemProps"
+          v-on="scope.itemEvents"
+        >
+          <q-item-section>
+            <q-item-label>{{scope.opt.firstName}} {{scope.opt.lastName}}</q-item-label>
+            <q-item-label caption>{{ scope.opt.title }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+  </div>
 
-            <q-item clickable v-close-popup @click="type = 'organization'">
-                <q-item-section avatar>
-                <q-avatar icon="apartment" text-color="primary"/>
-                </q-item-section>
-                <q-item-section>
-                <q-item-label>Organizations</q-item-label>
-                </q-item-section>
-            </q-item>
-            </q-list>
-        </q-menu>
-        </q-btn>
-          <q-select
-            v-if="type === 'organization'"
-            v-model="tenantID"
-            :options="option"
-            option-value="id"
-            option-label="name"
-            hint="Search organization"
-            emit-value
-            map-options
-            @filter="filterFn"
-            use-input
-            input-debounce="0"
-            style="min-width: 250px; max-width: 300px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">
-                  No results
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-          <q-select
-            v-if="type === 'user'"
-            v-model="tenantID"
-            :options="option"
-            option-value="id"
-            option-label="name"
-            hint="Search user"
-            emit-value
-            map-options
-            @filter="filterFn"
-            use-input
-            input-debounce="0"
-            style="min-width: 250px; max-width: 300px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">
-                  No results
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-        <q-btn  rounded class="q-ml-auto" color="primary" icon="done" @click="addtenant"/>
-      </div>
 </template>
 
 <script lang="ts">
-const stringOptions = [
-  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-]
-import Vue from 'vue';
-import { mapActions, mapGetters } from 'vuex';
-export default Vue.extend({
+  import * as userProfile from 'src/services/userProfile.service';
+  import { UsersSearchScopeEnum } from 'src/services/userProfile.service';
+  import Vue from 'vue';
+  import { mapActions, mapGetters } from 'vuex';
+  import { UserProfileInterface } from 'src/store/userProfile/state';
+  import { EntityTypes } from 'src/types';
+
+  export default Vue.extend({
     name: 'AddTenant',
     data() {
+      const options: UserProfileInterface[] = [];
+      const selectedUser: UserProfileInterface | null = null;
+      const loading: boolean = false;
       return {
-      type: 'user',
-      tenantID: null,
-      options: stringOptions
+        selectedUser,
+        options,
+        loading
       };
     },
-    created() {
-      this.getGroups({
-        scope: 'account'
-      })
-    },
     computed: {
-      option(){
-          return this.groups()
-      }
+      ...mapGetters('userProfileModule', ['userStatus'])
     },
     methods: {
-      ...mapGetters('GroupsModule', ['groups', 'status']),
-      ...mapActions('GroupsModule', ['addTenant', 'getTenants', 'getGroups']),
-      addtenant(){
-        this.addTenant({
-          groupId: this.$route.params.groupId,
-          payload: {
-              tenant: this.tenantID,
-              type: this.type
-          }
-        }).then(response => {
-          console.log(response.data)
-        }).catch(error => {
-          console.log(error)
-        })
+      ...mapActions('GroupsModule', ['addTenant']),
+      addUserTenant() {
+        if (this.selectedUser) {
+          const { $route: { params: {groupId} } } = this;
+          const { id: tenant } = this.selectedUser || { id: ''};
+          this.addTenant({
+            groupId,
+            payload: {
+              tenant,
+              type: EntityTypes.USER
+            }
+          });
+        }
       },
-
-    filterFn (val, update) {
-      if (val === '') {
-        update(() => {
-          this.options = stringOptions
-        })
-        return
-      }
-      update(() => {
-        const needle = val.toLowerCase()
-        this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
-      })
-    }
+      filterFn(value: string, update: any) {
+        const keyword = value.toLocaleLowerCase();
+        // Bypassing vuex here, to get users inside the update callback
+        this.loading = true;
+        userProfile.search({
+          keyword,
+          scope: UsersSearchScopeEnum.PUBLIC
+        }).then(users => {
+          update(() => {
+            this.options = users;
+            this.loading = false;
+          });
+        });
+      },
     }
   });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <State :status="status" :empty="!user">
+  <State :status="userStatus" :empty="!user">
     <q-card flat>
         <template>
           <UserProfileHeader :profile="user" />
@@ -26,7 +26,7 @@
     name: 'UserProfile',
     components: { State, UserProfileHeader },
     computed: {
-      ...mapGetters('userProfileModule', ['user', 'status']),
+      ...mapGetters('userProfileModule', ['user', 'userStatus']),
     },
     methods: {
       ...mapActions('userProfileModule', ['getUser']),
