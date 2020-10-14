@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { GroupsInterface, GroupsStateInterface } from './state';
+import { GroupsInterface, GroupsStateInterface, TenantsInterface } from './state';
 import Vue from 'vue';
 
 const mutation: MutationTree<GroupsStateInterface> = {
@@ -15,7 +15,18 @@ const mutation: MutationTree<GroupsStateInterface> = {
     Vue.set(state, 'groups', []);
     Vue.set(state, 'status', { loading: false, error });
   },
-
+  getTenantsRequest(state) {
+    Vue.set(state, 'tenants', []);
+    Vue.set(state, 'status', { loading: true });
+  },
+  getTenantsSuccess(state, tenantsList: TenantsInterface[]) {
+    Vue.set(state, 'tenants', tenantsList);
+    Vue.set(state, 'status', { loading: false });
+  },
+  getTenantsFailed(state, error: string) {
+    Vue.set(state, 'tenants', []);
+    Vue.set(state, 'status', { loading: false, error });
+  },
   groupEditRequest(state) {
     Vue.set(state, 'status', { updating: true });
   },

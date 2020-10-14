@@ -4,6 +4,7 @@ import { GroupsStateInterface } from './state';
 
 const getters: GetterTree<GroupsStateInterface, StateInterface> = {
   groups: ({ groups }) => groups || [],
+  tenants: ({ tenants }) => tenants || [],
   group: ({ group }) => group || {},
   status: ({ status }) => status || {},
 };

@@ -1,6 +1,6 @@
 import { API } from 'src/constants';
 import axios from 'axios';
-import { GroupsStateInterface, GroupsInterface } from 'src/store/groups/state';
+import { GroupsStateInterface, GroupsInterface, TenantsInterface } from 'src/store/groups/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 
 export enum GroupsSearchScopeEnum {
@@ -16,6 +16,10 @@ export interface UpdateQueryInterface {
   id?: string;
   name?: string;
 }
+export interface AddTenantInterface {
+  tenant?: string;
+  type?: string;
+}
 export const create = async ({ profile, avatar }: { profile: GroupsInterface, avatar: File }) => {
   let avatarMediaObject;
   if (avatar) {
@@ -24,12 +28,21 @@ export const create = async ({ profile, avatar }: { profile: GroupsInterface, av
   }
 axios.post<GroupsStateInterface>(`${API}/groups`, profile)
   .then(({ data }) => data);
+}
 
+export const addTenanttoGroup = async (id: String, payload : AddTenantInterface) => {
+axios.post<GroupsStateInterface>(`${API}/groups/${id}/tenants`, payload)
+  .then(({ data }) => data);
 }
 
  export const getGroups = (params: GroupsSearchQueryInterface) =>
   axios.get<{ groups: GroupsInterface[] }>(`${API}/groups`, { params })
     .then(({ data: { groups = [] } }) => groups);
+
+
+ export const getTenants = (id: string) =>
+  axios.get<{ tenants: TenantsInterface[] }>(`${API}/groups/${id}/tenants`)
+    .then(({ data: { tenants = [] } }) => tenants);
 
 
 export const getById = (id: string) =>
@@ -45,6 +58,10 @@ export const update = async ({ profile: {id, ...updatedProfile}, avatar }: { pro
   axios.put<GroupsStateInterface>(`${API}/groups/${id}`, updatedProfile)
   .then(({ data }) => data);
 }
+
+export const removeTenant = (idGroup: string, idTenant: string) =>
+  axios.delete(`${API}/groups/${idGroup}/tenants/${idTenant}`)
+  .then(({ data }) => data);
 
 export const remove = ({ id }: UpdateQueryInterface) =>
   axios.delete(`${API}/groups/${id}`)
