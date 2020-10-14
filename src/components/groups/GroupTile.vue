@@ -31,11 +31,12 @@
               <q-item clickable v-close-popup :to="{name: 'groupEdit', params: { groupId: $props.group.id }}">
                 <q-item-section>Edit Group</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="deletegroupp">
-                <q-item-section>Delete group</q-item-section>
-              </q-item>
               <q-item clickable v-close-popup :to="{ name: 'groupTenants', params: { groupId: group.id, groupName: group.name } }">
                 <q-item-section>Group Tenants</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup @click="deletegroupp">
+                <q-item-section class="text-negative">Delete group</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
