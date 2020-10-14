@@ -9,7 +9,7 @@
     </q-item-section>
     <q-item-section>
       <q-item-label lines="1">
-        <span class="text-h6 text-grey-6">{{$props.org.name}}</span>
+        <span class="text-h6 text-grey-6">{{$props.org.firstName}}  {{$props.org.lastName}}</span>
       </q-item-label>
       <q-item-label caption lines="1">
         <span class="text-body1 text-grey-6">{{$props.org.description}}</span>

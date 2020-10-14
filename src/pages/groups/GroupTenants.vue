@@ -15,6 +15,7 @@
         />
       </div>
       <AddTenant v-if="tenantsType === 'users'" />
+      <AddOrgTenant v-if="tenantsType === 'organization'" />
       <q-separator/>
       <State :status="status" :empty="!tenants.length">
         <q-list bordered>
@@ -34,9 +35,10 @@
   import State from 'components/common/State.vue';
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
   import AddTenant from 'components/groups/AddTenant.vue';
+  import AddOrgTenant from 'components/groups/AddOrgTenant.vue';
   export default Vue.extend({
     name: 'groupTenants',
-    components: { State, TenantsTile, PublicOrganizationTile, AddTenant },
+    components: { State, TenantsTile, PublicOrganizationTile, AddTenant,AddOrgTenant },
     data() {
       return {
         inputDialog: false,

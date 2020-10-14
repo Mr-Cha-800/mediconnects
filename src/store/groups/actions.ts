@@ -72,11 +72,11 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
   },
   // this works
   getTenants: ({ commit }, payload) => {
-    commit('getGroupsRequest');
+    commit('getTenantsRequest');
     groups.getTenants(payload).then(response => {
-      commit('getGroupsSuccess', response);
+      commit('getTenantsSuccess', response);
     }).catch(error => {
-      commit('getGroupsFailed', error);
+      commit('getTenantsFailed', error);
     });
   }
 };

@@ -9,7 +9,8 @@ export interface GroupsInterface {
 
 export interface TenantsInterface {
   id?: string;
-  name?: string;
+  /* firstName?: string;
+  lastName?: string; */
 }
 export interface GroupsStateInterface {
   groups: GroupsInterface[],
