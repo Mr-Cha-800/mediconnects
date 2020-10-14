@@ -32,3 +32,13 @@ export const update = async ({ profile, avatar }: { profile: UserProfileInterfac
   return axios.put<UserProfileInterface>(`${API}/account`, profile)
     .then(({ data }) => data);
 };
+
+export const getSections = async () => {
+  return axios.get<any>(`${API}/account/profile/sections`)
+    .then(({ data }) => data);
+};
+
+export const addSection = async ({ post, weight }: { post?: string, weight?: number }) => {
+  return axios.post<any>(`${API}/account/profile/sections`, { post, weight })
+    .then(({ data }) => data);
+};

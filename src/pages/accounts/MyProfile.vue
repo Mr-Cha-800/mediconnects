@@ -9,10 +9,7 @@
         <ProfilePosting/>
       </q-card>
 
-      <!--TODO: Add list of user posts-->
-      <q-card flat class="q-mt-md flex" style="height: 400px">
-        Posts Goes Here
-      </q-card>
+      <ProfileSections />
     </State>
   </div>
 </template>
@@ -23,16 +20,17 @@
   import ProfilePosting from 'components/profile/ProfilePosting.vue';
   import { mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
+  import ProfileSections from 'components/posts/ProfileSections.vue';
 
   export default Vue.extend({
     name: 'MyProfile',
-    components: { UserProfileHeader, ProfilePosting, State },
+    components: { UserProfileHeader, ProfilePosting, State, ProfileSections },
     computed: {
       ...mapGetters('userProfileModule', ['profile', 'status'])
     },
     mounted() {
-      if (this.profile && !this.profile.firstName) {
-        return this.$router.push({name: 'MyProfileUpdate'});
+      if (this.profile && this.profile.email && !this.profile.firstName) {
+        return this.$router.push({ name: 'MyProfileUpdate' });
       }
     }
   });

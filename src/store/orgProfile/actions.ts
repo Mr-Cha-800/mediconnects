@@ -16,6 +16,12 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
   getOrg: ({ commit }, id: string) => {
     commit('orgByIdRequest');
     organizations.getById(id).then(org => {
+      if (org && org.followed) {
+        commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
+      }
+      if (org && org.connected) {
+        commit('followConnectModule/ConnectSuccess', { entity: id }, {root: true});
+      }
       commit('orgByIdSuccess', org);
     }).catch(error => {
       commit('orgByIdFailed', error);

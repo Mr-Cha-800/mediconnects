@@ -8,6 +8,7 @@ export interface OrganizationInterface {
   followers?: number,
   tenants?: number,
   followed?: boolean,
+  connected?: boolean,
 }
 
 export interface OrgProfileInterface {

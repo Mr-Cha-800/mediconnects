@@ -10,3 +10,7 @@ const fileExt = {
 export const avatarMediaObject = (
   { resource }: MediaObject = {}
   ) => resource ? `${MEDIA_API}/${resource}.840${fileExt.image}` : DEFAULT_IMAGE;
+
+export const postImageMediaObject = (
+  { resource }: MediaObject = {}
+  ) => resource ? `${MEDIA_API}/${resource}.840${fileExt.image}` : DEFAULT_IMAGE;

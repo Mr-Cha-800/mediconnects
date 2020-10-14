@@ -9,10 +9,17 @@
 
     </q-card>
 
-    <!--TODO: Add list of user posts-->
-    <q-card flat class="q-mt-md flex" style="height: 400px">
-      Posts Goes Here
-    </q-card>
+    <div v-for="{ section } in user.sections">
+      <q-card flat square class="q-mt-md">
+        <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
+        <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
+        <div class="absolute-right">
+          <q-btn flat round color="primary" icon="keyboard_arrow_up"/>
+          <q-btn flat round color="primary" icon="edit"/>
+          <q-btn flat round color="primary" icon="keyboard_arrow_down"/>
+        </div>
+      </q-card>
+    </div>
   </State>
 </template>
 
@@ -21,12 +28,16 @@
   import { mapActions, mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
   import UserProfileHeader from 'components/profile/UserProfileHeader.vue';
+  import { PostingTypesEnum } from 'src/store/posting/state';
+  import ImageCard from 'components/posts/ImageCard.vue';
+  import TextCard from 'components/posts/TextCard.vue';
 
   export default Vue.extend({
     name: 'UserProfile',
-    components: { State, UserProfileHeader },
+    components: { State, UserProfileHeader, TextCard, ImageCard },
     computed: {
       ...mapGetters('userProfileModule', ['user', 'userStatus']),
+      postingTypes: () => PostingTypesEnum
     },
     methods: {
       ...mapActions('userProfileModule', ['getUser']),

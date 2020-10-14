@@ -1,0 +1,10 @@
+{
+  "appId": "com.mediconnects.app",
+  "appName": "MediConnects",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.1.96:8080"
+  }
+}

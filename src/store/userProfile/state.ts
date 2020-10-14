@@ -9,6 +9,7 @@ export interface UserProfileInterface {
   description?: string;
   avatar?: MediaObject;
   sections?: any[],
+  sectionsGroups?: any[],
   connections? : number;
   followers? : number;
   following? : number;
@@ -18,6 +19,7 @@ export interface UserProfileInterface {
   organizationsPartOf? : number;
   posts? : number;
   followed? : boolean;
+  connected? : boolean;
 }
 
 export interface UserProfileStateInterface {

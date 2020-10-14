@@ -23,6 +23,9 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
       if (userDetails && userDetails.followed) {
         commit('followConnectModule/FollowSuccess', { entity: id }, {root: true});
       }
+      if (userDetails && userDetails.connected) {
+        commit('followConnectModule/ConnectSuccess', { entity: id }, {root: true});
+      }
     }).catch(error => {
       commit('UserProfileFailed', error);
     })

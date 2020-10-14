@@ -4,39 +4,48 @@ import Vue from 'vue';
 
 const mutation: MutationTree<FollowConnectStateInterface> = {
   FollowRequest(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { following: true } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: true } });
   },
 
   FollowSuccess(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { followed: true } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: false, followed: true } });
   },
 
   FollowFailed(state, { entity, error }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { error } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: false, error } });
   },
 
   unFollowRequest(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { following: true } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: true } });
   },
 
   unFollowSuccess(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { followed: false } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: false, followed: false } });
   },
 
   unFollowFailed(state, { entity, error }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { error } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, following: false, error } });
   },
 
   ConnectRequest(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { connecting: true } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, connecting: true } });
   },
 
   ConnectSuccess(state, { entity }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { connecting: false, connected: true } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, connecting: false, connected: true } });
   },
 
   ConnectFailed(state, { entity, error }) {
-    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { error } });
+    const entityStatus = state.followConnectStatus[entity];
+    Vue.set(state, 'followConnectStatus', {...state.followConnectStatus, [entity]: { ...entityStatus, connecting: false, error } });
   },
 
   ConnectRequestsRequest(state) {
