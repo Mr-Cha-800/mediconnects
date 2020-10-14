@@ -59,6 +59,10 @@ export const update = async ({ profile: {id, ...updatedProfile}, avatar }: { pro
   .then(({ data }) => data);
 }
 
+export const removeTenant = (idGroup: string, idTenant: string) =>
+  axios.delete(`${API}/groups/${idGroup}/tenants/${idTenant}`)
+  .then(({ data }) => data);
+
 export const remove = ({ id }: UpdateQueryInterface) =>
   axios.delete(`${API}/groups/${id}`)
   .then(({ data }) => data);

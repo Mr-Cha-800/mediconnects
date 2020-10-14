@@ -60,6 +60,16 @@ console.log(response)
      // commit('groupAddFailed', error);
     })
   },
+  deleteTenant: ({ commit, dispatch }, payload) => {
+    // commit('groupEditRequest');
+    groups.removeTenant(payload.idGroup, payload.idTenant).then(response => {
+     // commit('groupDeleteSuccess', payload);
+      dispatch('getGroups')
+    }).catch(error => {
+      console.log(error)
+    //  commit('groupEditFailed', error);
+    })
+  },
   // this works
   getTenants: ({ commit }, payload) => {
     commit('getGroupsRequest');
