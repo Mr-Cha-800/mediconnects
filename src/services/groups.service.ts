@@ -2,6 +2,7 @@ import { API } from 'src/constants';
 import axios from 'axios';
 import { GroupsStateInterface, GroupsInterface, TenantsInterface } from 'src/store/groups/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
+import { EntityTypes } from 'src/types';
 
 export enum GroupsSearchScopeEnum {
   PART_OF = 'partof',
@@ -18,7 +19,7 @@ export interface UpdateQueryInterface {
 }
 export interface AddTenantInterface {
   tenant?: string;
-  type?: string;
+  type?: EntityTypes;
 }
 export const create = async ({ profile, avatar }: { profile: GroupsInterface, avatar: File }) => {
   let avatarMediaObject;

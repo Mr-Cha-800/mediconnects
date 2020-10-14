@@ -1,12 +1,25 @@
 <template>
   <div>
     <q-card flat>
-      <AddTenant/>
+      <div class="q-gutter-y-md">
+        <q-btn-toggle
+          v-model="tenantsType"
+          spread
+          no-caps
+          flat
+          toggle-color="primary"
+          :options="[
+          {label: 'Users', value: 'users'},
+          {label: 'Organization', value: 'organization'}
+        ]"
+        />
+      </div>
+      <AddTenant v-if="tenantsType === 'users'" />
       <q-separator/>
-      <State :status="status" :empty="!tenants.length" >
+      <State :status="status" :empty="!tenants.length">
         <q-list bordered>
           <template v-for="org in tenants">
-            <TenantsTile :org="org" />
+            <TenantsTile :org="org"/>
             <q-separator/>
           </template>
         </q-list>
@@ -26,18 +39,19 @@
     components: { State, TenantsTile, PublicOrganizationTile, AddTenant },
     data() {
       return {
-      inputDialog: false,
-      tenantName: null,
+        inputDialog: false,
+        tenantName: null,
+        tenantsType: 'users'
       };
     },
     created() {
-      this.getTenants(this.$route.params.groupId)
+      this.getTenants(this.$route.params.groupId);
     },
     computed: {
-      ...mapGetters('GroupsModule', ['tenants', 'status']),
+      ...mapGetters('GroupsModule', ['tenants', 'status'])
     },
     methods: {
-      ...mapActions('GroupsModule', ['getTenants']),
+      ...mapActions('GroupsModule', ['getTenants'])
     }
 
   });
