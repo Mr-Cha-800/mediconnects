@@ -51,15 +51,16 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
       commit('groupEditFailed', error);
     })
   },
-  // tenants not yet ready
+  // tenants add not yet ready, causing 500 error
   addTenant: ({ commit, dispatch }, payload) => {
-    commit('groupAddRequest');
-    groups.create(payload).then(() => {
-      commit('groupAddSuccess');
+    // commit('groupAddRequest');
+    groups.addTenanttoGroup(payload.groupId, payload.payload).then(response=> {
+console.log(response)
     }).catch(error => {
-      commit('groupAddFailed', error);
+     // commit('groupAddFailed', error);
     })
   },
+  // this works
   getTenants: ({ commit }, payload) => {
     commit('getGroupsRequest');
     groups.getTenants(payload).then(response => {

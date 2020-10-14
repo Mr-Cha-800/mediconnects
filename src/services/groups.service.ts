@@ -16,6 +16,10 @@ export interface UpdateQueryInterface {
   id?: string;
   name?: string;
 }
+export interface AddTenantInterface {
+  tenant?: string;
+  type?: string;
+}
 export const create = async ({ profile, avatar }: { profile: GroupsInterface, avatar: File }) => {
   let avatarMediaObject;
   if (avatar) {
@@ -24,7 +28,11 @@ export const create = async ({ profile, avatar }: { profile: GroupsInterface, av
   }
 axios.post<GroupsStateInterface>(`${API}/groups`, profile)
   .then(({ data }) => data);
+}
 
+export const addTenanttoGroup = async (id: String, payload : AddTenantInterface) => {
+axios.post<GroupsStateInterface>(`${API}/groups/${id}/tenants`, payload)
+  .then(({ data }) => data);
 }
 
  export const getGroups = (params: GroupsSearchQueryInterface) =>
