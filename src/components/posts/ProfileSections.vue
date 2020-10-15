@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="{ section } in profile.sections">
+    <div v-for="{ section } in profile.sections" :key="section.id">
       <q-card flat square class="q-mt-md">
         <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
