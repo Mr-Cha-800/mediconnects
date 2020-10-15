@@ -52,7 +52,7 @@
     data() {
       const options: GroupsInterface[] = [];
       const selectedGroup: GroupsInterface | null = null;
-      const loading: boolean = false;
+      const loading = false;
       return {
         selectedGroup,
         options,

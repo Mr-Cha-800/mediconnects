@@ -52,7 +52,7 @@
     data() {
       const options: UserProfileInterface[] = [];
       const selectedUser: UserProfileInterface | null = null;
-      const loading: boolean = false;
+      const loading = false;
       return {
         selectedUser,
         options,

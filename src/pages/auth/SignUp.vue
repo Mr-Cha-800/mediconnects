@@ -54,8 +54,8 @@
     name: 'PageSignUp',
     data() {
       const userLogin: Login = {
-        email: '',
-        password: ''
+        email: 'admin0@admin.com',
+        password: 'ReallySecure2020!'
       };
       return { userLogin };
     },

@@ -9,7 +9,7 @@
 
     </q-card>
 
-    <div v-for="{ section } in user.sections">
+    <div v-for="{ section } in user.sections" :key="section.id">
       <q-card flat square class="q-mt-md">
         <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>

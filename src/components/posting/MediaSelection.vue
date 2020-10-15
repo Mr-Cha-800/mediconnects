@@ -34,7 +34,7 @@
     name: 'MediaSelection',
     components: { MediaSelectionDesktop, MediaSelectionMobile },
     data() {
-      const sourceStream: File | CameraPhoto | {} = {};
+      const sourceStream: File | CameraPhoto | unknown = {};
       let type: PostingTypesEnum = PostingTypesEnum.TEXT;
       return {
         sourceStream,
