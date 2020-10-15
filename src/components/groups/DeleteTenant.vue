@@ -1,6 +1,6 @@
 <template>
     <q-btn round flat color="red-5" @click="confirm = true" icon="delete">
-        <q-tooltip>Delete tenant</q-tooltip>
+        <q-tooltip>Delete tenant </q-tooltip>
     <q-dialog v-model="confirm" persistent>
       <q-card>
         <q-card-section class="row items-center">
@@ -28,15 +28,19 @@ export default Vue.extend({
         }
     },
     props: {
-      id: {
+      idTenant: {
+        type: String
+      },
+      idGroup: {
         type: String
       }
     },
     methods: {
-      ...mapActions('GroupsModule', ['deletegroup']),
+      ...mapActions('GroupsModule', ['deleteTenant']),
       deletegroupp(){
-        this.deletegroup({
-          id: this.id
+        this.deleteTenant({
+          idGroup: this.idGroup,
+          idTenant: this.idTenant
         })
       }
     }

@@ -1,20 +1,20 @@
 <template>
   <div>
     <q-select
-      v-model="selectedGroup"
+      v-model="selectedOrg"
       use-input
       clearable
       hide-selected
       fill-input
       input-debounce="300"
       :options="options"
-      :option-label="group => group ? `${group.name}` : ''"
+      :option-label="org => org ? `${org.name}` : ''"
       @filter="filterFn"
       :loading="loading"
       input-class="q-px-md"
     >
       <template v-slot:append>
-        <q-btn flat icon="check" size="md" @click="addUserTenant" :disable="!selectedGroup" />
+        <q-btn flat icon="check" size="md" @click="addUserTenant" :disable="!selectedOrg" />
       </template>
       <template v-slot:no-option>
         <q-item>
@@ -30,7 +30,6 @@
         >
           <q-item-section>
             <q-item-label>{{scope.opt.name}}</q-item-label>
-            <q-item-label  class="ellipsis" caption>Created By : {{ scope.opt.createdBy.firstName }} {{ scope.opt.createdBy.lastName }}</q-item-label>
           </q-item-section>
         </q-item>
       </template>
@@ -40,21 +39,21 @@
 </template>
 
 <script lang="ts">
-  import * as groups from 'src/services/groups.service';
-  import { GroupsSearchScopeEnum } from 'src/services/groups.service';
+  import * as organizations from 'src/services/organisations.service';
+  import { OrgSearchScopeEnum } from 'src/services/organisations.service';
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
-  import { GroupsInterface } from 'src/store/groups/state';
+  import { OrganizationInterface } from 'src/store/orgProfile/state';
   import { EntityTypes } from 'src/types';
 
   export default Vue.extend({
     name: 'AddOrgTenant',
     data() {
-      const options: GroupsInterface[] = [];
-      const selectedGroup: GroupsInterface | null = null;
+      const options: OrganizationInterface[] = [];
+      const selectedOrg: OrganizationInterface | null = null;
       const loading: boolean = false;
       return {
-        selectedGroup,
+        selectedOrg,
         options,
         loading
       };
@@ -65,9 +64,9 @@
     methods: {
       ...mapActions('GroupsModule', ['addTenant']),
       addUserTenant() {
-        if (this.selectedGroup) {
+        if (this.selectedOrg) {
           const { $route: { params: {groupId} } } = this;
-          const { id: tenant } = this.selectedGroup || { id: ''};
+          const { id: tenant } = this.selectedOrg || { id: ''};
           this.addTenant({
             groupId,
             payload: {
@@ -81,12 +80,12 @@
         const keyword = value.toLocaleLowerCase();
         // Bypassing vuex here, to get users inside the update callback
         this.loading = true;
-        groups.getGroups({
-          scope: GroupsSearchScopeEnum.ACCOUNT,
-          keyword
-        }).then(groups => {
+        organizations.search({
+          keyword,
+          scope: OrgSearchScopeEnum.ACCOUNT
+        }).then(organizations => {
           update(() => {
-            this.options = groups;
+            this.options = organizations;
             this.loading = false;
           });
         });
