@@ -53,27 +53,24 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
     });
   },
   // tenants add not yet ready, causing 500 error
-  addTenant: ({ commit, dispatch }, { groupId, payload }) => {
-    // commit('groupAddRequest');
-    groups.addTenanttoGroup(groupId, payload).then(response => {
-    }).catch(error => {
-      // commit('groupAddFailed', error);
-    });
-  },
-  deleteTenant: ({ commit, dispatch }, payload) => {
-    // commit('groupEditRequest');
-    groups.removeTenant(payload.idGroup, payload.idTenant).then(response => {
-      // commit('groupDeleteSuccess', payload);
-      dispatch('getGroups');
+  addTenant: async ({ commit, dispatch }, { groupId, payload }) => {
+    await groups.addTenanttoGroup(groupId, payload).then(response => {
+      dispatch('getTenants', groupId)
     }).catch(error => {
       console.log(error);
-      //  commit('groupEditFailed', error);
+    });
+  },
+  deleteTenant: async ({ commit, dispatch }, payload) => {
+    await groups.removeTenant(payload.idGroup, payload.idTenant).then(response => {
+      dispatch('getTenants', payload.idGroup)
+    }).catch(error => {
+      console.log(error);
     });
   },
   // this works
-  getTenants: ({ commit }, payload) => {
+  getTenants: async ({ commit }, payload) => {
     commit('getTenantsRequest');
-    groups.getTenants(payload).then(response => {
+    await groups.getTenants(payload).then(response => {
       commit('getTenantsSuccess', response);
     }).catch(error => {
       commit('getTenantsFailed', error);

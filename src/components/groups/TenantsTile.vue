@@ -17,7 +17,7 @@
     </q-item-section>
     <q-item-section side>
       <div class="text-grey-8 q-gutter-xs">
-        <DeleteTenant  :id="$props.org.id"/>
+        <DeleteTenant  :idTenant="$props.org.id" :idGroup="$route.params.groupId"/>
       </div>
     </q-item-section>
   </q-item>
