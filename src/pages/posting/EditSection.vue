@@ -2,7 +2,7 @@
   <q-card flat>
     <div class="row">
       <div class="col-12">
-        <PostEditFrom/>
+        <SectionEditFrom/>
       </div>
     </div>
   </q-card>
@@ -11,11 +11,11 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import PostEditFrom from 'components/posting/PostEditFrom.vue';
+  import SectionEditFrom from 'components/posting/SectionEditFrom.vue';
 
   export default Vue.extend({
     name: 'EditPost',
-    components: { PostEditFrom },
+    components: { SectionEditFrom },
   });
 </script>
 

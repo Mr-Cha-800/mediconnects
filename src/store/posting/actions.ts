@@ -19,6 +19,14 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
   },
+  editProfileSection: ({ commit }, payload) => {
+    commit('PostingRequest', payload);
+    posting.editSection(payload).then(({id: post})  => {
+      userProfile.editSection({post}).then(() => {
+        commit('PostingSuccess', payload);
+      }).catch(error => commit('PostingFailed', error));
+    }).catch(error => commit('PostingFailed', error));
+  },
 };
 
 export default actions;

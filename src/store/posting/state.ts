@@ -7,6 +7,7 @@ export enum PostingTypesEnum {
 };
 
 export interface PostingRequestInterface {
+  id?: string;
   type?: PostingTypesEnum;
   title?: string;
   description?: string;

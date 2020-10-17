@@ -6,7 +6,7 @@
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
         <div class="absolute-right">
           <q-btn flat round color="primary" icon="keyboard_arrow_up"/>
-          <q-btn flat round color="primary" @click="$router.push({ name: 'EditPost', params: { postId: '123' } })" icon="edit"/>
+          <q-btn flat round color="primary" @click="$router.push({ name: 'EditSection', params: { sectionId: section.id } })" icon="edit"/>
           <q-btn flat round color="primary" icon="keyboard_arrow_down"/>
         </div>
       </q-card>

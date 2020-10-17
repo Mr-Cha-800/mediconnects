@@ -42,3 +42,8 @@ export const addSection = async ({ post, weight }: { post?: string, weight?: num
   return axios.post<any>(`${API}/account/profile/sections`, { post, weight })
     .then(({ data }) => data);
 };
+
+export const editSection = async ({ post, weight }: { post?: string, weight?: number }) => {
+  return axios.put<any>(`${API}/account/profile/sections/5f89b8e6894e041b5f7ef1bb`, { post, weight })
+    .then(({ data }) => data);
+};
