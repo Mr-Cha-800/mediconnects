@@ -16,6 +16,7 @@ const routes: RouteConfig[] = [
       { path: '/profile/organizations/:orgId/members', component: () => import('pages/organizations/OrganizationMembers.vue'), name: 'OrganizationMembers', meta: { auth: true } },
       { path: '/profile/requests', component: () => import('pages/accounts/UserConnectRequests.vue'), name: 'UserConnectRequests', meta: { auth: true } },
       { path: '/post', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
+      { path: '/section/:sectionId/edit', component: () => import('pages/posting/EditSection.vue'), name: 'EditSection', meta: { auth: true, noFooter: true } },
 
       { path: '/groups', component: () => import('pages/groups/Groups.vue'), name: 'groups', meta: { auth: true } },
       { path: '/groups/add', component: () => import('pages/groups/GroupAdd.vue'), name: 'groupAdd', meta: { auth: true } },

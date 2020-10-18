@@ -42,3 +42,22 @@ export const addSection = async ({ post, weight }: { post?: string, weight?: num
   return axios.post<any>(`${API}/account/profile/sections`, { post, weight })
     .then(({ data }) => data);
 };
+
+export const editSection = async (id: string) => {
+ //  console.log(id)
+  return axios.put(`${API}/account/profile/sections/${id}`, { id})
+    .then(({ data }) => data);
+};
+export const deleteSection = async (id: string) => {
+ //  console.log(id)
+  return axios.delete(`${API}/account/profile/sections/${id}`)
+    .then(({ data }) => data);
+};
+export const changeOrderUP = async (id: string, weight: number) => {
+  return axios.put(`${API}/account/profile/sections/${id}`, { id, weight})
+    .then(({ data }) => data);
+};
+export const changeOrderDown = async (id: string, weight: number) => {
+  return axios.put(`${API}/account/profile/sections/${id}`, { id, weight})
+    .then(({ data }) => data);
+};
