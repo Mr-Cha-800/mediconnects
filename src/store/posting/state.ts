@@ -1,12 +1,13 @@
 export enum PostingTypesEnum {
-  IMAGE = "image",
-  VIDEO = "video",
-  AUDIO = "audio",
-  DOCUMENT = "document",
-  TEXT = "text",
+  IMAGE = 'image',
+  VIDEO = 'video',
+  AUDIO = 'audio',
+  DOCUMENT = 'document',
+  TEXT = 'text',
 };
 
 export interface PostingRequestInterface {
+  sectionId?: string;
   id?: string;
   type?: PostingTypesEnum;
   title?: string;

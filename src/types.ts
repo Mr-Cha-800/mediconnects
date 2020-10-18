@@ -10,6 +10,6 @@ export type MediaObject = {
 };
 
 export enum EntityTypes {
-  ORG = "organization",
-  USER = "user",
+  ORG = 'organization',
+  USER = 'user',
 }

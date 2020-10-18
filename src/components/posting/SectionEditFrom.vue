@@ -1,4 +1,4 @@
-<template>{{this.$route.params.sectionId}}
+<template>
   <q-form class="container q-pa-lg" @submit.prevent="submiteditProfile" ref="updateForm">
     <q-item>
       <q-item-section>
@@ -17,7 +17,7 @@
         <q-input
           class="full-width"
           placeholder="Share something..."
-          type="text"
+          type="textarea"
           v-model="payload.description"
         />
       </q-item-section>
@@ -25,10 +25,10 @@
     <MediaSelection @streamSelected="streamSelected"/>
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
-        <q-btn type="submit" label="Post" color="primary" >
+        <q-btn type="submit" label="Edit" color="primary" >
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />
-            Posting...
+            Editing...
           </template>
         </q-btn>
       </q-item-section>
@@ -41,7 +41,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import { VForm } from 'src/types';
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
   import { validateRequired } from 'src/formValidators';
   import MediaSelection from 'components/posting/MediaSelection.vue';
@@ -50,7 +50,8 @@
     name: 'PostingForm',
     data() {
       const payload: PostingRequestInterface = {
-       // id: this.$route.params.sectionId,
+        id: this.$route.params.Id,
+        sectionId: this.$route.params.sectionId,
         type: PostingTypesEnum.TEXT,
         title: '',
         description: ''
@@ -73,6 +74,10 @@
           description: ''
         };
       }
+    },
+    computed: {
+      ...mapGetters('userProfileModule', ['profile']),
+      postingTypes: () => PostingTypesEnum
     }
   });
 </script>

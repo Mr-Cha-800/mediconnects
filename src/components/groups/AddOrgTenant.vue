@@ -51,7 +51,7 @@
     data() {
       const options: OrganizationInterface[] = [];
       const selectedOrg: OrganizationInterface | null = null;
-      const loading: boolean = false;
+      const loading = false;
       return {
         selectedOrg,
         options,

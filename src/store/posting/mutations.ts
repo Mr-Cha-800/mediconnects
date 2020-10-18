@@ -13,7 +13,7 @@ const mutation: MutationTree<PostingStateInterface> = {
 
   PostingFailed(state, error) {
     Vue.set(state, 'posting', { ...state.posting, status: { loading: false, error } });
-  },
+  }
 };
 
 export default mutation;

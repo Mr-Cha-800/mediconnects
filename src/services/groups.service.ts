@@ -31,7 +31,7 @@ axios.post<GroupsStateInterface>(`${API}/groups`, profile)
   .then(({ data }) => data);
 }
 
-export const addTenanttoGroup = async (id: String, payload : AddTenantInterface) => {
+export const addTenanttoGroup = async (id: string, payload : AddTenantInterface) => {
 axios.post<GroupsStateInterface>(`${API}/groups/${id}/tenants`, payload)
   .then(({ data }) => data);
 }
