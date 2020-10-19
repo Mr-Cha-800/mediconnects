@@ -9,7 +9,10 @@ export interface UserProfileInterface {
   description?: string;
   avatar?: MediaObject;
   sections?: any[],
-  sectionsGroups?: any[],
+  sectionGroups?: {
+    id?: string;
+    name?: string;
+  }[],
   connections? : number;
   followers? : number;
   following? : number;

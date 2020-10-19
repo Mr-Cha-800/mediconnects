@@ -15,7 +15,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
   addProfilePost: ({ commit }, payload) => {
     commit('PostingRequest', payload);
     posting.post(payload).then(({id: post}) => {
-      userProfile.addSection({post}).then(() => {
+      userProfile.addSection({post, weight: payload.weight, group: payload.sectionGroup }).then(() => {
         commit('PostingSuccess', payload);
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));

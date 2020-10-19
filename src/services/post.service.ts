@@ -3,7 +3,7 @@ import { PostingRequestInterface, PostingTypesEnum, PostInterface } from 'src/st
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 import { API } from 'src/constants';
 
-export const post = async ({ mediaSource, type, title }: PostingRequestInterface) => {
+export const post = async ({ mediaSource, type, title, description }: PostingRequestInterface) => {
   let mediaSourceMediaObject;
   if (mediaSource) {
     let uploadType: UploadType = UploadType.IMAGE;
@@ -14,6 +14,7 @@ export const post = async ({ mediaSource, type, title }: PostingRequestInterface
   return axios.post<PostInterface>(`${API}/posts`, {
     type,
     title,
+    description,
     content: mediaSourceMediaObject
   }).then(({ data }) => data);
 }

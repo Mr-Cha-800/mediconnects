@@ -38,8 +38,8 @@ export const getSections = async () => {
     .then(({ data }) => data);
 };
 
-export const addSection = async ({ post, weight }: { post?: string, weight?: number }) => {
-  return axios.post<any>(`${API}/account/profile/sections`, { post, weight })
+export const addSection = async ({ post, weight, group }: { post?: string, group?: string, weight?: number }) => {
+  return axios.post<any>(`${API}/account/profile/sections`, { post, weight, group })
     .then(({ data }) => data);
 };
 

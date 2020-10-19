@@ -12,6 +12,8 @@ export interface PostingRequestInterface {
   type?: PostingTypesEnum;
   title?: string;
   description?: string;
+  weight?: number;
+  sectionGroup?: string;
   organizations?: string[];
   mediaSource?: File;
   content?: string;
