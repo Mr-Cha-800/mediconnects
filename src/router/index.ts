@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import { Store } from 'vuex';
 import { StateInterface } from '../store';
 import routes from './routes';
+import { CometChat } from '@cometchat-pro/chat/CometChat';
 
 export const Router = new VueRouter({
   scrollBehavior: () => ({ x: 0, y: 0 }),
@@ -20,8 +21,10 @@ export default route<Store<StateInterface>>(({ Vue, store }) => {
 
   Router.beforeEach(async (to, from, next) => {
     const { meta: { auth } } = to;
+    const user = await CometChat.getLoggedinUser();
 
-    if (auth && !store.getters['accountModule/isAuthenticated']) {
+    if (auth && (!user || !store.getters['accountModule/isAuthenticated'])) {
+      CometChat.logout();
       return Router.push({name: 'login'});
     }
     next();

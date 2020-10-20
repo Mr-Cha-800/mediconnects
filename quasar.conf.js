@@ -24,10 +24,13 @@ module.exports = configure(function(ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ['axios', 'capacitor'],
+    boot: ['axios', 'capacitor', 'cometChat'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    css: ['app.scss'],
+    css: [
+      '../components/cometchat-components/assets/css/style.css',
+      'app.scss'
+    ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -48,7 +51,10 @@ module.exports = configure(function(ctx) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
         API: 'https://kic.bluenimble.com/mcdev/api',
-        MEDIA_API: 'https://kic-mcdev-objects.bluenimble.com'
+        MEDIA_API: 'https://kic-mcdev-objects.bluenimble.com',
+        APP_ID: '245030fd2e05c5f',
+        REGION: 'us',
+        API_KEY: '64cf4d879e98b296f0a6eba75bd70ad77b159872'
       },
 
       // transpile: false,

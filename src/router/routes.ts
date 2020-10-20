@@ -23,15 +23,14 @@ const routes: RouteConfig[] = [
       { path: '/groups/:groupId/edit', component: () => import('pages/groups/GroupEdit.vue'), name: 'groupEdit', meta: { auth: true } },
       { path: '/groups/:groupId/tenants', component: () => import('pages/groups/GroupTenants.vue'), name: 'groupTenants', meta: { auth: true } },
 
-      { path: '/messages', component: () => import('pages/Index.vue'), name: 'messages', meta: { auth: true } },
-
       { path: '/users/:userId/profile', component: () => import('pages/users/UserProfile.vue'), name: 'UserProfile', meta: { auth: true } },
 
       { path: '/search/users', component: () => import('pages/search/ProfilesSearch.vue'), name: 'ProfilesSearch', meta: { auth: true } },
-      { path: '/search/organizations', component: () => import('pages/search/OrganizationsSearch.vue'), name: 'OrganizationsSearch', meta: { auth: true } },
 
+      { path: '/search/organizations', component: () => import('pages/search/OrganizationsSearch.vue'), name: 'OrganizationsSearch', meta: { auth: true } },
       { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
 
+      { path: '/messages', component: () => import('pages/messages/MessagesPage.vue'), name: 'messages', meta: { auth: true, noFooter: true } },
     ]
   },
 

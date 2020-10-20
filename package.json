@@ -12,6 +12,7 @@
   "dependencies": {
     "@capacitor/cli": "^2.4.2",
     "@capacitor/core": "^2.4.2",
+    "@cometchat-pro/chat": "^2.1.2",
     "@ionic-native/video-capture-plus": "^5.28.0",
     "@ionic/pwa-elements": "^3.0.1",
     "@quasar/extras": "^1.0.0",
