@@ -4,6 +4,7 @@ import { UserProfileStateInterface } from './state';
 import * as userProfile from './../../services/userProfile.service';
 import { UsersSearchQueryInterface } from 'src/services/userProfile.service';
 import * as AccountService from 'src/services/accounts.service';
+import * as CometChat from 'src/services/cometChat.service';
 import { Router } from 'src/router';
 
 const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
@@ -41,6 +42,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   updateProfile: ({ commit }, payload) => {
     commit('MyProfileUpdateRequest');
     userProfile.update(payload).then(userDetails => {
+      CometChat.updateUser(userDetails);
       // refresh the token, After Updating profile
       AccountService.refreshToken().then(user => {
         commit('MyProfileUpdateSuccess', userDetails);
