@@ -1,5 +1,22 @@
 <template>
   <q-form @submit.prevent="submitProfile" ref="updateForm">
+
+      <div class="q-gutter-y-md">
+        <q-btn-toggle
+          v-model="postType"
+          spread
+          no-caps
+          flat
+          toggle-color="primary"
+          :options="[
+          {label: 'Users', value: 'users'},
+          {label: 'Organization', value: 'organization'}
+        ]"
+        />
+      </div>
+      <AddUserIdtoPost @clicked="onClickUsers" v-if="postType === 'users'" />
+      <AddOrgIdtoPost @clicked="onClickOrgs" v-if="postType === 'organization'" />
+      <q-separator/>
     <q-bar class="bg-grey-2">
       <q-space />
       <q-toggle
@@ -13,6 +30,12 @@
         style="color:#009688"
       />
     </q-bar>
+    <!-- Only to show the selected ones-->
+    <div>Users IDs and Orgs IDs selected :
+    <div v-for="user in usersSelected" :key="user.id">{{user.id}}</div>
+    <div v-for="org in orgsSelected" :key="org.id">{{org.id}}</div>
+    </div>
+    <!-- END -->
     <q-item>
       <q-chip
         v-for="where in wheres"
@@ -121,9 +144,12 @@
   import Vue from 'vue';
   import { VForm } from 'src/types';
   import { validateRequired } from 'src/formValidators';
+  import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
+  import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
 
   export default Vue.extend({
     name: 'PostingForm',
+    components: { AddUserIdtoPost, AddOrgIdtoPost },
     props: {
       profile: {
         type: Object,
@@ -136,6 +162,9 @@
     },
     data() {
       return {
+        usersSelected : [],
+        orgsSelected : [],
+        postType: 'users',
         imageStream: null,
         videoStream: null,
         isPublicPost: false,
@@ -177,6 +206,12 @@
         this.imageStream = null;
         reader.onload = ({ target: { result }}: any) => this.videoStream = result;
         reader.readAsDataURL(file);
+      },
+      onClickUsers (value) {
+       this.usersSelected = value
+      },
+      onClickOrgs (value) {
+       this.orgsSelected = value // someValue
       }
     },
   });
