@@ -49,72 +49,13 @@
           placeholder="Share something..."
           borderless
           rows="10"
+          v-model="payload.description"
           type="textarea"
         />
       </q-item-section>
     </q-item>
-    <q-item v-if="videoStream" class="q-pa-sm">
-      <video :src="videoStream" controls width="100%" preload="metadata" />
-    </q-item>
-    <q-item v-if="imageStream" class="q-pa-sm">
-      <q-img :src="imageStream" ratio="1" />
-    </q-item>
-    <q-item class="q-pa-sm">
-      <q-item-section>
-        <q-file
-          dense
-          no-caps
-          color="grey-8"
-          class="full-width"
-          size="sm"
-          label="Photos"
-          accept=".jpg, image/*"
-          @input="selectedImage"
-        >
-          <template v-slot:prepend>
-            <q-icon name="photo" />
-          </template>
-        </q-file>
-        <q-file
-          dense
-          no-caps
-          color="grey-8"
-          class="full-width"
-          size="sm"
-          label="Videos"
-          accept=".mp4, video/*"
-          @input="selectedVideo"
-        >
-          <template v-slot:prepend>
-            <q-icon name="ondemand_video" />
-          </template>
-        </q-file>
-        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Record Video" disable>
-          <template v-slot:prepend>
-            <q-icon name="ondemand_video" />
-          </template>
-        </q-file>
-        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Go Live" disable>
-          <template v-slot:prepend>
-            <q-icon name="videocam" />
-          </template>
-        </q-file>
-        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Documents" disable>
-          <template v-slot:prepend>
-            <q-icon name="description" />
-          </template>
-        </q-file>
-        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Article" disable>
-          <template v-slot:prepend>
-            <q-icon name="history_edu" />
-          </template>
-        </q-file>
-        <q-file dense no-caps color="grey-8" class="full-width" size="sm" label="Backgrounds" disable>
-          <template v-slot:prepend>
-            <q-icon name="palette" />
-          </template>
-        </q-file>
-      </q-item-section>
+    <PostMediaSelection @streamSelected="streamSelected"/>
+
     </q-item>
 
     <q-item class="q-pa-sm">
@@ -126,23 +67,22 @@
           </template>
         </q-btn>
       </q-item-section>
-
     </q-item>
-
-
   </q-form>
 </template>
 <script lang="ts">
   import Vue from 'vue';
   import { VForm } from 'src/types';
+  import { mapActions } from 'vuex';
   import { validateRequired } from 'src/formValidators';
   import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
   import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
   import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
+  import PostMediaSelection from 'components/posting/PostMediaSelection.vue';
 
   export default Vue.extend({
     name: 'PostingForm',
-    components: { AddUserIdtoPost, AddOrgIdtoPost },
+    components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection },
     props: {
       profile: {
         type: Object,
@@ -156,7 +96,7 @@
     data() {
         const payload: PostingRequestInterface = {
         type: PostingTypesEnum.TEXT,
-        title: '',
+        description: '',
       };
       return {
         postType: 'users',
@@ -184,27 +124,15 @@
       },
     },
     methods: {
+      ...mapActions('postingModule', ['addPost']),
       validateRequired: validateRequired,
       submitProfile(): void {
         if (this.vUpdateForm.validate()) {
           this.$emit('submit', { profile: this.$props.profile });
         }
       },
-      selectedImage(file: File): void {
-        const reader = new FileReader();
-        this.videoStream = null;
-        reader.onload = ({ target: { result }}: any) => this.imageStream = result;
-        reader.readAsDataURL(file);
-        this.payload = { ...this.payload, mediaSource: this.imageStream  };
-        this.payload.type = PostingTypesEnum.IMAGE
-      },
-      selectedVideo(file: File): void {
-        const reader = new FileReader();
-        this.imageStream = null;
-        reader.onload = ({ target: { result }}: any) => this.videoStream = result;
-        reader.readAsDataURL(file);
-        this.payload = { ...this.payload, mediaSource: this.videoStream  };
-        this.payload.type = PostingTypesEnum.VIDEO
+      streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
+        this.payload = { ...this.payload, mediaSource, type };
       },
       onClickUsers (value) {
        this.individual.users = value;
@@ -215,12 +143,20 @@
        this.organization.showList = false;
       },
       submitPost() {
-        console.log(this.payload)
-       /* const payload = {
-          ...this.payload,
-          weight: this.profile.sections.length * 1000
-        }
-        this.addProfilePost(payload); */
+        this.addPost(this.payload).then(() => {
+          this.$q.notify({
+            progress: true,
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'done',
+            message: 'Congratulations ! Posted successfully'
+          })
+        })
+        this.payload = {
+          type: PostingTypesEnum.TEXT,
+          title: '',
+          description: '',
+        };
       }
     },
   });

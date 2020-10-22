@@ -10,6 +10,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
     commit('PostingRequest', payload);
     posting.post(payload).then(() => {
       commit('PostingSuccess', payload);
+      Router.back();
     }).catch(error => commit('PostingFailed', error));
   },
   addProfilePost: ({ commit }, payload) => {
