@@ -45,7 +45,14 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
         dispatch(`userProfileModule/getMyProfile`, null, { root: true });
       }).catch(error => commit('PostingFailed', error));
   },
-
+  getSection: ({ commit }, id: string) => {
+    commit('sectionByIdRequest');
+      userProfile.getById(id).then(section => {
+      commit('sectionByIdSuccess', section);
+    }).catch(error => {
+      commit('sectionByIdFailed', error);
+    })
+  },
 
 };
 

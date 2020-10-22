@@ -22,7 +22,7 @@
         />
       </q-item-section>
     </q-item>
-    <MediaSelection @streamSelected="streamSelected"/>
+    <MediaSelection   @streamSelected="streamSelected" />
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
         <q-btn type="submit" label="Edit" color="primary" >
@@ -51,7 +51,7 @@
     data() {
       const payload: PostingRequestInterface = {
         id: this.$route.params.Id,
-        sectionId: this.$route.params.sectionId,
+        sectionId: '',
         type: PostingTypesEnum.TEXT,
         title: '',
         description: ''
@@ -62,7 +62,7 @@
     },
     components: { MediaSelection },
     methods: {
-      ...mapActions('postingModule', ['editProfileSection']),
+      ...mapActions('postingModule', ['getSection','editProfileSection']),
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
         this.payload = { ...this.payload, mediaSource, type };
       },
@@ -76,8 +76,20 @@
       }
     },
     computed: {
-      ...mapGetters('userProfileModule', ['profile']),
+      ...mapGetters('postingModule', ['sectionDetails']),
       postingTypes: () => PostingTypesEnum
-    }
+    },
+    created() {
+      this.getSection(this.$route.params.Id)
+    },
+    mounted() {
+      setTimeout(() => {
+        this.payload.sectionId = this.sectionDetails.section.id
+        this.payload.title = this.sectionDetails.section.title
+        this.payload.description = this.sectionDetails.section.description
+      }, 2000);
+
+
+    },
   });
 </script>
