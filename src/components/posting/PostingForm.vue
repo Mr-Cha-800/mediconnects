@@ -13,27 +13,35 @@
         style="color:#009688"
       />
     </q-bar>
-    <!-- Only to show the selected ones-->
-    <div>Users IDs and Orgs IDs selected :
-    <div v-for="user in usersSelected" :key="user.id">{{user.id}}</div>
-    <div v-for="org in orgsSelected" :key="org.id">{{org.id}}</div>
-    </div>
     <!-- END -->
     <q-item v-if="!isPublicPost">
       <q-chip
-        v-for="where in wheres"
-        :outline="!where.active"
+        :outline="!organization.orgs.length"
         size="1rem"
-        :color="where.active ? 'primary' : 'grey-8'"
-        :outline-color="where.active ? 'primary' : 'grey-8'"
+        :color="organization.orgs.length ? 'primary' : 'grey-8'"
+        :outline-color="!organization.orgs.length ? 'primary' : 'grey-8'"
         clickable
-        @click="where.active  = !where.active "
-        :text-color="where.active ? 'white' : ''"
-      >{{where.name}}
-        <q-badge align="bottom" v-if="where.badge > 0 " color="red" floating>{{where.badge}}</q-badge>
+        @click="() => {organization.showList = true; individual.showList = false}"
+        :text-color="!organization.orgs.length ? 'white' : ''"
+      >{{organization.name}}
+        <q-badge align="bottom" v-if="organization.orgs.length " color="red" floating>{{organization.orgs.length}}</q-badge>
+      </q-chip>
+      <q-chip
+        :outline="!individual.users.length"
+        size="1rem"
+        :color="individual.users.length ? 'primary' : 'grey-8'"
+        :outline-color="!individual.users.length ? 'primary' : 'grey-8'"
+        clickable
+        @click="() => {individual.showList = true; organization.showList = false}"
+        :text-color="!individual.users.length ? 'white' : ''"
+      >{{individual.name}}
+        <q-badge align="bottom" v-if="individual.users.length " color="red" floating>{{individual.users.length}}</q-badge>
       </q-chip>
     </q-item>
-    <q-item></q-item>
+    <q-item>
+      <AddUserIdtoPost @clicked="onClickUsers" v-if="individual.showList" />
+      <AddOrgIdtoPost @clicked="onClickOrgs" v-if="organization.showList" />
+    </q-item>
     <q-item>
       <q-item-section>
         <q-input
@@ -146,25 +154,22 @@
     },
     data() {
       return {
-        usersSelected : [],
-        orgsSelected : [],
         postType: 'users',
         imageStream: null,
         videoStream: null,
-        isPublicPost: false,
-        wheres: [
-          {
-            name: 'Organization',
-            active: true,
-            badge: 4
-          },
-          {
-            name: 'Individuals',
-            active: false,
-            badge: 0
-          }
-        ]
-
+        isPublicPost: true,
+        organization: {
+          name: 'Organization',
+          orgs: [],
+          badge: 0,
+          showList: false,
+        },
+        individual: {
+          name: 'Individuals',
+          users: [],
+          badge: 0,
+          showList: false,
+        }
       }
     },
     computed: {
@@ -192,10 +197,12 @@
         reader.readAsDataURL(file);
       },
       onClickUsers (value) {
-       this.usersSelected = value
+       this.individual.users = value;
+       this.individual.showList = false;
       },
       onClickOrgs (value) {
-       this.orgsSelected = value // someValue
+       this.organization.orgs = value;
+       this.organization.showList = false;
       }
     },
   });
