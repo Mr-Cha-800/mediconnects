@@ -1,6 +1,6 @@
 import { API } from 'src/constants';
 import axios from 'axios';
-import { UserProfileInterface } from 'src/store/userProfile/state';
+import { UserProfileInterface, SectionInterface } from 'src/store/userProfile/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
 
 export enum UsersSearchScopeEnum {
@@ -61,3 +61,7 @@ export const changeOrderDown = async (id: string, weight: number) => {
   return axios.put(`${API}/account/profile/sections/${id}`, { id, weight})
     .then(({ data }) => data);
 };
+
+export const getById = (id: string) =>
+  axios.get<SectionInterface>(`${API}/account/profile/sections/${id}`)
+  .then(({ data }) => data);

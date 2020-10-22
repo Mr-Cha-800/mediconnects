@@ -32,6 +32,7 @@ export interface PostInterface extends Pick<PostingRequestInterface, 'type' | 't
 
 export interface PostingStateInterface {
   posts: PostInterface[];
+  section: SectionInterface,
   posting?: {
     post: PostingRequestInterface;
     status: {
@@ -47,9 +48,23 @@ export interface PostingStateInterface {
 
 const state: PostingStateInterface = {
   posts: [],
+  section: {},
   status: {
     loading: false,
   }
 };
 
+export interface SectionInterface {
+  weight?: number,
+  section: {
+    id?: string,
+    timestamp?: string,
+    type?: string,
+    title?: string,
+    description?: string
+  },
+  id?: string,
+  timestamp?: string,
+  group?: string
+}
 export default state;

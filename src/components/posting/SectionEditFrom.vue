@@ -22,7 +22,7 @@
         />
       </q-item-section>
     </q-item>
-    <MediaSelection @streamSelected="streamSelected"/>
+    <MediaSelectionUpdate :resource="file"  @streamSelected="streamSelected" />
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
         <q-btn type="submit" label="Edit" color="primary" >
@@ -44,25 +44,28 @@
   import { mapActions, mapGetters } from 'vuex';
   import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
   import { validateRequired } from 'src/formValidators';
-  import MediaSelection from 'components/posting/MediaSelection.vue';
+  import MediaSelectionUpdate from 'components/posting/MediaSelectionUpdate.vue';
+  import { postImageMediaObject } from 'src/helpers/parseMediaOject';
+
 
   export default Vue.extend({
     name: 'PostingForm',
     data() {
       const payload: PostingRequestInterface = {
         id: this.$route.params.Id,
-        sectionId: this.$route.params.sectionId,
+        sectionId: '',
         type: PostingTypesEnum.TEXT,
         title: '',
         description: ''
       };
       return {
-        payload
+        payload,
+        file: {}
       };
     },
-    components: { MediaSelection },
+    components: { MediaSelectionUpdate },
     methods: {
-      ...mapActions('postingModule', ['editProfileSection']),
+      ...mapActions('postingModule', ['getSection','editProfileSection']),
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
         this.payload = { ...this.payload, mediaSource, type };
       },
@@ -76,8 +79,23 @@
       }
     },
     computed: {
-      ...mapGetters('userProfileModule', ['profile']),
+      ...mapGetters('postingModule', ['sectionDetails']),
       postingTypes: () => PostingTypesEnum
-    }
+    },
+    created() {
+      this.getSection(this.$route.params.Id)
+    },
+    mounted() {
+      setTimeout(() => {
+        this.payload.sectionId = this.sectionDetails.section.id
+        this.payload.title = this.sectionDetails.section.title
+        this.payload.description = this.sectionDetails.section.description
+        if(this.sectionDetails.section.content){
+          this.file = this.sectionDetails.section.content
+        }
+     }, 2000);
+
+
+    },
   });
 </script>
