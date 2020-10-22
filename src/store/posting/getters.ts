@@ -4,6 +4,7 @@ import { PostingStateInterface } from './state';
 
 const getters: GetterTree<PostingStateInterface, StateInterface> = {
   postingStatus: ({ posting: {status} = {} }) => status || {},
+  status: ({ status }) => status || {},
   postingContent: ({ posting: {post} = {} }) => post || {},
   sectionDetails: ({ section }) => section || {}
 };

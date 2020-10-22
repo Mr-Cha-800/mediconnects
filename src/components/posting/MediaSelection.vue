@@ -28,6 +28,7 @@
   import MediaSelectionMobile from 'components/posting/MediaSelectionMobile.vue';
   import { CameraPhoto } from '@capacitor/core';
   import { PostingTypesEnum } from 'src/store/posting/state';
+  import { postImageMediaObject } from 'src/helpers/parseMediaOject';
 
   const reader = new FileReader();
   export default Vue.extend({
@@ -38,9 +39,20 @@
       let type: PostingTypesEnum = PostingTypesEnum.TEXT;
       return {
         sourceStream,
+        content: {},
         dataUrl: '',
         type
       };
+    },
+    props: {
+      mediaType: {
+        type: String
+      },
+      mediaContent: {
+        type: Object,
+        default: () => ({})
+      },
+
     },
     computed: {
       postingTypes: () => PostingTypesEnum,
@@ -59,6 +71,11 @@
         this.type = PostingTypesEnum.TEXT;
         this.$emit('streamSelected', { type: this.type });
       },
+    },
+    mounted() {
+      this.type = this.$props.mediaType || PostingTypesEnum.TEXT;
+      this.content = this.$props.mediaContent;
+      this.dataUrl = postImageMediaObject(this.$props.mediaContent);
     }
   });
 </script>

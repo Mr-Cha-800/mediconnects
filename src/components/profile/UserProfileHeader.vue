@@ -49,7 +49,7 @@
 
     <q-item>
       <q-item-section>
-        <UserProfileSections :user-sections="profile.sectionsGroups"/>
+        <UserProfileSections :user-sections="profile.sectionGroups"/>
       </q-item-section>
     </q-item>
   </div>

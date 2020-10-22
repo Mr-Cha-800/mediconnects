@@ -1,22 +1,5 @@
 <template>
   <q-form @submit.prevent="submitProfile" ref="updateForm">
-
-      <div class="q-gutter-y-md">
-        <q-btn-toggle
-          v-model="postType"
-          spread
-          no-caps
-          flat
-          toggle-color="primary"
-          :options="[
-          {label: 'Users', value: 'users'},
-          {label: 'Organization', value: 'organization'}
-        ]"
-        />
-      </div>
-      <AddUserIdtoPost @clicked="onClickUsers" v-if="postType === 'users'" />
-      <AddOrgIdtoPost @clicked="onClickOrgs" v-if="postType === 'organization'" />
-      <q-separator/>
     <q-bar class="bg-grey-2">
       <q-space />
       <q-toggle
@@ -36,7 +19,7 @@
     <div v-for="org in orgsSelected" :key="org.id">{{org.id}}</div>
     </div>
     <!-- END -->
-    <q-item>
+    <q-item v-if="!isPublicPost">
       <q-chip
         v-for="where in wheres"
         :outline="!where.active"
@@ -50,6 +33,7 @@
         <q-badge align="bottom" v-if="where.badge > 0 " color="red" floating>{{where.badge}}</q-badge>
       </q-chip>
     </q-item>
+    <q-item></q-item>
     <q-item>
       <q-item-section>
         <q-input
