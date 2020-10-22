@@ -14,18 +14,22 @@
       >
         <span class="dateSeperator">{{( index===0?printDate(msg.sentAt):printDate(msg.sentAt,messages[index-1].sentAt))}}</span>
       </div>
+      <div v-if="userData.guid">
+        <q-avatar size="lg" class="q-mr-sm">
+          <q-img :src="msg.sender.avatar" />
+        </q-avatar>
+        <div class="chat-ppl-listitem-dtls">
+          <span>{{msg.sender.name}}</span>
+        </div>
+      </div>
       <div class="cc1-chat-win-msg-block sender-msg" v-if="msg.sender.uid === currentUser.uid">
         <div class="cc1-chat-win-sndr-msg-wrap">
           <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
           <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
-            <video width="100%" height="auto" controls>
-              <source :src="msg.data.url" type="audio/mp4" />
-            </video>
+            <q-media-player type="video" background-color="white" :source="msg.data.url"/>
           </div>
           <div v-else-if="cometchat.MESSAGE_TYPE.AUDIO === msg.type" class="message-audio">
-            <audio controls width="100%" height="auto">
-              <source :src="msg.data.url" />
-            </audio>
+            <q-media-player type="audio" background-color="white" dense :source="msg.data.url"/>
           </div>
           <div
             v-else-if="cometchat.MESSAGE_TYPE.MEDIA === msg.type"
@@ -44,12 +48,12 @@
           <div
             v-else
             class="message-text"
-          >{{(msg.text?"Something Unknown CometChat can't process":"Something Unknown CometChat can't process")}}</div>
+          >{{(msg.text?"Something Unknown MediConnects can't process":"Something Unknown MediConnects can't process")}}</div>
         </div>
         <div class="cc1-chat-win-msg-time-wrap">
           <span class="cc1-chat-win-timestamp">
             {{getDate(msg.sentAt)}}
-  
+
             <span class="cc1-chat-win-tick" v-if="msg.sentAt && ! msg.deliveredAt && !msg.readAt">
               <img style="width: 15px;" src="./../assets/images/single_tick.png" alt="sent" />
             </span>
@@ -66,14 +70,10 @@
         <div class="cc1-chat-win-rcvr-msg-wrap">
           <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
           <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
-            <video width="100%" height="auto" controls>
-              <source :src="msg.data.url" type="audio/mp4" />
-            </video>
+            <q-media-player type="video" background-color="white" :source="msg.data.url"/>
           </div>
           <div v-else-if="cometchat.MESSAGE_TYPE.AUDIO === msg.type" class="message-audio">
-            <audio controls width="100%" height="auto">
-              <source :src="msg.data.url" />
-            </audio>
+            <q-media-player type="audio" background-color="white" dense :source="msg.data.url"/>
           </div>
           <div
             v-else-if="cometchat.MESSAGE_TYPE.MEDIA === msg.type"
@@ -92,7 +92,7 @@
           <div
             v-else
             class="message-text"
-          >{{(msg.text?"Something Unknown CometChat can't process":"Something Unknown CometChat can't process")}}</div>
+          >{{(msg.text?"Something Unknown MediConnects can't process":"Something Unknown MediConnects can't process")}}</div>
         </div>
 
         <div class="cc1-chat-win-msg-time-wrap">
@@ -149,7 +149,7 @@ export default {
 
       attachListener(callback) {
         const listenerID = 'UNIQUE_LISTENER_ID';
-        CometChat.addMessageListener( 
+        CometChat.addMessageListener(
             listenerID,
             new CometChat.MessageListener({
                 onTextMessageReceived: (textMessage) => {
@@ -235,7 +235,7 @@ export default {
       // this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
     });
 
-    
+
 
   },
 
@@ -276,7 +276,7 @@ export default {
       }
 
     });
-      
+
 
   },
   updated: function() {
@@ -305,7 +305,7 @@ export default {
       this.loading = true;
       this.userData = data;
       this.messages = [];
-      
+
       // this.currentHeight = 0;
 
       if (this.userData && this.userData.uid) {
@@ -314,7 +314,7 @@ export default {
         this.messageRequest.fetchPrevious().then(
           messages => {
             this.messages = [...messages, ...this.messages];
-            this.loading = false;            
+            this.loading = false;
             this.scrollToBottom();
           },
           err => {
@@ -380,7 +380,7 @@ export default {
       // if (!this.scrollTrigger) {
       //     this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight - this.currentScrollPossition;
       // } else {
-      
+
       // }
 
 
@@ -414,8 +414,8 @@ export default {
         this.messages = [];
       } else {
         return;
-      } 
-      
+      }
+
     }
   }
 };

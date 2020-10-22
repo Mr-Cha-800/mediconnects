@@ -48,7 +48,7 @@
       </q-page-container>
 
       <q-footer>
-        <q-toolbar class="bg-grey-3 text-black row">
+        <q-toolbar class="bg-grey-3 row">
           <MessageFooter />
         </q-toolbar>
       </q-footer>
@@ -60,7 +60,7 @@
   import ChatBox from 'components/messages/ChatBox.vue';
   import ChatsList from 'components/messages/ChatsList.vue';
   import MessageFooter from 'components/cometchat-components/components/MessageFooter.vue';
-  import MessageView from 'components/cometchat-components/components/MessageView';
+  import MessageView from 'components/cometchat-components/components/MessageView.vue';
 
   export default {
     name: 'MessagesPage',

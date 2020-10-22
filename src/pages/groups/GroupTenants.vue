@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-card flat>
+      <GroupHeader :group="group" />
       <div class="q-gutter-y-md">
         <q-btn-toggle
           v-model="tenantsType"
@@ -36,9 +37,10 @@
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
   import AddTenant from 'components/groups/AddTenant.vue';
   import AddOrgTenant from 'components/groups/AddOrgTenant.vue';
+  import GroupHeader from 'components/groups/GroupHeader.vue';
   export default Vue.extend({
     name: 'groupTenants',
-    components: { State, TenantsTile, PublicOrganizationTile, AddTenant,AddOrgTenant },
+    components: { State, TenantsTile, PublicOrganizationTile, AddTenant,AddOrgTenant, GroupHeader },
     data() {
       return {
         inputDialog: false,
@@ -47,13 +49,14 @@
       };
     },
     created() {
+      this.getGroup(this.$route.params.groupId);
       this.getTenants(this.$route.params.groupId);
     },
     computed: {
-      ...mapGetters('GroupsModule', ['tenants', 'status'])
+      ...mapGetters('GroupsModule', ['tenants', 'group', 'status'])
     },
     methods: {
-      ...mapActions('GroupsModule', ['getTenants'])
+      ...mapActions('GroupsModule', ['getTenants', 'getGroup'])
     }
 
   });

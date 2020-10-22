@@ -12,7 +12,7 @@
           <input id="file-input" @change="onMediInputChange($event)" type='file'
             name="name" style="display: none;" />
           <input id="audio-input" type='file' accept="audio/*"
-            @change="onMediInputChange($event)" name="name" style="display: none;" /> 
+            @change="onMediInputChange($event)" name="name" style="display: none;" />
         </div>
 
 
@@ -38,7 +38,7 @@
 
 
         <!-- msg composer -->
-        <div class="cc1-chat-win-inpt-wrap">
+        <div class="cc1-chat-win-inpt-wrap full-width q-pr-sm">
           <input
             autocomplete="off"
             name="chatMsg"
@@ -46,20 +46,10 @@
             id="chatMsg"
             placeholder="Type Message"
             type="text"
-            v-on:keydown="onchangeDetect($event)"            
+            v-on:keydown="onchangeDetect($event)"
           />
-          <input id="smileButton" type="button" class="smile-button" />
         </div>
 
-
-        <div class="cc1-chat-win-inpt-send">
-          <a href="javascript:void(0);" class="cc1-chat-win-inpt-send-btn" style="display:none;">
-            <img src="./../assets/images/svg/send-blue-icon.svg" />
-          </a>
-          <a href="javascript:void(0);" class="cc1-chat-win-inpt-voice-btn">
-            <img src="./../assets/images/svg/voice-record-frey-icon.svg" />
-          </a>
-        </div>
       </div>
     </div>
 </template>
@@ -75,7 +65,7 @@ export default {
         user: '',
         group: '',
         // currentUser: '',
-        listItems: [{ title: 'Image', id: 'image', icon: 'image_icon.svg' }, { title: 'File', id: 'file', icon: 'attach_file_icon.svg'}, { title: 'Audio', id: 'audio', icon: 'audiotrack_icon.svg'}, { title: 'Video', id: 'video', icon: 'video_icon.svg' }, { title: 'Location', id: 'location', icon: 'location_on_icon.svg'}],
+        listItems: [{ title: 'Image', id: 'image', icon: 'image_icon.svg' }, { title: 'File', id: 'file', icon: 'attach_file_icon.svg'}, { title: 'Audio', id: 'audio', icon: 'audiotrack_icon.svg'}, { title: 'Video', id: 'video', icon: 'video_icon.svg' }],
         filesInput: null,
         imageInput: null,
         audioInput: null,
@@ -235,7 +225,7 @@ export default {
           input = document.getElementById('video-input');
         }
         // input = document.getElementById('image-input');
-        
+
 
         if (this.user) {
           receiverID = this.user.uid;
@@ -260,7 +250,7 @@ export default {
         CometChat.sendMediaMessage(mediaMessage).then(
           message => {
             console.log('Media message sent successfully', message);
-            this.onMessageSent(message);            
+            this.onMessageSent(message);
             input.value = null;
             this.imageInput = undefined;
             this.audioInput = undefined;
@@ -286,7 +276,7 @@ export default {
 
 
 
-      
+
 
 
     }

@@ -1,3 +1,4 @@
+import { MediaObject } from 'src/types';
 
 export interface GroupsInterface {
   id?: string;
