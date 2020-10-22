@@ -1,6 +1,6 @@
 <template>
 <div>
-  <q-item clickable >
+  <q-item clickable :to="{ name: 'groupTenants', params: { groupId: group.id, groupName: group.name } }">
     <q-item-section class="q-ml-none" avatar>
       <q-avatar size="6rem" square>
         <q-img

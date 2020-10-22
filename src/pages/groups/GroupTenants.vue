@@ -2,7 +2,7 @@
   <div>
     <q-card flat>
       <GroupHeader :group="group" />
-      <div class="q-gutter-y-md">
+      <!--<div class="q-gutter-y-md">
         <q-btn-toggle
           v-model="tenantsType"
           spread
@@ -14,10 +14,12 @@
           {label: 'Organization', value: 'organization'}
         ]"
         />
+      </div>-->
+      <div class="q-ma-md">
+        <span class="text-h6 text-grey-8">Add new Tenant:</span>
       </div>
       <AddTenant v-if="tenantsType === 'users'" />
-      <AddOrgTenant v-if="tenantsType === 'organization'" />
-      <q-separator/>
+      <!--<AddOrgTenant v-if="tenantsType === 'organization'" />-->
       <State :status="status" :empty="!tenants.length">
         <q-list bordered>
           <template v-for="org in tenants">

@@ -11,6 +11,7 @@
       :option-label="user => user ? `${user.firstName} ${user.lastName}` : ''"
       @filter="filterFn"
       :loading="loading"
+      placeholder="Search tenants"
       input-class="q-px-md"
     >
       <template v-slot:append>

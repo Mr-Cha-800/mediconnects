@@ -11,6 +11,7 @@
       :options="options"
       :option-label="user => user ? `${user.firstName} ${user.lastName}` : ''"
       @filter="filterFn"
+      placeholder="Search Users"
       :loading="loading"
       input-class="q-px-md"
     >
@@ -88,7 +89,7 @@
         this.loading = true;
         userProfile.search({
           keyword,
-          scope: UsersSearchScopeEnum.PUBLIC
+          scope: UsersSearchScopeEnum.FOLLOWING
         }).then(users => {
           update(() => {
             this.options = users;

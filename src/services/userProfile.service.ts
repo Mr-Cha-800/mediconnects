@@ -1,7 +1,8 @@
 import { API } from 'src/constants';
 import axios from 'axios';
-import { UserProfileInterface, SectionInterface } from 'src/store/userProfile/state';
+import { UserProfileInterface } from 'src/store/userProfile/state';
 import mediaUploader, { UploadType } from 'src/services/mediaUploader.service';
+import { SectionInterface } from 'src/store/posting/state';
 
 export enum UsersSearchScopeEnum {
   PUBLIC = 'public',

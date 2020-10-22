@@ -35,7 +35,6 @@
         <div v-if="sendPM">
           <form
             @submit.prevent.stop="onPmSubmit"
-            @reset.prevent.stop="onReset"
             class="q-gutter-md q-pt-md row"
           >
             <div class="col-12">
@@ -46,7 +45,6 @@
                 clearable
                 type="textarea"
                 v-model="pm"
-                label="Say Hello"
                 ref="pmInput"
                 lazy-rules
                 :rules="[ val => !!val || 'Please type your message']"
@@ -59,7 +57,7 @@
                 type="submit"
                 color="primary"
               />
-              <q-btn label="Cancel" type="reset" color="primary" flat class="q-ml-sm"/>
+              <q-btn label="Cancel" color="primary" @click="onReset" flat class="q-ml-sm"/>
             </div>
           </form>
         </div>
@@ -85,13 +83,13 @@
         sendPM: false,
         showMessage: false,
         message: '',
-        pm: ''
+        pm: 'Say Hello'
       };
     },
     methods: {
       onReset() {
-        this.pm = '';
-        this.showMessage = false;
+        this.pm = 'Say Hello';
+        this.sendPM = false;
       },
       onPmSubmit() {
         if ((this.$refs.pmInput as any).validate()) {
