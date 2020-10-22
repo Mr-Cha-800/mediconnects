@@ -4,7 +4,7 @@
         <p class="text-h4 text-grey-8">{{post.title}}</p>
         <p class="text-body1 text-grey-8">{{post.description}}</p>
       </div>
-      <q-img :src="postImage"/>
+      <q-img v-if="post" :src="postImage"/>
     </div>
 </template>
 <script lang="ts">

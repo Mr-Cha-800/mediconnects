@@ -6,7 +6,6 @@
           <q-separator />
           <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
         </template>
-
     </q-card>
 
     <div v-for="{ section } in user.sections" :key="section.id">
