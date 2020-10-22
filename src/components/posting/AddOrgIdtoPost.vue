@@ -11,6 +11,7 @@
       :options="options"
       :option-label="org => org ? `${org.name}` : ''"
       @filter="filterFn"
+      placeholder="Search Organizations"
       :loading="loading"
       input-class="q-px-md"
     >

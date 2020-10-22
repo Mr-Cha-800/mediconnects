@@ -119,7 +119,7 @@
 
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
-        <q-btn type="submit" label="Post" color="primary" >
+        <q-btn type="submit" label="Post" @click="submitPost" color="primary" >
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />
             Posting...
@@ -136,6 +136,7 @@
   import Vue from 'vue';
   import { VForm } from 'src/types';
   import { validateRequired } from 'src/formValidators';
+  import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
   import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
   import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
 
@@ -153,11 +154,16 @@
       }
     },
     data() {
+        const payload: PostingRequestInterface = {
+        type: PostingTypesEnum.TEXT,
+        title: '',
+      };
       return {
         postType: 'users',
         imageStream: null,
         videoStream: null,
         isPublicPost: true,
+        payload,
         organization: {
           name: 'Organization',
           orgs: [],
@@ -189,12 +195,16 @@
         this.videoStream = null;
         reader.onload = ({ target: { result }}: any) => this.imageStream = result;
         reader.readAsDataURL(file);
+        this.payload = { ...this.payload, mediaSource: this.imageStream  };
+        this.payload.type = PostingTypesEnum.IMAGE
       },
       selectedVideo(file: File): void {
         const reader = new FileReader();
         this.imageStream = null;
         reader.onload = ({ target: { result }}: any) => this.videoStream = result;
         reader.readAsDataURL(file);
+        this.payload = { ...this.payload, mediaSource: this.videoStream  };
+        this.payload.type = PostingTypesEnum.VIDEO
       },
       onClickUsers (value) {
        this.individual.users = value;
@@ -203,6 +213,14 @@
       onClickOrgs (value) {
        this.organization.orgs = value;
        this.organization.showList = false;
+      },
+      submitPost() {
+        console.log(this.payload)
+       /* const payload = {
+          ...this.payload,
+          weight: this.profile.sections.length * 1000
+        }
+        this.addProfilePost(payload); */
       }
     },
   });

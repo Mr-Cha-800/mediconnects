@@ -1,5 +1,5 @@
 <template>
-  <div>{{dataFilters}}
+  <div>
     <q-chip
       :outline="!isActive('')"
       size="1rem"
@@ -46,7 +46,6 @@
     data() {
       const sections: Record<string, unknown>[] = [];
       return {
-        dataFilters: [],
         sections,
         newSection: '',
         editMode: false,
