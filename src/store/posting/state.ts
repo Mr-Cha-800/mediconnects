@@ -19,7 +19,7 @@ export interface PostingRequestInterface {
   content?: string;
 }
 
-export interface PostInterface extends Pick<PostingRequestInterface, 'type' | 'title' | 'description' | 'organizations'>{
+export interface PostInterface extends Pick<PostingRequestInterface, 'type' | 'title' | 'description' | 'organizations' | 'sectionGroup'>{
   id?: string;
   timestamp?: string;
   createdBy?: {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>{{dataFilters}}
     <q-chip
       :outline="!isActive('')"
       size="1rem"
@@ -34,7 +34,6 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-
   export default Vue.extend({
     name: 'UserProfileSections',
     props: {
@@ -47,6 +46,7 @@
     data() {
       const sections: Record<string, unknown>[] = [];
       return {
+        dataFilters: [],
         sections,
         newSection: '',
         editMode: false,
@@ -72,11 +72,10 @@
           });
           this.resetSection();
         }
-      },
+      }
     },
     mounted() {
       this.sections = [...this.$props.userSections];
     }
-
   });
 </script>

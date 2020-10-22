@@ -19,9 +19,9 @@ export const post = async ({ mediaSource, type, title, description }: PostingReq
   }).then(({ data }) => data);
 }
 
-export const editSection = async ({ sectionId, mediaSource, type, title, description }: PostingRequestInterface) => {
+export const editSection = async ({ sectionId, mediaSource, type, title, description, sectionGroup }: PostingRequestInterface) => {
   let mediaSourceMediaObject;
-  // console.log('section ID : ' + sectionId)
+ // console.log('sectionGroup ID : ' + sectionGroup)
   if (mediaSource) {
     let uploadType: UploadType = UploadType.IMAGE;
     if (type === PostingTypesEnum.VIDEO) uploadType = UploadType.VIDEO;
@@ -32,6 +32,7 @@ export const editSection = async ({ sectionId, mediaSource, type, title, descrip
     type,
     title,
     description,
+    sectionGroup,
     content: mediaSourceMediaObject
   }).then(({ data }) => data);
 }
