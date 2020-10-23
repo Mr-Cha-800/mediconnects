@@ -29,6 +29,7 @@ export interface UserProfileStateInterface {
   users: UserProfileInterface[],
   profile: UserProfileInterface;
   user: UserProfileInterface;
+  filter: string;
   status: {
     loading: boolean;
     updating: boolean;
@@ -45,6 +46,7 @@ const state: UserProfileStateInterface = {
   profile: {},
   user: {},
   userStatus: {},
+  filter: 'all',
   status: {
     loading: false,
     updating: false,

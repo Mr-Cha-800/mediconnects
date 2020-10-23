@@ -34,6 +34,7 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
+  import { mapGetters,mapActions } from 'vuex';
   export default Vue.extend({
     name: 'UserProfileSections',
     props: {
@@ -54,11 +55,14 @@
       };
     },
     methods: {
+      ...mapGetters('userProfileModule', ['filtersections']),
+      ...mapActions('userProfileModule', ['filterSectionss'] ),
       isActive(sectionName: string): boolean {
         return this.activeSection === sectionName;
       },
       setSection(sectionName: string): void {
         this.activeSection = sectionName
+        this.filterSectionss(this.activeSection)
       },
       resetSection(): void {
         this.newSection = '';
