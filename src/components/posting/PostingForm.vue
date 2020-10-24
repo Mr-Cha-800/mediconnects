@@ -49,9 +49,33 @@
           placeholder="Share something..."
           borderless
           rows="10"
-          v-model="payload.description"
-          type="textarea"
+          v-model="payload.title"
+          type="text"
         />
+      </q-item-section>
+
+    </q-item>
+    <q-item>
+        <q-item-section>
+
+        <q-expansion-item
+          label="Add Description"
+          class="overflow-hidden"
+          append
+          expand-icon="add"
+          expand-icon-toggle
+        >
+          <q-card>
+            <q-card-section>
+              <q-input
+                v-model="payload.description"
+                class="full-width"
+                placeholder="Description"
+                type="textarea"
+              />
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
       </q-item-section>
     </q-item>
     <PostMediaSelection @streamSelected="streamSelected"/>
@@ -66,10 +90,13 @@
         </q-btn>
       </q-item-section>
     </q-item>
+    <PostingState />
   </q-form>
 </template>
 <script lang="ts">
   import Vue from 'vue';
+  import PostingState from 'components/common/PostingState.vue';
+
   import { VForm } from 'src/types';
   import { mapActions } from 'vuex';
   import { validateRequired } from 'src/formValidators';
@@ -80,7 +107,7 @@
 
   export default Vue.extend({
     name: 'PostingForm',
-    components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection },
+    components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection, PostingState },
     props: {
       profile: {
         type: Object,
@@ -94,6 +121,7 @@
     data() {
         const payload: PostingRequestInterface = {
         type: PostingTypesEnum.TEXT,
+        title: '',
         description: '',
       };
       return {
@@ -141,15 +169,7 @@
        this.organization.showList = false;
       },
       submitPost() {
-        this.addPost(this.payload).then(() => {
-          this.$q.notify({
-            progress: true,
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'done',
-            message: 'Congratulations ! Posted successfully'
-          })
-        })
+        this.addPost(this.payload)
         this.payload = {
           type: PostingTypesEnum.TEXT,
           title: '',

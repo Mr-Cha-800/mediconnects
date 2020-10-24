@@ -25,7 +25,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-item-label class="text-h6">Post description</q-item-label>
+          <q-item-label class="text-h6">Post section group</q-item-label>
             <q-select
               v-model="payload.sectionGroup"
               :options="profile.sectionGroups"
