@@ -4,16 +4,13 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar>
-            <!-- THIS didn't work
-          <q-img :src="post.createdBy.avatar" height="100%"/>
-            -->
-            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+            <q-img :src="propAvatar" height="100%"/>
           </q-avatar>
         </q-item-section>
         <q-item-section>
           <q-item-label>{{post.createdBy.firstName}} {{post.createdBy.lastName}}</q-item-label>
           <q-item-label caption>{{post.createdBy.title}}</q-item-label>
-          <q-item-label caption>{{todaysDate}}</q-item-label>
+          <q-item-label caption>{{formatDate(post.timestamp)}}</q-item-label>
         </q-item-section>
       </q-item>
       <TextCard v-if="post.type === postingTypes.TEXT" :post="post"/>
@@ -73,9 +70,10 @@
 <script>
   import Vue from 'vue';
   import { PostingTypesEnum } from 'src/store/posting/state';
-  import { date } from 'quasar'
+  import formatDistanceToNow from 'date-fns/formatDistanceToNow'
   import ImageCard from 'components/posts/ImageCard.vue';
   import TextCard from 'components/posts/TextCard.vue';
+  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
   export default Vue.extend({
     name: 'feedpost',
@@ -101,32 +99,16 @@
         } else if (val === 2) {
           this.agree = 3;
         }
-      }
+      },
+      formatDate(stringDate) {
+        return formatDistanceToNow(new Date(stringDate), { addSuffix: true });
+      },
     },
   computed: {
+    propAvatar() {
+      return avatarMediaObject(this.$props.post.createdBy.avatar);
+    },
     postingTypes: () => PostingTypesEnum,
-    todaysDate () {
-      // to calculate time difference for each post , working perfectly !
-      const date1 = Date.now()
-      let unit = 'day'
-      let unithour = 'hours'
-      let unitminute = 'minutes'
-      let unitsecond = 'seconds'
-      if (date.isSameDate(date1, this.post.timestamp,'minute')) {
-      let diff = date.getDateDiff(date1, this.post.timestamp, unitsecond)
-        return diff + ' Seconds ago'
-      }
-      else if (date.isSameDate(date1, this.post.timestamp,'hour')) {
-      let diff = date.getDateDiff(date1, this.post.timestamp, unitminute)
-        return diff + ' Minutes ago'
-      }
-      else if (date.isSameDate(date1, this.post.timestamp,unit)) {
-      let diff = date.getDateDiff(date1, this.post.timestamp, unithour)
-        return diff + ' Hours ago'
-      }else{
-        return date.formatDate(this.post.timestamp, 'dddd D MMMM')
-      }
-    }
   }
   });
 </script>

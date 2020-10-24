@@ -3,7 +3,10 @@ import { StateInterface } from '../index';
 import { PostingStateInterface } from './state';
 
 const getters: GetterTree<PostingStateInterface, StateInterface> = {
-  posts: ({ posts }) => posts || [],
+  posts: ({ posts }) => {
+    const p = [...posts];
+    return p.reverse();
+  },
   status: ({ status }) => status || {},
 };
 
