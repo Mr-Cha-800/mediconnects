@@ -41,12 +41,12 @@
     components: { PostMediaSelectionDesktop, PostMediaSelectionMobile },
     data() {
       const sourceStream: File | CameraPhoto | unknown = {};
-      let type: PostingTypesEnum = PostingTypesEnum.TEXT;
+      let type: PostingTypesEnum ;
       return {
         sourceStream,
         content: {},
         dataUrl: '',
-        type
+        type : PostingTypesEnum.TEXT
       };
     },
     props: {
@@ -54,8 +54,7 @@
         type: String
       },
       mediaContent: {
-        type: Object,
-        default: () => ({})
+        type: Object
       },
 
     },

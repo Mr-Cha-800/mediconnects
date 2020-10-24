@@ -61,7 +61,7 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
     groups.addTenanttoGroup(groupId, payload).then(response => {
       CometChat.addMemberToGroup(groupId, payload.tenant);
       // waiting 100ms for groups to get indexed
-      setTimeout(() => dispatch('getTenants', groupId), 500);
+      setTimeout(function(){ dispatch('getTenants', groupId)}, 500);
     }).catch(error => {
       commit('getTenantsFailed', error);
     });
@@ -71,7 +71,7 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
     groups.removeTenant(payload.idGroup, payload.idTenant).then(response => {
       CometChat.removeMemberFromGroup(payload.idGroup, payload.idTenant);
       // waiting 100ms for groups to get indexed
-      setTimeout(() => dispatch('getTenants', payload.idGroup), 100);
+      setTimeout(function(){ dispatch('getTenants', payload.idGroup)} , 100);
     }).catch(error => {
       commit('getTenantsFailed', error);
     });

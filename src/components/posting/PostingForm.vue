@@ -132,11 +132,11 @@
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
         this.payload = { ...this.payload, mediaSource, type };
       },
-      onClickUsers (value) {
+      onClickUsers (value:any) {
        this.individual.users = value;
        this.individual.showList = false;
       },
-      onClickOrgs (value) {
+      onClickOrgs (value:any) {
        this.organization.orgs = value;
        this.organization.showList = false;
       },

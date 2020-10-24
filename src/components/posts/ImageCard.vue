@@ -18,8 +18,7 @@
     name: 'ImageCard',
     props: {
       post: {
-        type: Object,
-        default: () => ({})
+        type: Object
       }
     },
     computed: {

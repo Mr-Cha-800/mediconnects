@@ -10,8 +10,7 @@
     name: 'TextCard',
     props: {
       post: {
-        type: Object,
-        default: () => ({})
+        type: Object
       }
     }
   });

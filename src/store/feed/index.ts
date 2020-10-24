@@ -1,11 +1,11 @@
 import { Module } from 'vuex';
 import { StateInterface } from '../index';
-import state, { PostInterface } from './state';
+import state, { PostingStateInterface } from './state';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-const feedPostsModule: Module<PostInterface, StateInterface> = {
+const feedPostsModule: Module<PostingStateInterface, StateInterface> = {
   namespaced: true,
   actions,
   getters,

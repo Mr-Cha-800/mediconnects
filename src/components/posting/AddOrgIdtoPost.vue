@@ -56,7 +56,7 @@
     name: 'AddOrgIdtoPost',
     data() {
       const options: OrganizationInterface[] = [];
-      const selectedOrg: OrganizationInterface[] = [];
+      const selectedOrg: OrganizationInterface | null = null;
       const loading = false;
       return {
         selectedOrg,
@@ -96,7 +96,7 @@
           });
         });
       },
-      onClickOrgs (event) {
+      onClickOrgs (event:any) {
         this.$emit('clicked', this.selectedOrg)
       }
     }

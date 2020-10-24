@@ -57,7 +57,7 @@
     name: 'AddUserIdtoPost',
     data() {
       const options: UserProfileInterface[] = [];
-      const selectedUsers: UserProfileInterface[] = [] ;
+      const selectedUsers: UserProfileInterface[] | null = null ;
       const loading = false;
       return {
         selectedUsers,
@@ -97,7 +97,7 @@
           });
         });
       },
-      onClickUsers (event) {
+      onClickUsers (event: any) {
         this.$emit('clicked', this.selectedUsers)
       }
     }
