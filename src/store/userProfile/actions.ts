@@ -50,6 +50,9 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
       }).catch(error => commit('MyProfileUpdateFailed', error));
     }).catch(error => commit('MyProfileUpdateFailed', error));
   },
+  filterSectionss: ({ commit }, payload) =>{
+    commit('updateFilter',payload)
+  }
 };
 
 export default actions;

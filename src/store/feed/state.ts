@@ -46,7 +46,7 @@ export interface PostingStateInterface {
   }
 }
 
-const state: PostingStateInterface = {
+const state: PostInterface = {
   posts: [],
   section: {},
   status: {

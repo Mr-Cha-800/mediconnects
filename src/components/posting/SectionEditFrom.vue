@@ -23,6 +23,22 @@
           />
         </q-item-section>
       </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label class="text-h6">Post description</q-item-label>
+            <q-select
+              v-model="payload.sectionGroup"
+              :options="profile.sectionGroups"
+              class="full-width"  a
+              placeholder="Section Group"
+              option-value="id"
+              option-label="name"
+              emit-value
+              map-options
+            />
+        </q-item-section>
+
+      </q-item>
       <MediaSelection :mediaContent="file" :mediaType="payload.type" @streamSelected="streamSelected"/>
       <q-item class="q-pa-sm">
         <q-item-section class="q-pa-md">
@@ -57,7 +73,8 @@
         sectionId: '',
         type: PostingTypesEnum.TEXT,
         title: '',
-        description: ''
+        description: '',
+        sectionGroup: ''
       };
       return {
         payload,
@@ -75,12 +92,13 @@
         this.payload = {
           type: PostingTypesEnum.TEXT,
           title: '',
-          description: ''
+          description: '',
         };
       }
     },
     computed: {
       ...mapGetters('postingModule', ['sectionDetails', 'status']),
+      ...mapGetters('userProfileModule', ['profile']),
       postingTypes: () => PostingTypesEnum
     },
     watch: {
@@ -91,6 +109,7 @@
             this.payload.title = this.sectionDetails.section.title
             this.payload.description = this.sectionDetails.section.description
             this.payload.type = this.sectionDetails.section.type
+            this.payload.sectionGroup = this.sectionDetails.section.sectionGroup
             if(this.sectionDetails.section.content) {
               this.file = this.sectionDetails.section.content
             }

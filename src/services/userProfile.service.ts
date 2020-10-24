@@ -44,9 +44,8 @@ export const addSection = async ({ post, weight, group }: { post?: string, group
     .then(({ data }) => data);
 };
 
-export const editSection = async (id: string) => {
- //  console.log(id)
-  return axios.put(`${API}/account/profile/sections/${id}`, { id})
+export const editSection = async (id: string, group: string) => {
+  return axios.put(`${API}/account/profile/sections/${id}`, {id, group})
     .then(({ data }) => data);
 };
 export const deleteSection = async (id: string) => {

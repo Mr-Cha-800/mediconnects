@@ -10,6 +10,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
     commit('PostingRequest', payload);
     posting.post(payload).then(() => {
       commit('PostingSuccess', payload);
+      Router.back();
     }).catch(error => commit('PostingFailed', error));
   },
   addProfilePost: ({ commit }, payload) => {
@@ -23,7 +24,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
   editProfileSection: ({ commit, dispatch }, payload) => {
     commit('PostingRequest', payload);
     posting.editSection(payload).then(({id: post})  => {
-      userProfile.editSection(payload.id).then(() => {
+      userProfile.editSection(payload.id,payload.sectionGroup).then(() => {
         commit('PostingSuccess', payload);
         dispatch(`userProfileModule/getMyProfile`, null, { root: true });
         Router.back();

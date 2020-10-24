@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="{ section, id } in profile.sections" :key="section.id">
+    <div v-for="{ section, id } in filtersections" :key="section.id">
       <q-card flat square class="q-mt-md">
         <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
@@ -30,7 +30,7 @@
     name: 'ProfileSections',
     components: { TextCard, ImageCard, DeleteSection, MoveUpSection, MoveDownSection },
     computed: {
-      ...mapGetters('userProfileModule', ['profile']),
+      ...mapGetters('userProfileModule', ['profile', 'filtersections']),
       postingTypes: () => PostingTypesEnum
     }
   });

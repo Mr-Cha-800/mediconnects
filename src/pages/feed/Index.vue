@@ -12,23 +12,38 @@
         v-model="publicFeed"
       />
     </q-bar>
-    <feedpost/>
-    <feedpost/>
-    <feedpost/>
+      <State :status="status" :empty="!posts.length" >
+        <q-list bordered>
+          <template v-for="post in posts">
+              <feedpost :post="post"/>
+            <q-separator/>
+          </template>
+        </q-list>
+      </State>
   </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import feedpost from 'components/feedpost.vue';
-
+  import feedpost from 'components/feedPosts/feedpost.vue';
+  import { mapActions,mapGetters }  from 'vuex'
+  import State from 'components/common/State.vue';
   export default Vue.extend({
     name: 'FeedIndex',
-    components: {feedpost},
+    components: {feedpost,State },
     data() {
       return {
         publicFeed: 'ON',
       }
+    },
+    computed: {
+      ...mapGetters('feedPostsModule', ['posts', 'status']),
+    },
+    methods: {
+      ...mapActions('feedPostsModule', ['getPosts'])
+    },
+    created(){
+      this.getPosts()
     }
   });
 </script>
