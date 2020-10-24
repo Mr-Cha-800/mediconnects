@@ -56,8 +56,6 @@
     </q-item>
     <PostMediaSelection @streamSelected="streamSelected"/>
 
-    </q-item>
-
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
         <q-btn type="submit" label="Post" @click="submitPost" color="primary" >
