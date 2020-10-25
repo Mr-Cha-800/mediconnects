@@ -16,23 +16,23 @@ const getters: GetterTree<UserProfileStateInterface, StateInterface> = {
       return avengers
     }
     else if(state.filter === 'Experience') {
-     const avengers = state.profile.sections.filter(section => section.group === 'experience');
+     const avengers = state.profile.sections?.filter(section => section.group === 'experience');
       return avengers
     }
     else if(state.filter === 'Education') {
-     const avengers = state.profile.sections.filter(section => section.group === 'education');
+     const avengers = state.profile.sections?.filter(section => section.group === 'education');
       return avengers
     }
     else if(state.filter === 'Companies') {
-     const avengers = state.profile.sections.filter(section => section.group === 'companies');
+     const avengers = state.profile.sections?.filter(section => section.group === 'companies');
       return avengers
     }
     else if(state.filter === 'Family') {
-     const avengers = state.profile.sections.filter(section => section.group === 'family');
+     const avengers = state.profile.sections?.filter(section => section.group === 'family');
       return avengers
     }
     else if(state.filter === 'Music') {
-     const avengers = state.profile.sections.filter(section => section.group === 'music');
+     const avengers = state.profile.sections?.filter(section => section.group === 'music');
       return avengers
     }
     return state.profile.sections

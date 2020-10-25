@@ -1,13 +1,13 @@
 import { MutationTree } from 'vuex';
 import Vue from 'vue';
-import { PostInterface } from 'src/store/feed/state';
+import { PostingStateInterface } from 'src/store/feed/state';
 import { SectionInterface } from './state';
-const mutation: MutationTree<PostInterface> = {
+const mutation: MutationTree<PostingStateInterface> = {
   getPostsRequest(state) {
     Vue.set(state, 'posts', []);
     Vue.set(state, 'status', { loading: true });
   },
-  getPostsSuccess(state, postsList: PostInterface[]) {
+  getPostsSuccess(state, postsList: PostingStateInterface[]) {
     Vue.set(state, 'posts', postsList);
     Vue.set(state, 'status', { loading: false });
   },
