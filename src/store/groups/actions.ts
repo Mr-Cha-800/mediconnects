@@ -9,7 +9,9 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
 
   addGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
+    commit('postingModule/PostingRequest', null, { root: true })
     groups.create(payload).then(groupDetails => {
+      commit('postingModule/PostingSuccess', null, { root: true })
       commit('groupAddSuccess');
       CometChat.createGroup(groupDetails);
       dispatch('getGroups');
@@ -36,9 +38,11 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
   },
   updateGroup: ({ commit, dispatch }, payload) => {
     commit('groupEditRequest');
+    commit('postingModule/PostingRequest', null, { root: true })
     groups.update(payload).then(() => {
       CometChat.updateGroup(payload);
-      commit('groupUpdateSuccess', payload);
+    commit('postingModule/PostingSuccess', null, { root: true })
+    commit('groupUpdateSuccess', payload);
       dispatch('getGroups');
       Router.back();
     }).catch(error => {

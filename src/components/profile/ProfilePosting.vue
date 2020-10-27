@@ -39,27 +39,33 @@
     <div class="col-12 q-pa-md text-right" v-if="showPostButton">
       <q-btn color="primary" label="Post" @click="submitPost"/>
     </div>
+    <PostingState :loadingDetails="loadingDetails"/>
   </div>
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
+  import { PostingRequestInterface, PostingTypesEnum, LoadingTypesEnum } from 'src/store/posting/state';
   import { mapActions, mapGetters } from 'vuex';
   import MediaSelection from 'components/posting/MediaSelection.vue';
+  import PostingState from 'components/common/PostingState.vue';
 
   export default Vue.extend({
     name: 'ProfilePosting',
-    components: { MediaSelection },
+    components: { MediaSelection, PostingState },
     data() {
       const payload: PostingRequestInterface = {
         type: PostingTypesEnum.TEXT,
         title: ''
       };
       return {
+        loadingDetails:{
+          type: LoadingTypesEnum.POST
+        },
         payload
       };
     },
     computed: {
+      ...mapGetters('postingModule', ['postingStatus']),
       ...mapGetters('userProfileModule', ['profile']),
       showPostButton(): boolean {
         return !!this.payload.title || !!this.payload.mediaSource;
@@ -74,7 +80,7 @@
         const payload = {
           ...this.payload,
           weight: this.profile.sections.length * 1000
-        }
+        };
         this.addProfilePost(payload);
         this.payload = {
           type: PostingTypesEnum.TEXT,

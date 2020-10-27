@@ -51,7 +51,9 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
 
   addOrgProfile: ({ commit }, payload) => {
     commit('orgProfileAddRequest');
+    commit('postingModule/PostingRequest', null, { root: true })
     organizations.add(payload).then(() => {
+      commit('postingModule/PostingSuccess', null, { root: true })
       commit('orgProfileAddSuccess');
       return Router.push({name: 'profileOrganizations'});
     }).catch(error => {
@@ -61,7 +63,9 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
 
   editOrgProfile: ({ commit }, payload) => {
     commit('orgProfileEditRequest');
+    commit('postingModule/PostingRequest', null, { root: true })
     organizations.edit(payload).then(() => {
+      commit('postingModule/PostingSuccess', null, { root: true })
       commit('orgProfileEditSuccess');
       return Router.push({name: 'profileOrganizations'});
     }).catch(error => {
