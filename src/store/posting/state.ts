@@ -5,6 +5,13 @@ export enum PostingTypesEnum {
   DOCUMENT = 'document',
   TEXT = 'text',
 };
+export enum LoadingTypesEnum {
+  ORG = 'org',
+  GROUP = 'group',
+  POST = 'post',
+  SECTION = 'section',
+  PROFILE = 'profile',
+};
 
 export interface PostingRequestInterface {
   sectionId?: string;

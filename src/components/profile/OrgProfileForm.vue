@@ -32,6 +32,7 @@
         </template>
       </q-btn>
     </q-item-section>
+    <PostingState :loadingDetails="loadingDetails"/>
   </q-form>
 </template>
 <script lang="ts">
@@ -39,9 +40,13 @@
   import { VForm } from 'src/types';
   import { validateRequired } from 'src/formValidators';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import PostingState from 'components/common/PostingState.vue';
+  import { mapGetters } from 'vuex';
+ import { LoadingTypesEnum } from 'src/store/posting/state';
 
   export default Vue.extend({
     name: 'OrgProfileForm',
+    components: { PostingState },
     props: {
       profile: {
         type: Object,
@@ -54,11 +59,15 @@
     },
     data() {
       return {
+        loadingDetails:{
+          type: LoadingTypesEnum.ORG
+        },
         avatar: null,
         avatarImg: null,
       }
     },
     computed: {
+      ...mapGetters('postingModule', ['postingStatus']),
       vUpdateForm(): VForm {
         return this.$refs.updateForm as VForm
       },
