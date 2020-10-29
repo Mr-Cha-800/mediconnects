@@ -21,6 +21,7 @@ const actions: ActionTree<AccountInterface, StateInterface> = {
 
   logout({ commit }) {
     AccountService.logout();
+    CometChat.logout();
     commit('logout');
     return Router.push({name: 'login'});
   },
@@ -29,8 +30,9 @@ const actions: ActionTree<AccountInterface, StateInterface> = {
     commit('registerRequest');
     AccountService.register(user, password)
       .then(
-        (user) => {
-          CometChat.createUser(user.id)
+        async (user) => {
+          await CometChat.createUser(user.id, user.email);
+          await CometChat.login(user.id);
           commit('registerSuccess', user);
           Router.push({name: 'home'})
           return Router.push({name: 'MyProfileUpdate'});

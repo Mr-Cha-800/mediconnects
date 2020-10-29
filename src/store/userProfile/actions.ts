@@ -39,14 +39,15 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     }).catch(error => commit('MyProfileFailed', error));
   },
 
-  updateProfile: ({ commit }, payload) => {
+  updateProfile: ({ commit, dispatch }, payload) => {
     commit('MyProfileUpdateRequest');
     userProfile.update(payload).then(userDetails => {
       CometChat.updateUser(userDetails);
       // refresh the token, After Updating profile
       AccountService.refreshToken().then(user => {
         commit('MyProfileUpdateSuccess', userDetails);
-        return Router.push({name: 'MyProfile'});
+        return dispatch(`accountModule/logout`, null, { root: true });
+        //return Router.push({name: 'MyProfile'});
       }).catch(error => commit('MyProfileUpdateFailed', error));
     }).catch(error => commit('MyProfileUpdateFailed', error));
   },
