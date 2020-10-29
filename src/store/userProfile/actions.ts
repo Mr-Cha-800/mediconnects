@@ -39,7 +39,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     }).catch(error => commit('MyProfileFailed', error));
   },
 
-  updateProfile: ({ commit }, payload) => {
+  updateProfile: ({ commit, dispatch }, payload) => {
     commit('MyProfileUpdateRequest');
     commit('postingModule/PostingRequest', null, { root: true })
     userProfile.update(payload).then(userDetails => {
@@ -47,6 +47,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
       // refresh the token, After Updating profile
       AccountService.refreshToken().then(user => {
         commit('MyProfileUpdateSuccess', userDetails);
+        dispatch(`accountModule/logout`, null, { root: true });
         commit('postingModule/PostingSuccess', null, { root: true })
         return Router.push({name: 'MyProfile'});
       }).catch(error => commit('MyProfileUpdateFailed', error));

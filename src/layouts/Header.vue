@@ -26,7 +26,7 @@
         <q-space/>
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn round dense flat icon="message">
+          <q-btn round dense flat icon="message" :to="{name: 'messages'}">
             <q-tooltip>Messages</q-tooltip>
           </q-btn>
           <q-btn round dense flat icon="notifications">
@@ -142,7 +142,6 @@
             label: 'Messages',
             icon: 'message',
             pathName: 'messages',
-            badge: '99+'
           }
         }
       };

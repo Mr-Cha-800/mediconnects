@@ -5,12 +5,15 @@ import { Router } from 'src/router';
 import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 import { GroupsInterface } from 'src/store/groups/state';
 
-export const createUser = async (id?: string) => {
-  const user = new CometChat.User(id);
-  await CometChat.createUser(user, COMETCHAT_CONSTANTS.API_KEY + '');
-  return Promise.resolve();
+export const createUser = (uid?: string, name?: string) => {
+  const user = new CometChat.User({
+    uid,
+    name,
+  });
+  return  CometChat.createUser(user, COMETCHAT_CONSTANTS.API_KEY + '');
 }
 export const login = (id?: string) => CometChat.login(id, COMETCHAT_CONSTANTS.API_KEY + '')
+export const logout = () => CometChat.logout()
 
 export const updateUser = async ({ id, firstName, lastName, avatar }: UserProfileInterface) => {
   const user = new CometChat.User({

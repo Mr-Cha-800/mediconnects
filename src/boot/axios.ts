@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { boot } from 'quasar/wrappers';
 import { Router } from 'src/router';
+import * as Sentry from "@sentry/browser";
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -23,10 +24,16 @@ export default boot(({ Vue, store }) => {
 
   axios.interceptors.response.use(
     response => response,
-    ({ response: { data: { message, code } } }) => {
+    (error) => {
+      const { response: { data: { message, code } } } = error;
+
       if (code === '406') {
         return Router.push({name: 'MyProfileUpdate'})
       }
+
+      Sentry.captureException(message, {
+        extra: error
+      });
 
       if (code === '500') {
         throw 'An unknown error has occurred';
