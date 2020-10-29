@@ -53,16 +53,18 @@
       </q-item>
 
 
+    <PostingState :loadingDetails="loadingDetails"/>
     </q-form>
   </State>
 </template>
 <script lang="ts">
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
-  import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
+  import { PostingRequestInterface, PostingTypesEnum, LoadingTypesEnum } from 'src/store/posting/state';
   import MediaSelectionUpdate from 'components/posting/MediaSelectionUpdate.vue';
   import State from 'components/common/State.vue';
   import MediaSelection from 'components/posting/MediaSelection.vue';
+  import PostingState from 'components/common/PostingState.vue';
 
 
   export default Vue.extend({
@@ -77,11 +79,14 @@
         sectionGroup: ''
       };
       return {
+        loadingDetails:{
+          type: LoadingTypesEnum.SECTION
+        },
         payload,
         file: {}
       };
     },
-    components: { State, MediaSelection },
+    components: { State, MediaSelection, PostingState },
     methods: {
       ...mapActions('postingModule', ['getSection', 'editProfileSection']),
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
