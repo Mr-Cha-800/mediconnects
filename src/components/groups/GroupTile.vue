@@ -3,8 +3,7 @@
   <q-item clickable :to="{ name: 'groupTenants', params: { groupId: group.id, groupName: group.name } }">
     <q-item-section class="q-ml-none" avatar>
       <q-avatar size="6rem" square>
-        <q-img
-          :src="avatar"/>
+        <AvatarMedia :content="$props.group.avatar"/>
       </q-avatar>
     </q-item-section>
     <q-item-section>
@@ -50,31 +49,22 @@
 </template>
 
 <script>
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
   import { mapActions } from 'vuex';
   export default {
-    name: 'OrganizationTile',
-    components: {  },
+    name: 'GroupTile',
+    components: { AvatarMedia },
     props: {
       group: {
         type: Object,
-        default: () => ({})
-      }
-    },
-    data() {
-      return {
-      };
-    },
-    computed: {
-      avatar() {
-        return avatarMediaObject(this.$props.group.avatar);
+        default: () => ({}),
       }
     },
     methods: {
       ...mapActions('GroupsModule', ['deleteGroup']),
-      deletegroupp(){
+      deletegroupp() {
         this.deleteGroup({
-          id: this.group.id
+          id: this.$props.group.id
         })
       }
     }

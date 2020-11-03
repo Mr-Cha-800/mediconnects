@@ -4,18 +4,17 @@ import * as groups from './../../services/groups.service';
 import * as CometChat from 'src/services/cometChat.service';
 import { GroupsStateInterface } from 'src/store/groups/state';
 import { Router } from 'src/router';
+import { LoadingTypesEnum } from 'src/store/posting/state';
 
 const actions: ActionTree<GroupsStateInterface, StateInterface> = {
 
   addGroup: ({ commit, dispatch }, payload) => {
-    commit('groupEditRequest');
-    commit('postingModule/PostingRequest', null, { root: true })
+    commit('postingModule/PostingRequest', {type: LoadingTypesEnum.GROUP, title: payload.title}, { root: true });
+    Router.back();
     groups.create(payload).then(groupDetails => {
       commit('postingModule/PostingSuccess', null, { root: true })
       commit('groupAddSuccess');
-      CometChat.createGroup(groupDetails);
       dispatch('getGroups');
-      Router.back();
     }).catch(error => {
       commit('groupEditFailed', error);
     });
@@ -37,10 +36,9 @@ const actions: ActionTree<GroupsStateInterface, StateInterface> = {
     });
   },
   updateGroup: ({ commit, dispatch }, payload) => {
-    commit('groupEditRequest');
-    commit('postingModule/PostingRequest', null, { root: true })
+    commit('postingModule/PostingRequest', {type: LoadingTypesEnum.GROUP, title: payload.title}, { root: true });
+    Router.back();
     groups.update(payload).then(() => {
-      CometChat.updateGroup(payload);
     commit('postingModule/PostingSuccess', null, { root: true })
     commit('groupUpdateSuccess', payload);
       dispatch('getGroups');

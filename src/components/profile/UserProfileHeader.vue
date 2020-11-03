@@ -3,7 +3,7 @@
     <q-item class="flex fit justify-start items-center">
       <div class="q-pr-lg q-pr-xl-md">
         <q-avatar size="15vh">
-          <q-img :src="avatar" height="100%"/>
+          <AvatarMedia :content="profile.avatar"/>
         </q-avatar>
       </div>
       <div class="self-center">
@@ -28,7 +28,7 @@
         <FollowConnect :type="entity" :entity="profile.id" />
       </q-item-label>
     </q-item>
-    <q-item class="row" v-if="!isMyProfile">
+    <q-item class="row">
       <q-item-section class="col-12">
         <q-item-label caption>
           <UserProfileSocialTags :count="profile.followers">Followers</UserProfileSocialTags>
@@ -60,12 +60,12 @@
   import { mapGetters } from 'vuex';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import UserProfileSections from 'components/profile/UserProfileSections.vue';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
 
   export default Vue.extend({
     name: 'UserProfileHeader',
-    components: { UserProfileSocialTags, UserProfileSections, FollowConnect },
+    components: { UserProfileSocialTags, UserProfileSections, FollowConnect, AvatarMedia },
     props: {
       profile: {
         type: Object,
@@ -74,9 +74,6 @@
     },
     computed: {
       ...mapGetters('userProfileModule', ['isMe']),
-      avatar(): string {
-        return avatarMediaObject(this.$props.profile.avatar);
-      },
       entity: (): EntityTypes => EntityTypes.USER,
       isMyProfile(): boolean {
         return this.isMe(this.$props.profile.id);

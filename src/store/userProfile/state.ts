@@ -23,6 +23,9 @@ export interface UserProfileInterface {
   posts? : number;
   followed? : boolean;
   connected? : boolean;
+  refreshToken?: {
+    token: string;
+  }
 }
 
 export interface UserProfileStateInterface {

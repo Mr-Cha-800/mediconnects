@@ -1,7 +1,6 @@
 <template>
   <q-form @submit.prevent="submitProfile" ref="updateForm">
-    <q-bar class="bg-grey-2">
-      <q-space />
+    <NavBanner>
       <q-toggle
         :false-value="false"
         :label="`Public ${isPublicPost ? 'ON' : 'OFF'}`"
@@ -12,7 +11,7 @@
         v-model="isPublicPost"
         style="color:#009688"
       />
-    </q-bar>
+    </NavBanner>
     <!-- END -->
     <q-item v-if="!isPublicPost">
       <q-chip
@@ -55,12 +54,11 @@
       </q-item-section>
 
     </q-item>
-    <q-item>
-        <q-item-section>
+    <div class="full-width">
 
         <q-expansion-item
-          label="Add Description"
-          class="overflow-hidden"
+          label="More details"
+          class="overflow-hidden full-width"
           append
           expand-icon="add"
           expand-icon-toggle
@@ -70,14 +68,13 @@
               <q-input
                 v-model="payload.description"
                 class="full-width"
-                placeholder="Description"
+                placeholder="Add Description to your post"
                 type="textarea"
               />
             </q-card-section>
           </q-card>
         </q-expansion-item>
-      </q-item-section>
-    </q-item>
+    </div>
     <PostMediaSelection @streamSelected="streamSelected"/>
 
     <q-item class="q-pa-sm">
@@ -90,7 +87,6 @@
         </q-btn>
       </q-item-section>
     </q-item>
-    <PostingState />
   </q-form>
 </template>
 <script lang="ts">
@@ -104,10 +100,11 @@
   import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
   import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
   import PostMediaSelection from 'components/posting/PostMediaSelection.vue';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'PostingForm',
-    components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection, PostingState },
+    components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection, PostingState, NavBanner },
     props: {
       profile: {
         type: Object,

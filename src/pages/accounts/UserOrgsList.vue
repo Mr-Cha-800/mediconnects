@@ -1,6 +1,9 @@
 <template>
   <div>
     <q-card flat>
+      <NavBanner>
+        <q-btn flat color="primary" icon="add" :to="{ name: 'OrgProfileAdd' }"/>
+      </NavBanner>
       <div class="flex q-pa-md">
         <q-btn
           rounded
@@ -11,8 +14,6 @@
           @click="setOrgCategory(orgCategory.payload, orgKey)"
           class="q-ml-sm"
         />
-
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'OrgProfileAdd' }"/>
       </div>
       <q-separator/>
       <State :status="status" :empty="!getOrgs.length" >
@@ -37,10 +38,11 @@
   import OrganizationTile from 'components/organizations/OrganizationTile.vue';
   import State from 'components/common/State.vue';
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'Organization',
-    components: { State, OrganizationTile, PublicOrganizationTile },
+    components: { State, OrganizationTile, PublicOrganizationTile, NavBanner },
     data() {
       return {
         activeOrg: 'account',

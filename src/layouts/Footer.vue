@@ -8,19 +8,21 @@
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="gt-sm" v-if="!postingStatus.loading">
       <q-btn fab icon="add" color="primary" :to="{name: 'AddPost'}"/>
     </q-page-sticky>
+
+    <PostingState v-if="postingStatus.loading" />
   </div>
+
 </template>
 
 <script lang="ts">
   import { mapGetters } from 'vuex';
-  // import PostingState from 'components/common/PostingState.vue';
+  import PostingState from 'components/common/PostingState.vue';
 
   export default {
     name: 'Footer',
-    components: { // PostingState
-     },
+    components: { PostingState },
     computed: {
-     // ...mapGetters('postingModule', ['postingStatus']),
+     ...mapGetters('postingModule', ['postingStatus']),
     },
   };
 </script>

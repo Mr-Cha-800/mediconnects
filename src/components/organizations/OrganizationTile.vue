@@ -2,8 +2,7 @@
   <q-item clickable :to="{ name: 'organizationProfile', params: { orgId: $props.org.id } }">
     <q-item-section class="q-ml-none" avatar>
       <q-avatar size="6rem" square>
-        <q-img
-          :src="avatar"/>
+        <AvatarMedia :content="org.avatar"/>
       </q-avatar>
     </q-item-section>
     <q-item-section>
@@ -34,9 +33,9 @@
   </q-item>
 </template>
 
-<script>
+<script lang="ts">
 
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
 
   export default {
     name: 'OrganizationTile',
@@ -46,16 +45,12 @@
         default: () => ({})
       }
     },
+    components: { AvatarMedia },
     data() {
       return {
         isSelected: false
       };
     },
-    computed: {
-      avatar() {
-        return avatarMediaObject(this.$props.org.avatar);
-      }
-    }
   };
 </script>
 

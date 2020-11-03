@@ -30,6 +30,10 @@ export default boot(({ Vue, store }) => {
       if (code === '406') {
         return Router.push({name: 'MyProfileUpdate'})
       }
+      // Token Expired
+      if (code === '401') {
+        return Router.push({name: 'login'})
+      }
 
       Sentry.captureException(message, {
         extra: error

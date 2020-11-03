@@ -1,13 +1,5 @@
 <template>
   <div @scroll="handleChatScroll($event)">
-    <q-toolbar class="bg-grey-3">
-      <q-input rounded outlined dense class="WAL__field full-width" bg-color="white" v-model="searchKey"
-               placeholder="Search or start a new conversation" @change="onSearchChange">
-        <template slot="prepend">
-          <q-icon name="search"/>
-        </template>
-      </q-input>
-    </q-toolbar>
     <q-scroll-area :style="style">
       <q-list>
         <q-item
@@ -94,7 +86,7 @@
       getChatList(data) {
         this.callChatList(data).fetchNext().then(chat => {
             this.chatList = [...this.chatList, ...chat];
-            if (this.selectedChatIndex === null) {
+            if (this.selectedChatIndex === null && this.chatList.length) {
               this.currentUser(this.chatList[0], 0);
             }
           },

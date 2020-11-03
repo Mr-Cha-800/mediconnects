@@ -32,7 +32,6 @@
         </template>
       </q-btn>
     </q-item-section>
-    <PostingState :loadingDetails="loadingDetails"/>
   </q-form>
 </template>
 <script lang="ts">

@@ -1,18 +1,9 @@
 <template>
   <State :status="status" :empty="!orgDetails">
     <q-card flat>
-      <template>
-        <OrgProfileHeader :org="orgDetails" />
-        <q-separator />
-        <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
-        <q-separator />
-        <ProfilePosting />
-      </template>
-    </q-card>
-
-    <!--TODO: Add list of user posts-->
-    <q-card flat class="q-mt-md flex" style="height: 400px">
-      Posts Goes Here
+      <NavBanner />
+      <OrgProfileHeader :org="orgDetails" />
+      <q-separator />
     </q-card>
   </State>
 </template>
@@ -26,15 +17,17 @@
   import ErrorState from 'components/common/ErrorState.vue';
   import EmptyState from 'components/common/EmptyState.vue';
   import State from 'components/common/State.vue';
+  import { mapCacheActions } from 'vuex-cache';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'Profile',
-    components: { State, OrgProfileHeader, ProfilePosting },
+    components: { State, OrgProfileHeader, ProfilePosting, NavBanner },
     computed: {
       ...mapGetters('orgProfileModule', ['orgDetails', 'status']),
     },
     methods: {
-      ...mapActions('orgProfileModule', ['getOrg']),
+      ...mapCacheActions('orgProfileModule', ['getOrg']),
     },
     beforeMount() {
       const { $route: { params: {orgId = ''} = {} } = {} } = this;

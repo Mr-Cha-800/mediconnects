@@ -21,7 +21,7 @@ export default route<Store<StateInterface>>(({ Vue, store }) => {
 
   Router.beforeEach(async (to, from, next) => {
     const { meta: { auth } } = to;
-    const user = await CometChat.getLoggedinUser();
+    const user = {} //await CometChat.getLoggedinUser();
 
     if (auth && (!user || !store.getters['accountModule/isAuthenticated'])) {
       CometChat.logout();

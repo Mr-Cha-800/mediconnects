@@ -17,14 +17,20 @@ export const register = (user: string, password: string) =>
     .then(({ data }) => handleLoginResponse(data));
 
 const handleLoginResponse = ({ id, email, token }: UserInterface) => {
-  if (token) {
-    localStorage.setItem('token', JSON.stringify(token));
-    localStorage.setItem('user', JSON.stringify({ id, email }));
-  }
+  handleRefreshTokenResponse({token});
+  localStorage.setItem('user', JSON.stringify({ id, email }));
   return { id, email, token };
 };
-const handleRefreshTokenResponse = ({ token }: UserInterface) => {
+export const handleRefreshTokenResponse = ({ token }: UserInterface) => {
   if (token) {
+    axios.interceptors.response.use(
+      config => {
+        config.headers['Content-Type'] = 'application/json';
+        config.headers.Authorization = `Bearer ${token}`;
+
+        return config;
+      }
+    )
     localStorage.setItem('token', JSON.stringify(token));
   }
   return { token };

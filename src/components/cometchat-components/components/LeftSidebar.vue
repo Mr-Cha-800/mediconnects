@@ -5,7 +5,6 @@
     <CallList v-else-if="activeTab=='call'" />
     <ChatList v-else-if="activeTab=='chat'" />
     <GroupList v-else-if="activeTab=='groups'" />
-    <MoreList v-else />
     <div class="ccl-left-panel-footer-wrap">
       <Nav @activeTab="currentTab" />
     </div>

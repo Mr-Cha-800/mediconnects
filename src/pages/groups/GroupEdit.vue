@@ -1,5 +1,6 @@
 <template>
   <q-card flat>
+    <NavBanner />
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-md-2">
         <State :status="this.status" :empty="!this.profile">
@@ -19,10 +20,11 @@
   import ErrorState from 'components/common/ErrorState.vue';
   import EmptyState from 'components/common/EmptyState.vue';
   import State from 'components/common/State.vue';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'GroupEdit',
-    components: { State, GroupForm },
+    components: { State, GroupForm, NavBanner },
     computed: {
       ...mapGetters('GroupsModule', ['group', 'status']),
     },

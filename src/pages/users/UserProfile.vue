@@ -1,22 +1,17 @@
 <template>
   <State :status="userStatus" :empty="!user">
     <q-card flat>
-        <template>
-          <UserProfileHeader :profile="user" />
-          <q-separator />
-          <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
-        </template>
+      <NavBanner />
+      <UserProfileHeader :profile="user" />
+      <q-separator />
     </q-card>
 
     <div v-for="{ section } in user.sections" :key="section.id">
       <q-card flat square class="q-mt-md">
         <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
-        <div class="absolute-right">
-          <q-btn flat round color="primary" icon="keyboard_arrow_up"/>
-          <q-btn flat round color="primary" icon="edit"/>
-          <q-btn flat round color="primary" icon="keyboard_arrow_down"/>
-        </div>
+        <VideoCard v-if="section.type === postingTypes.VIDEO" :post="section"/>
+        <AudioCard v-if="section.type === postingTypes.AUDIO" :post="section"/>
       </q-card>
     </div>
   </State>
@@ -30,16 +25,20 @@
   import { PostingTypesEnum } from 'src/store/posting/state';
   import ImageCard from 'components/posts/ImageCard.vue';
   import TextCard from 'components/posts/TextCard.vue';
+  import VideoCard from 'components/posts/VideoCard.vue';
+  import AudioCard from 'components/posts/AudioCard.vue';
+  import { mapCacheActions } from 'vuex-cache';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'UserProfile',
-    components: { State, UserProfileHeader, TextCard, ImageCard },
+    components: { State, UserProfileHeader, TextCard, ImageCard, VideoCard, AudioCard, NavBanner },
     computed: {
       ...mapGetters('userProfileModule', ['user', 'userStatus']),
       postingTypes: () => PostingTypesEnum
     },
     methods: {
-      ...mapActions('userProfileModule', ['getUser']),
+      ...mapCacheActions('userProfileModule', ['getUser']),
     },
     beforeMount() {
       const { $route: { params: {userId = ''} = {} } = {} } = this;

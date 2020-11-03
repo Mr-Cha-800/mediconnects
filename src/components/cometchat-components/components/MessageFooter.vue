@@ -30,7 +30,10 @@
               <div v-if="fileName" class="file-desc">{{fileName}}</div>
               <div v-if="fileSize" class="file-desc">{{fileSize}}</div>
             </div>
-            <a href="javascript:;" v-on:click="sendImageMessage($event)" class="media-send-button">Send File</a>
+            <div class="q-mt-md">
+              <q-btn v-on:click="sendImageMessage($event)" class="bg-primary q-mr-md">Send File</q-btn>
+              <q-btn flat v-on:click="resetFiles()" >Cancel</q-btn>
+            </div>
           </div>
         </div>
         <!--END-->
@@ -266,6 +269,13 @@ export default {
         );
       },
 
+      resetFiles() {
+        this.imageInput = undefined;
+        this.audioInput = undefined;
+        this.filesInput = undefined;
+        this.videoInput = undefined;
+      },
+
 
       onMessageSent(message) {
         // this.updatedMessagesList = JSON.stringify([message]);
@@ -301,7 +311,6 @@ export default {
 }
 .media-wrap-container {
   text-align: center;
-  max-width: 30%;
   margin: 0 auto;
   position: relative;
   animation: animatetop 0.4s;
@@ -315,7 +324,6 @@ export default {
 }
 
 .media-send-button{
-  background-color: #0008ff;
   color: #fff;
   display: inline-block;
   padding: 10px 15px;

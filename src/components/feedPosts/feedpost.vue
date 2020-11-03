@@ -15,53 +15,57 @@
       </q-item>
       <TextCard v-if="post.type === postingTypes.TEXT" :post="post"/>
       <ImageCard v-if="post.type === postingTypes.IMAGE" :post="post"/>
+      <VideoCard v-if="post.type === postingTypes.VIDEO" :post="post"/>
+      <AudioCard v-if="post.type === postingTypes.AUDIO" :post="post"/>
 
-      <q-bar class="q-pt-md justify-between  text-body2 bg-white">
-        <p>
+      <q-bar class="q-my-xs bg-white">
+        <span class="text-grey-8 text-body1 q-mr-md">
           <q-icon color="red" class="" name="favorite"/>
           500
-        </p>
-        <p>
-          <q-icon color="grey" class="" name="cancel"/>
-          5 Comments
-        </p>
-        <p>
+        </span>
+        <span class="text-grey-8 text-body1 q-mr-md">
           <q-icon color="grey" class="" name="mode_comment"/>
-          2 Shares </p>
-        <p>
+          5 Comments
+        </span>
+        <span class="text-grey-8 text-body1 q-mr-md">
           <q-icon color="grey" class="" name="share"/>
-          1.2k Views
-        </p>
+          2 Shares
+        </span>
       </q-bar>
 
 
       <q-separator/>
-      <q-bar class="bg-white justify-center centers q-pr-md q-pl-md">
-        <q-btn no-wrap no-caps size="sm" @click="agreer(4)" v-if="agree === 2" flat color="green">
-          <q-icon class="q-pr-xs" name="check_circle"/>
-          Agreed
-        </q-btn>
-        <q-btn no-wrap no-caps size="sm" @click="agreer(1)" v-if="agree === 1 || agree === 3 " flat color="grey-7">
-          <q-icon class="q-pr-xs" name="check_circle"/>
-          Agree
-        </q-btn>
-        <q-btn no-wrap no-caps size="sm" @click="agreer(2)" v-if="agree === 1 || agree === 2" flat color="grey-7">
-          <q-icon class="q-pr-xs" name="cancel"/>
-          Disagree
-        </q-btn>
-        <q-btn no-wrap no-caps size="sm" @click="agreer(4)" v-if="agree === 3" flat color="red">
-          <q-icon class="q-pr-xs" name="cancel"/>
-          Disagreed
-        </q-btn>
-        <q-btn no-wrap no-caps size="sm" flat color="grey-7">
-          <q-icon class="q-pr-xs" name="mode_comment"/>
-          Comment
-        </q-btn>
-        <q-btn no-wrap no-caps size="sm" flat color="grey-7">
-          <q-icon class="q-pr-xs" name="share"/>
-          Share
-        </q-btn>
-      </q-bar>
+      <div class="flex q-py-xs">
+        <div>
+          <q-btn no-wrap no-caps size="sm" @click="agreer(4)" v-if="agree === 2" flat color="green">
+            <q-icon class="q-pr-xs" name="check_circle"/>
+            <span class="text-body2 q-pr-xs">Agreed</span>
+          </q-btn>
+          <q-btn no-wrap no-caps size="sm" @click="agreer(1)" v-if="agree === 1 || agree === 3 " flat color="grey-7">
+            <q-icon class="q-pr-xs" name="check_circle"/>
+            <span class="text-body2 q-pr-xs">Agree</span>
+          </q-btn>
+          <q-btn no-wrap no-caps size="sm" @click="agreer(2)" v-if="agree === 1 || agree === 2" flat color="grey-7">
+            <q-icon class="q-pr-xs" name="cancel"/>
+            <span class="text-body2 q-pr-xs">Disagree</span>
+          </q-btn>
+          <q-btn no-wrap no-caps size="sm" @click="agreer(4)" v-if="agree === 3" flat color="red">
+            <q-icon class="q-pr-xs" name="cancel"/>
+            <span class="text-body2 q-pr-xs">Disagreed</span>
+          </q-btn>
+        </div>
+        <q-space />
+        <div>
+          <q-btn no-wrap no-caps size="sm" flat color="grey-7">
+            <q-icon class="q-pr-xs" name="mode_comment"/>
+            <span class="text-body2 q-pr-xs">Comment</span>
+          </q-btn>
+          <q-btn no-wrap no-caps size="sm" flat color="grey-7">
+            <q-icon class="q-pr-xs" name="share"/>
+            <span class="text-body2 q-pr-xs">Share</span>
+          </q-btn>
+        </div>
+      </div>
     </q-card>
   </div>
 
@@ -73,11 +77,13 @@
   import formatDistanceToNow from 'date-fns/formatDistanceToNow'
   import ImageCard from 'components/posts/ImageCard.vue';
   import TextCard from 'components/posts/TextCard.vue';
+  import VideoCard from 'components/posts/VideoCard.vue';
+  import AudioCard from 'components/posts/AudioCard.vue';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
 
   export default Vue.extend({
     name: 'feedpost',
-    components: {ImageCard, TextCard },
+    components: {ImageCard, TextCard, VideoCard, AudioCard },
     data() {
       return {
         agree: 1

@@ -1,15 +1,15 @@
 <template>
   <div>
+    <template v-if="status.error">
+      <ErrorState>{{status.error}}</ErrorState>
+    </template>
     <template v-if="status.loading">
       <Loader />
-    </template>
-    <template v-else-if="status.error">
-      <ErrorState>{{status.error}}</ErrorState>
     </template>
     <template v-else-if="empty">
       <EmptyState />
     </template>
-    <slot v-else />
+    <slot v-if="!status.loading && !empty" />
   </div>
 </template>
 

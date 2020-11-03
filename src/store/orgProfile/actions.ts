@@ -4,6 +4,8 @@ import * as organizations from './../../services/organisations.service';
 import { OrgSearchQueryInterface } from 'src/services/organisations.service';
 import { OrganizationInterface, OrgProfileInterface } from 'src/store/orgProfile/state';
 import { Router } from 'src/router';
+import { LoadingTypesEnum } from 'src/store/posting/state';
+import { OrgSearchScopeEnum } from './../../services/organisations.service';
 const actions: ActionTree<OrgProfileInterface, StateInterface> = {
   search: ({ commit }, payload: OrgSearchQueryInterface) => {
     commit('orgSearchRequest');
@@ -49,27 +51,28 @@ const actions: ActionTree<OrgProfileInterface, StateInterface> = {
     })
   },
 
-  addOrgProfile: ({ commit }, payload) => {
-    commit('orgProfileAddRequest');
-    commit('postingModule/PostingRequest', null, { root: true })
+  addOrgProfile: ({ commit, dispatch }, payload) => {
+    commit('postingModule/PostingRequest', {type: LoadingTypesEnum.ORG, title: payload.title}, { root: true });
+    Router.back();
     organizations.add(payload).then(() => {
       commit('postingModule/PostingSuccess', null, { root: true })
       commit('orgProfileAddSuccess');
-      return Router.push({name: 'profileOrganizations'});
+      dispatch('search', {scope: OrgSearchScopeEnum.ACCOUNT});
     }).catch(error => {
       commit('orgProfileAddFailed', error);
+      commit('postingModule/PostingFailed', null, { root: true });
     })
   },
 
   editOrgProfile: ({ commit }, payload) => {
-    commit('orgProfileEditRequest');
-    commit('postingModule/PostingRequest', null, { root: true })
+    commit('postingModule/PostingRequest', {type: LoadingTypesEnum.ORG, title: payload.title}, { root: true });
+    Router.back();
     organizations.edit(payload).then(() => {
       commit('postingModule/PostingSuccess', null, { root: true })
       commit('orgProfileEditSuccess');
-      return Router.push({name: 'profileOrganizations'});
     }).catch(error => {
       commit('orgProfileEditFailed', error);
+      commit('postingModule/PostingFailed', null, { root: true });
     })
   },
 };

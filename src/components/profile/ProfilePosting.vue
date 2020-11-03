@@ -4,7 +4,7 @@
       <q-input rounded dense outlined placeholder="Post to profile" autogrow v-model="payload.title"/>
       <div>
         <q-expansion-item
-          label="Add Description"
+          label="More Details"
           class="overflow-hidden"
           append
           expand-icon="add"
@@ -15,7 +15,7 @@
               <q-input
                 v-model="payload.description"
                 class="full-width"
-                placeholder="Description"
+                placeholder="Add Description to your Profile Post"
                 type="textarea"
               />
             </q-card-section>
@@ -24,7 +24,7 @@
                 v-model="payload.sectionGroup"
                 :options="profile.sectionGroups"
                 class="full-width"  a
-                placeholder="Section Group"
+                label="Section Group"
                 option-value="id"
                 option-label="name"
                 emit-value
@@ -39,7 +39,6 @@
     <div class="col-12 q-pa-md text-right" v-if="showPostButton">
       <q-btn color="primary" label="Post" @click="submitPost"/>
     </div>
-    <PostingState :loadingDetails="loadingDetails"/>
   </div>
 </template>
 <script lang="ts">
@@ -68,7 +67,7 @@
       ...mapGetters('postingModule', ['postingStatus']),
       ...mapGetters('userProfileModule', ['profile']),
       showPostButton(): boolean {
-        return !!this.payload.title || !!this.payload.mediaSource;
+        return !!this.payload.sectionGroup && (!!this.payload.title || !!this.payload.mediaSource);
       }
     },
     methods: {

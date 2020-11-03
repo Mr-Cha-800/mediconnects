@@ -47,7 +47,7 @@ export interface PostingStateInterface {
     group?: string
   },
   posting?: {
-    post: PostingRequestInterface;
+    payload: PostingRequestInterface;
     status: {
       loading: boolean;
       error?: string;

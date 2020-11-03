@@ -52,8 +52,6 @@
 
       </q-item>
 
-
-    <PostingState :loadingDetails="loadingDetails"/>
     </q-form>
   </State>
 </template>

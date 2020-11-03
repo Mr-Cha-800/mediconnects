@@ -4,3 +4,15 @@
     display: none !important
   }
 }
+
+.top-shadow {
+  padding-bottom: 50px !important;
+  background: #C3C3C3;
+  background: -webkit-linear-gradient(bottom, #C3C3C3, #FFFFFF);
+  background: -moz-linear-gradient(bottom, #C3C3C3, #FFFFFF);
+  background: linear-gradient(to top, #C3C3C3, #FFFFFF);
+}
+
+.text-shadow {
+  text-shadow: 0 0 30px #4A9F9D;
+}
