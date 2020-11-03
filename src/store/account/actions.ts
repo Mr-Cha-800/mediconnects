@@ -13,7 +13,7 @@ const actions: ActionTree<AccountInterface, StateInterface> = {
         (user) => {
           CometChat.login(user.id).then(() => {
             commit('loginSuccess', user);
-            return Router.push({name: 'home'});
+            return Router.push({ name: 'home' });
           }).catch(({ message }) => commit('loginFailure', message));
         }
       ).catch(error => commit('loginFailure', error));
@@ -23,19 +23,16 @@ const actions: ActionTree<AccountInterface, StateInterface> = {
     AccountService.logout();
     CometChat.logout();
     commit('logout');
-    return Router.push({name: 'login'});
+    return Router.push({ name: 'login' });
   },
 
   register({ dispatch, commit }, { user, password }) {
     commit('registerRequest');
     AccountService.register(user, password)
       .then(
-        async (user) => {
-          await CometChat.createUser(user.id, user.email);
-          await CometChat.login(user.id);
+        (user) => {
           commit('registerSuccess', user);
-          Router.push({name: 'home'})
-          return Router.push({name: 'MyProfileUpdate'});
+          return Router.push({ name: 'MyProfileUpdate' });
         },
         error => {
           commit('registerFailure', error);

@@ -3,8 +3,7 @@
     <q-item :to="{name: 'UserProfile', params: { userId:  $props.connectRequest.createdBy.id}}">
       <q-item-section class="q-ml-none" avatar>
         <q-avatar size="6rem" square>
-          <q-img
-            :src="avatar"/>
+          <AvatarMedia :content="$props.connectRequest.createdBy.avatar"/>
         </q-avatar>
       </q-item-section>
       <q-item-section>
@@ -73,8 +72,8 @@
 <script lang="ts">
   import Vue from 'vue';
   import { date } from 'quasar'
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import { mapActions, mapGetters } from 'vuex';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
 
   export default Vue.extend({
     name: 'ConnectRequestTile',
@@ -84,6 +83,7 @@
         default: (): Record<string, unknown> => ({})
       }
     },
+    components: { AvatarMedia },
     data() {
       return {};
     },
@@ -92,9 +92,6 @@
       status(): Record<string, unknown> {
         return this.requestStatus(this.$props.connectRequest.id) || {}
       },
-      avatar(): string {
-        return avatarMediaObject(this.$props.connectRequest.createdBy.avatar);
-      }
     },
     methods: {
       ...mapActions('followConnectModule', ['acceptConnect', 'rejectConnect']),

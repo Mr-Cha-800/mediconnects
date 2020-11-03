@@ -79,7 +79,7 @@
     mounted() {
       this.type = this.$props.mediaType || PostingTypesEnum.TEXT;
       this.content = this.$props.mediaContent;
-      this.dataUrl = postImageMediaObject(this.$props.mediaContent);
+      this.dataUrl = postImageMediaObject(this.$props.mediaContent).src;
     }
   });
 </script>

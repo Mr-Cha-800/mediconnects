@@ -52,9 +52,9 @@ module.exports = configure(function(ctx) {
       env: {
         API: 'https://kic.bluenimble.com/mcdev/api',
         MEDIA_API: 'https://kic-mcdev-objects.bluenimble.com',
-        APP_ID: '245030fd2e05c5f',
+        APP_ID: '25008fb4cff02da',
         REGION: 'us',
-        API_KEY: '64cf4d879e98b296f0a6eba75bd70ad77b159872'
+        API_KEY: '6bf3c24d9b5caea26ff7582d4c3a566142c32876'
       },
 
       // transpile: false,

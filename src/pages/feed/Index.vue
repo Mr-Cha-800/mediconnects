@@ -26,7 +26,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import feedpost from 'components/feedPosts/feedpost.vue';
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import State from 'components/common/State.vue';
 
   export default Vue.extend({

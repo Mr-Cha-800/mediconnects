@@ -22,7 +22,9 @@
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vuex-cache": "^3.3.0",
+    "vuex-extensions": "^1.1.5"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

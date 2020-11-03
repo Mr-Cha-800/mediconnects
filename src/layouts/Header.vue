@@ -37,7 +37,7 @@
           </q-btn>
           <q-btn round flat exact :to="{name: 'MyProfile'}" v-if="$q.screen.gt.sm">
             <q-avatar size="26px">
-              <img :src="getAvatar">
+              <q-img :src="getAvatar" />
             </q-avatar>
             <q-tooltip>Account</q-tooltip>
           </q-btn>

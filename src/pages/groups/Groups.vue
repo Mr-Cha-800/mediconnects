@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-card flat>
-      <div class="flex q-pa-md">
-        <q-btn outline rounded class="q-ml-auto" color="grey-8" icon="add" :to="{ name: 'groupAdd' }"/>
-      </div>
+      <NavBanner>
+        <q-btn flat color="primary" icon="add" :to="{ name: 'groupAdd' }"/>
+      </NavBanner>
       <q-separator/>
       <State :status="status" :empty="!groups.length" >
         <q-list bordered>
@@ -20,14 +20,15 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { OrgSearchQueryInterface, OrgSearchScopeEnum } from 'src/services/organisations.service';
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex';
+  import { mapCacheActions } from 'vuex-cache';
   import GroupTile from 'components/groups/GroupTile.vue';
   import State from 'components/common/State.vue';
   import PublicOrganizationTile from 'components/public/PublicOrganizationTile.vue';
+  import NavBanner from 'components/common/NavBanner.vue';
   export default Vue.extend({
     name: 'Groups',
-    components: { State, GroupTile, PublicOrganizationTile },
+    components: { State, GroupTile, PublicOrganizationTile, NavBanner },
     data() {
       return {
       };
@@ -41,7 +42,7 @@
       ...mapGetters('GroupsModule', ['groups', 'status']),
     },
     methods: {
-      ...mapActions('GroupsModule', ['addGroup', 'getGroups'])
+      ...mapCacheActions('GroupsModule', ['addGroup', 'getGroups'])
     }
 
   });

@@ -3,7 +3,7 @@
     <q-toolbar class="bg-grey-3 text-black">
       <q-btn round flat>
         <q-avatar>
-          <img :src="currentUser.avatar">
+          <q-img :src="currentUser.avatar" />
         </q-avatar>
       </q-btn>
 

@@ -1,6 +1,6 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { PostingStateInterface } from './state';
+import { LoadingTypesEnum, PostingStateInterface } from './state';
 import * as posting from './../../services/post.service';
 import * as userProfile from './../../services/userProfile.service';
 import {Router} from 'src/router';
@@ -13,21 +13,22 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
       Router.back();
     }).catch(error => commit('PostingFailed', error));
   },
-  addProfilePost: ({ commit }, payload) => {
-    commit('PostingRequest', payload);
+  addProfilePost: ({ commit, dispatch }, payload) => {
+    commit('PostingRequest', { ...payload, type: LoadingTypesEnum.PROFILE });
     posting.post(payload).then(({id: post}) => {
       userProfile.addSection({post, weight: payload.weight, group: payload.sectionGroup }).then(() => {
         commit('PostingSuccess', payload);
+        dispatch(`userProfileModule/getMyProfile`, null, { root: true });
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
   },
   editProfileSection: ({ commit, dispatch }, payload) => {
-    commit('PostingRequest', payload);
+    commit('PostingRequest', { ...payload, type: LoadingTypesEnum.PROFILE });
+    Router.back();
     posting.editSection(payload).then(({id: post})  => {
       userProfile.editSection(payload.id,payload.sectionGroup).then(() => {
         commit('PostingSuccess', payload);
         dispatch(`userProfileModule/getMyProfile`, null, { root: true });
-        Router.back();
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
   },

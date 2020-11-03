@@ -6,6 +6,7 @@ import { UsersSearchQueryInterface } from 'src/services/userProfile.service';
 import * as AccountService from 'src/services/accounts.service';
 import * as CometChat from 'src/services/cometChat.service';
 import { Router } from 'src/router';
+import { LoadingTypesEnum } from 'src/store/posting/state';
 
 const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   search: ({ commit }, payload: UsersSearchQueryInterface) => {
@@ -41,16 +42,12 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
 
   updateProfile: ({ commit, dispatch }, payload) => {
     commit('MyProfileUpdateRequest');
-    commit('postingModule/PostingRequest', null, { root: true })
     userProfile.update(payload).then(userDetails => {
-    CometChat.updateUser(userDetails);
       // refresh the token, After Updating profile
-      AccountService.refreshToken().then(user => {
-        commit('MyProfileUpdateSuccess', userDetails);
-        dispatch(`accountModule/logout`, null, { root: true });
-        commit('postingModule/PostingSuccess', null, { root: true })
-        return Router.push({name: 'MyProfile'});
-      }).catch(error => commit('MyProfileUpdateFailed', error));
+      const { refreshToken = {} } = userDetails
+      AccountService.handleRefreshTokenResponse(refreshToken);
+      commit('MyProfileUpdateSuccess', userDetails);
+      Router.push({name: 'MyProfile'});
     }).catch(error => commit('MyProfileUpdateFailed', error));
   },
   filterSectionss: ({ commit }, payload) =>{

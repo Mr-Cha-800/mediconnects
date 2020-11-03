@@ -22,7 +22,7 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   },
 
   MyProfileUpdateSuccess(state, userDetails: UserProfileInterface) {
-    Vue.set(state, 'profile', userDetails);
+    Vue.set(state, 'profile', {...state.profile, ...userDetails});
     Vue.set(state, 'status', { updating: false });
   },
 

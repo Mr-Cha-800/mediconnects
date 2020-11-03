@@ -1,35 +1,23 @@
 <template>
-  <div>
-    <q-card flat>
-      <GroupHeader :group="group" />
-      <!--<div class="q-gutter-y-md">
-        <q-btn-toggle
-          v-model="tenantsType"
-          spread
-          no-caps
-          flat
-          toggle-color="primary"
-          :options="[
-          {label: 'Users', value: 'users'},
-          {label: 'Organization', value: 'organization'}
-        ]"
-        />
-      </div>-->
-      <div class="q-ma-md">
-        <span class="text-h6 text-grey-8">Add new Tenant:</span>
-      </div>
-      <AddTenant v-if="tenantsType === 'users'" />
-      <!--<AddOrgTenant v-if="tenantsType === 'organization'" />-->
-      <State :status="status" :empty="!tenants.length">
-        <q-list bordered>
-          <template v-for="org in tenants">
-            <TenantsTile :org="org"/>
-            <q-separator/>
-          </template>
-        </q-list>
-      </State>
-    </q-card>
-  </div>
+  <q-card flat>
+    <NavBanner>
+      <q-btn flat color="primary" icon="edit" :to="{name: 'groupEdit', params: { groupId: $route.params.groupId }}"/>
+    </NavBanner>
+    <GroupHeader :group="group" />
+    <div class="q-ma-md">
+      <span class="text-h6 text-grey-8">Add new Tenants:</span>
+    </div>
+    <AddTenant v-if="tenantsType === 'users'" />
+    <!--<AddOrgTenant v-if="tenantsType === 'organization'" />-->
+    <State :status="status" :empty="!tenants.length">
+      <q-list bordered>
+        <template v-for="tenant in tenants">
+          <TenantsTile :tenant="tenant"/>
+          <q-separator/>
+        </template>
+      </q-list>
+    </State>
+  </q-card>
 </template>
 <script lang="ts">
   import Vue from 'vue';
@@ -40,9 +28,11 @@
   import AddTenant from 'components/groups/AddTenant.vue';
   import AddOrgTenant from 'components/groups/AddOrgTenant.vue';
   import GroupHeader from 'components/groups/GroupHeader.vue';
+  import { mapCacheActions } from 'vuex-cache';
+  import NavBanner from 'components/common/NavBanner.vue';
   export default Vue.extend({
     name: 'groupTenants',
-    components: { State, TenantsTile, PublicOrganizationTile, AddTenant,AddOrgTenant, GroupHeader },
+    components: { State, TenantsTile, PublicOrganizationTile, AddTenant,AddOrgTenant, GroupHeader, NavBanner },
     data() {
       return {
         inputDialog: false,
@@ -58,7 +48,7 @@
       ...mapGetters('GroupsModule', ['tenants', 'group', 'status'])
     },
     methods: {
-      ...mapActions('GroupsModule', ['getTenants', 'getGroup'])
+      ...mapCacheActions('GroupsModule', ['getTenants', 'getGroup'])
     }
 
   });

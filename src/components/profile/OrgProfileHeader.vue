@@ -3,7 +3,7 @@
     <q-item class="flex fit justify-start items-center">
       <div class="q-pr-lg q-pr-xl-md">
         <q-avatar size="8rem">
-          <q-img :src="avatar" height="100%"/>
+          <AvatarMedia :content="org.avatar"/>
         </q-avatar>
       </div>
       <div class="self-center">
@@ -47,9 +47,9 @@
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
   import UserProfileSkillsTags from 'components/profile/UserProfileSections.vue';
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
 
   export default Vue.extend({
     name: 'orgProfileHeader',
@@ -59,11 +59,8 @@
         default: (): Record<string, unknown> => ({})
       },
     },
-    components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect },
+    components: { UserProfileSocialTags, UserProfileSkillsTags, FollowConnect, AvatarMedia },
     computed: {
-      avatar(): string {
-        return avatarMediaObject(this.$props.org.avatar);
-      },
       entity: (): EntityTypes => EntityTypes.ORG,
     },
     data() {

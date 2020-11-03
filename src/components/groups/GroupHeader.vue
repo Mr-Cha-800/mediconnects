@@ -3,7 +3,7 @@
     <q-item class="flex fit justify-start items-center">
       <div class="q-pr-lg q-pr-xl-md">
         <q-avatar size="8rem">
-          <q-img :src="avatar" height="100%"/>
+          <AvatarMedia :content="group.avatar"/>
         </q-avatar>
       </div>
       <div class="self-center">
@@ -67,8 +67,8 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { avatarMediaObject } from 'src/helpers/parseMediaOject';
   import * as CometChat from 'src/services/cometChat.service';
+  import AvatarMedia from 'components/common/media/AvatarMedia.vue';
 
   export default Vue.extend({
     name: 'GroupHeader',
@@ -78,6 +78,7 @@
         default: (): Record<string, unknown> => ({})
       }
     },
+    components: { AvatarMedia },
     data() {
       return {
         sendPM: false,
@@ -102,11 +103,6 @@
         }
       }
     },
-    computed: {
-      avatar(): string {
-        return avatarMediaObject(this.$props.group.avatar);
-      }
-    }
 
   });
 </script>

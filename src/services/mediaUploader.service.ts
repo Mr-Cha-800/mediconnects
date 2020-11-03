@@ -1,13 +1,6 @@
 import { API, MEDIA_API } from 'src/constants';
 import axios from 'axios';
-
-const token = JSON.parse(<string>localStorage.getItem('token'));
-const instance = axios.create({
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/octet-stream'
-  }
-});
+import { getAudioMeta, getImageMeta, getVideoMeta } from 'src/helpers/getFileMeta';
 
 export enum UploadType {
   IMAGE = 'image',
@@ -46,13 +39,32 @@ const createChunks = (file: File): Blob[] => {
 };
 
 const uploadChunks = async (id: string, chunkedFile: Blob[]) => {
+  const token = JSON.parse(<string>localStorage.getItem('token'));
+  const instance = axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/octet-stream'
+    }
+  });
   for (const chunk of chunkedFile) {
     await instance.put(`${API}/storage/object/${id}`, chunk);
   }
 };
 
-const publishObject = (id: string, uploadType: UploadType, file: File) =>
-  axios.post<{ resource: string }>(`${API}/storage/object/${id}/publish`, {
+const publishObject = async (id: string, uploadType: UploadType, file: File) => {
+  let meta: any = {};
+  if (uploadType === UploadType.IMAGE) {
+    meta = await getImageMeta(file);
+  }
+  if (uploadType === UploadType.VIDEO) {
+    meta = await getVideoMeta(file);
+  }
+  if (uploadType === UploadType.AUDIO) {
+    meta = await getAudioMeta(file);
+  }
+  return axios.post<{ resource: string }>(`${API}/storage/object/${id}/publish`, {
     optimizer: uploadType,
     mimeType: file.type,
+    ...meta,
   }).then(({ data }) => data);
+}

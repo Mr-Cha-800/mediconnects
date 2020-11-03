@@ -40,7 +40,8 @@
         :breakpoint="690"
       >
 
-        <ChatsList />
+        <ChatBoxSidebar />
+        <!--<ChatsList />-->
       </q-drawer>
 
       <q-page-container class="bg-white">
@@ -61,19 +62,21 @@
   import ChatsList from 'components/messages/ChatsList.vue';
   import MessageFooter from 'components/cometchat-components/components/MessageFooter.vue';
   import MessageView from 'components/cometchat-components/components/MessageView.vue';
+  import ChatBoxSidebar from '../../components/messages/ChatBoxSidebar';
 
   export default {
     name: 'MessagesPage',
-    components: { ChatsList, ChatBox, MessageFooter, MessageView },
+    components: { ChatsList, ChatBox, MessageFooter, MessageView, ChatBoxSidebar },
     data() {
       const selectedUser = {};
       return {
         selectedUser,
-        leftDrawerOpen: false,
+        leftDrawerOpen: true,
       };
     },
     mounted() {
       this.$root.$on("selectedUser", data => {
+        this.leftDrawerOpen = false;
         this.selectedUser = data;
       });
     },

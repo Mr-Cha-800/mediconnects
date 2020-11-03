@@ -1,6 +1,9 @@
 <template>
   <div>
     <q-card flat>
+      <NavBanner>
+        <q-btn flat color="primary" icon="edit" :to="{ name: 'EditOrganization', params: { orgId: orgId }}"/>
+      </NavBanner>
       <div class="flex q-pa-md">
         <q-btn
           rounded
@@ -44,10 +47,11 @@
   import { ConnectRequestInterface } from 'src/store/followConnect/state';
   import ConnectRequestTile from 'components/profile/ConnectRequestTile.vue';
   import PublicUsersTile from 'components/public/PublicUsersTile.vue';
+  import NavBanner from 'components/common/NavBanner.vue';
 
   export default Vue.extend({
     name: 'OrganizationMembers',
-    components: { State, ConnectRequestTile, PublicUsersTile },
+    components: { State, ConnectRequestTile, PublicUsersTile, NavBanner },
     data() {
       return {
         orgId: '',
@@ -76,14 +80,13 @@
     },
     methods: {
       ...mapActions('followConnectModule', ['getConnectRequests']),
-      ...mapActions('orgProfileModule', ['getOrgMembers']),
-      isMembersType(key: string) {
+      isMembersType(key: string): boolean {
         return key === this.activeType;
       },
-      setMembersType(orgKey: string) {
+      setMembersType(orgKey: string): void {
         this.activeType = orgKey;
         if (this.isMembersType(this.membersTypes.joined)) {
-          this.getOrgMembers(this.orgId);
+          this.$store.cache.dispatch('orgProfileModule/getOrgMembers', this.orgId);
         } else if (this.isMembersType(this.membersTypes.pending)) {
           this.getConnectRequests();
         }

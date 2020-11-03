@@ -3,8 +3,8 @@ import Vue from 'vue';
 import { PostingStateInterface } from 'src/store/posting/state';
 import { SectionInterface } from './state';
 const mutation: MutationTree<PostingStateInterface> = {
-  PostingRequest(state, post) {
-    Vue.set(state, 'posting', { post, status: { loading: true } });
+  PostingRequest(state, payload) {
+    Vue.set(state, 'posting', { payload, status: { loading: true } });
   },
 
   PostingSuccess(state) {

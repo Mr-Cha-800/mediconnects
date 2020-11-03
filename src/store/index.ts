@@ -7,6 +7,8 @@ import followConnectModule from 'src/store/followConnect';
 import postingModule from 'src/store/posting';
 import GroupsModule from 'src/store/groups'
 import feedPostsModule from 'src/store/feed'
+import createCache from 'vuex-cache';
+import { createStore } from 'vuex-extensions';
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -21,7 +23,7 @@ export interface StateInterface {
 export default store(function ({ Vue }) {
   Vue.use(Vuex);
 
-  const Store = new Vuex.Store<StateInterface>({
+  const Store = createStore<StateInterface>(Vuex.Store,{
     modules: {
       accountModule,
       userProfileModule,
@@ -31,6 +33,7 @@ export default store(function ({ Vue }) {
       GroupsModule,
       feedPostsModule
     },
+    plugins: [createCache()],
 
     // enable strict mode (adds overhead!)
     // for dev mode only

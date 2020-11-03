@@ -43,7 +43,7 @@
             class="message-text"
           >{{msg.text?"this is text Message":msg.category}}</div>
           <div v-else-if="cometchat.MESSAGE_TYPE.IMAGE == msg.type" class="message-image">
-            <img :src="msg.data.url ? msg.data.url : msg.category" />
+            <q-img :src="msg.data.url ? msg.data.url : msg.category" style="width: 300px" />
           </div>
           <div
             v-else
@@ -87,7 +87,7 @@
             class="message-text"
           >{{msg.text?"this is text Message":msg.category}}</div>
           <div v-else-if="cometchat.MESSAGE_TYPE.IMAGE == msg.type" class="message-image">
-            <img :src="msg.data.url ? msg.data.url : msg.category" />
+            <q-img :src="msg.data.url ? msg.data.url : msg.category" style="width: 300px" />
           </div>
           <div
             v-else

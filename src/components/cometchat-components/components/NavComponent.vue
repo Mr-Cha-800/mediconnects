@@ -32,14 +32,6 @@
         class="ccl-left-panel-nav-link grp-chat"
       ></a>
     </div>
-    <div class="ccl-left-panel-nav-listitem">
-      <a
-        id="morelist"
-        href="javascript:void(0);"
-        v-on:click="tabClickHandler($event)"
-        class="ccl-left-panel-nav-link more"
-      ></a>
-    </div>
   </div>
 </template>
 
@@ -60,7 +52,7 @@ export default {
         currEle.classList.add("active");
         // this.activeTab = "contacts";
         this.$emit('activeTab', 'contacts');
-      } else if (currentTabName === "calllist") {        
+      } else if (currentTabName === "calllist") {
         currEle.classList.add("active");
         // this.activeTab = "call";
         this.$emit('activeTab', 'call');
@@ -70,11 +62,11 @@ export default {
         this.$emit('activeTab', 'chat');
       } else if (currentTabName === "grouplist") {
         currEle.classList.add("active");
-        // this.activeTab = "groups";        
+        // this.activeTab = "groups";
         this.$emit('activeTab', 'groups');
       } else {
         currEle.classList.add("active");
-        // this.activeTab = "more";        
+        // this.activeTab = "more";
         this.$emit('activeTab', 'more');
       }
     }

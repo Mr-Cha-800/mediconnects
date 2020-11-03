@@ -13,7 +13,7 @@
             <span class="text-body1">{{ status.error }}</span>
           </q-banner>
           <div class="col-12 q-my-xs">
-            <q-input outlined v-model="userLogin.email" label="Email" :rules="[validateEmail]" lazy-rules/>
+            <q-input type="email" outlined v-model="userLogin.email" label="Email" :rules="[validateEmail]" lazy-rules/>
           </div>
           <div class="col-12 q-my-xs">
             <q-input type="password" outlined v-model="userLogin.password" label="Password" :rules="[validatePassword]" lazy-rules/>
@@ -55,7 +55,7 @@
     data() {
       const userLogin: Login = {
         email: '',
-        password: ''
+        password: 'ReallySecure2020!'
       };
       return { userLogin };
     },

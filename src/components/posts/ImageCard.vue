@@ -1,18 +1,20 @@
 <template>
     <div>
-      <div class="q-pa-md">
+      <div class="q-pl-md">
+        <p class="text-h4 text-grey-8">{{post.title}}</p>
         <p class="text-body1 text-grey-8">{{post.description}}</p>
       </div>
-      <q-img v-if="post" :src="postImage">
-        <div v-if="post.title" class="absolute-top text-subtitle2 text-center bg-grey-5" style="opacity: 0.8">
-          <span class="text-h3">{{post.title}}</span>
-        </div>
-      </q-img>
+      <PostImageMedia :content="post.content">
+        <!--<div v-if="post.title" class="absolute-top bg-transparent text-center">
+          <span class="text-h4 text-primary text-weight-bolder text-shadow">{{post.title}}</span>
+        </div>-->
+      </PostImageMedia>
+
     </div>
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import { postImageMediaObject } from 'src/helpers/parseMediaOject';
+  import PostImageMedia from 'components/common/media/PostImageMedia.vue';
 
   export default Vue.extend({
     name: 'ImageCard',
@@ -21,10 +23,6 @@
         type: Object
       }
     },
-    computed: {
-      postImage(): string {
-        return postImageMediaObject(this.$props.post.content);
-      },
-    }
+    components: { PostImageMedia },
   });
 </script>
