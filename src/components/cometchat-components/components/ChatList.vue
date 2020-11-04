@@ -91,16 +91,6 @@ export default {
       })
     },
 
-    handleChatScroll(element) {
-      if ((element.target.offsetHeight + element.target.scrollTop) >= (element.target.scrollHeight - 20)) {
-        this.chatFetchNext().then((chat) => {
-          this.chatList = [...this.chatList, ...chat];
-        }, error => {
-          console.log(error)
-        });
-      }
-    },
-
     onSearchChange(event){
       this.chatList = [];
       if (this.searchStarted) {

@@ -1,17 +1,20 @@
 <template>
-  <q-scroll-area
-      class="q-pa-lg"
-      :thumb-style="thumbStyle"
-      :bar-style="barStyle"
-      style="height: 450px;"
-    >
-    <div
-      class="clearfix"
-      :class="[msg.sender.uid === currentUser.uid ? 'cc1-chat-win-sndr-row' : 'cc1-chat-win-rcvr-row']"
-      v-for="(msg, index) in messages"
-      :key="index"
-    >
-      <div
+<q-page class="row no-wrap">
+  <div class="col">
+    <div class="column full-height">
+      <q-scroll-area
+        ref="chatScroll"
+        class="col q-pa-lg"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
+        visible>
+          <div
+            class="clearfix"
+            :class="[msg.sender.uid === currentUser.uid ? 'cc1-chat-win-sndr-row' : 'cc1-chat-win-rcvr-row']"
+            v-for="(msg, index) in messages"
+            :key="index"
+          >
+        <div
         class="dateSeperatorCongtainer ccl-center"
         v-if="( index===0?printDate(msg.sentAt):printDate(msg.sentAt,messages[index-1].sentAt))"
       >
@@ -26,7 +29,7 @@
         </div>
       </div>
       <div class="cc1-chat-win-msg-block sender-msg" v-if="msg.sender.uid === currentUser.uid">
-        <div class="cc1-chat-win-sndr-msg-wrap">
+        <div class="cc1-chat-win-sndr-msg-wrap bg-primary">
           <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
           <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
             <q-media-player type="video" background-color="white" :source="msg.data.url"/>
@@ -107,12 +110,16 @@
           </span>
         </div>
       </div>
-    </div>
+          </div>
     <Loader v-if="loading" />
     <q-banner  v-if="Object.keys(currentUser).length === 0" class="text-white bg-teal">
       Choose a user please
     </q-banner>
-    </q-scroll-area>
+      </q-scroll-area>
+    </div>
+  </div>
+
+</q-page>
 </template>
 
 <script>
@@ -249,7 +256,8 @@ export default {
     this.$root.$on("messageSent", msg => {
       console.log("change something");
       this.messages.push(msg);
-      this.scrollToBottom();
+      // this.scrollToBottom();
+      this.scroll();
       // this.checkListner();
       // this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
     });
@@ -303,23 +311,36 @@ export default {
 
     // this.scrollToBottom();
 
+    this.scroll()
     // if (!this.scrollTrigger) {
 
-    this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
+    //this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
 
     setTimeout(() => {
       // this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight - this.currentScrollPossition;
-      this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
+     // this.messageScrollWrpr.scrollTop = this.messageScrollWrpr.scrollHeight;
     }, 1000);
     // } else {
     // console.log('call once---77777');
 
     // //   setTimeout(() => {
     //     this.scrollToBottom();
+
+    setTimeout(() => {
+    this.scroll()
+     }, 1000);
     // //   }, 500);
     // }
   },
   methods: {
+
+    scroll () {
+      const scrollArea = this.$refs.chatScroll;
+      const scrollTarget = scrollArea.getScrollTarget();
+      // console.log(scrollArea.getScrollTarget())
+      const duration = 0; // ms - use 0 to instant scroll
+      scrollArea.setScrollPosition(scrollTarget.scrollHeight, duration);
+    },
     messageWindowRefresh(data) {
       this.loading = true;
       this.userData = data;
@@ -334,7 +355,8 @@ export default {
           messages => {
             this.messages = [...messages, ...this.messages];
             this.loading = false;
-            this.scrollToBottom();
+            // this.scrollToBottom();
+            this.scroll();
           },
           err => {
             console.log(err);
@@ -347,7 +369,8 @@ export default {
           messages => {
             this.messages = [...this.messages, ...messages];
             this.loading = false;
-            this.scrollToBottom();
+            // this.scrollToBottom();
+            this.scroll();
 
           },
           err => {
@@ -373,7 +396,7 @@ export default {
       // // var seconds = date.getSeconds();
       // return ("0"+hours).slice(-2) +":"+ ("0"+minutes).slice(-2);
     },
-
+/*
     handlePreviousMsg(event) {
       this.scrollTrigger = true;
 
@@ -409,7 +432,7 @@ export default {
 
 
     },
-
+*/
     printDate(time1, time2) {
       if (time2) {
         if (new Date(time1 * 1000).getDate() - new Date(time2 * 1000).getDate()) {

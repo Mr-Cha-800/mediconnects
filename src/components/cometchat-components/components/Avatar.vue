@@ -1,6 +1,6 @@
 <template>
     <div class="chat-contact-listitem-thum" v-if="item.uid">
-        <img v-if="item.avatar" :src="item.avatar">
+        <img  v-if="item.avatar" :src="item.avatar">
         <div class="avatar" v-bind:style= "{'background-color': randomcolor()}" v-else>{{item.name.charAt(0).toLowerCase()}}</div>
     </div>
 
@@ -35,13 +35,11 @@ export default {
 
 <style scoped>
 .avatar {
-    width: 100%x;
-    height: 100%;
+    border-radius: 50%;
     color: #fff;
     font-size: 18px;
     text-align: center;
-    border-radius: 50%;
-    padding: 5px;
+    padding: 0px;
 }
 
 </style>

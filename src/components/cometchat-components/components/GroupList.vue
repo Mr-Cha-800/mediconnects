@@ -4,7 +4,7 @@
     <div class="ccl-left-panel-head-wrap">
       <div class="ccl-left-panel-srch-inpt-wrap">
         <input autocomplete="off" class="ccl-left-panel-srch font-15 ccl-secondary-color" placeholder="Search" type="text" maxlength="200" @input="onSearchChange($event)" />
-        <input id="searchButton" type="button" class="search-btn" />
+        <q-btn id="searchButton" flat  class="search-btn" icon="alert" ></q-btn>
       </div>
     </div>
 
@@ -13,7 +13,7 @@
       {{messageToDisplay}}
       </p>
     </div>
-    
+
     <div class="chat-ppl-list-ext-wrap scroll-container" @scroll="handleGroupScroll($event)" v-else-if="grousList.length !=0">
       <div class="chat-ppl-list-wrap" v-for="(groupRow, index) in grousList" :key="index">
         <div class="chat-ppl-listitem clearfix" v-on:click="currentGroup(groupRow)">
@@ -22,7 +22,7 @@
             <span class="chat-ppl-listitem-name">{{groupRow.name}}</span>
             <p class="chat-ppl-listitem-txt ccl-secondary-color">{{groupRow.owner}}</p>
           </div>
-        </div>         
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
         }
         return this.groupRequest;
       },
-      
+
       groupFetchnext() {
         return this.groupRequest.fetchNext();
       },
@@ -77,20 +77,10 @@ export default {
     getGroupList(data) {
       this.callGroup(data).fetchNext().then(groups => {
         this.grousList = [...this.grousList, ...groups]
-      }, 
+      },
       error => {
         console.log(error);
       });
-    },
-
-    handleGroupScroll(elem) {
-      if ((elem.target.offsetHeight + elem.target.scrollTop) >= (elem.target.scrollHeight - 20)) {
-        this.groupFetchnext().then((group) => {
-          this.grousList = [...this.grousList, ...group];
-        }, error => {
-          console.log(error)
-        });
-      }
     },
 
     onSearchChange(event){

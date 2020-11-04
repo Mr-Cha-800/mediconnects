@@ -23,7 +23,7 @@
             <audio controls v-else-if="audioInput" class="cometchat-image-viewer-image">
               <source :src="audioInput">
             </audio>
-            <video controls v-else-if=videoInput class="cometchat-image-viewer-image">
+            <video controls v-else-if="videoInput" class="cometchat-image-viewer-image">
               <source :src="videoInput">
             </video>
             <div class="media-desc-container" v-if="fileName || fileSize">
@@ -42,7 +42,26 @@
 
         <!-- msg composer -->
         <div class="cc1-chat-win-inpt-wrap full-width q-pr-sm">
-          <input
+
+      <q-input
+            outlined
+            filled
+            autocomplete="off"
+            name="chatMsg"
+            id="chatMsg"
+            placeholder="Type Message"
+            type="text"
+            v-on:keydown="onchangeDetect($event)"
+            dense>
+        <template v-slot:after>
+          <q-btn round dense flat @click="onchangeDetect($event)" icon="send" />
+        </template>
+      </q-input>
+<!--
+          <q-input
+          dense
+          borderless
+          bottom-slots
             autocomplete="off"
             name="chatMsg"
             class="cc1-chat-win-inpt-box font-15"
@@ -50,7 +69,11 @@
             placeholder="Type Message"
             type="text"
             v-on:keydown="onchangeDetect($event)"
-          />
+          >
+        <template v-slot:after>
+          <q-btn round dense flat icon="send" />
+        </template>
+          </q-input> -->
         </div>
 
       </div>

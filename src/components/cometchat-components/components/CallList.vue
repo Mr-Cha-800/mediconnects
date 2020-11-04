@@ -1,5 +1,5 @@
 <template>
-  <div  -container">
+  <div>
     <div class="ccl-left-panel-head-wrap">
       <h4 class="ccl-left-panel-head-ttl">Calls</h4>
       <a href="javascript:void(0);" class="ccl-left-panel-head-edit-link" style="display: none;"></a>

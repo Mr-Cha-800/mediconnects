@@ -2,16 +2,23 @@
   <div>
   <div class="fullscreen">
     <SidebarHeader :active-tab="activeTab" />
-  <q-scroll-area
-      :thumb-style="thumbStyle"
-      :bar-style="barStyle"
-      style="height: 80%; max-width: 300px;"
-    >
-    <UserList v-if="activeTab=='contacts'" />
-    <ChatsList v-else-if="activeTab=='chat'" />
-    <GroupList v-else-if="activeTab=='groups'" />
+    <q-page class="row no-wrap">
+    <div class="col">
+      <div class="column full-height">
+        <q-scroll-area
+          class="col"
+          :thumb-style="thumbStyle"
+          :bar-style="barStyle"
+          visible>
+      <UserList v-if="activeTab=='contacts'" />
+      <ChatsList v-else-if="activeTab=='chat'" />
+      <GroupList v-else-if="activeTab=='groups'" />
 
-    </q-scroll-area>
+        </q-scroll-area>
+      </div>
+    </div>
+
+  </q-page>
     <div class="ccl-left-panel-footer-wrap">
       <Nav @activeTab="currentTab" />
     </div>

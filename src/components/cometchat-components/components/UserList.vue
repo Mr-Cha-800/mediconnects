@@ -6,7 +6,7 @@
   <div class="ccl-left-panel-head-wrap">
     <div class="ccl-left-panel-srch-inpt-wrap">
       <input autocomplete="off" class="ccl-left-panel-srch font-15 ccl-secondary-color" placeholder="Search" type="text" maxlength="200" @input="onSearchChange($event)" />
-      <input id="searchButton" type="button" class="search-btn" />
+      <q-btn id="searchButton" flat  class="search-btn" ></q-btn>
     </div>
   </div>
 
@@ -88,16 +88,6 @@ export default {
           console.log(error);
         }
       );
-    },
-
-    handleUserScroll(elem) {
-      if ((elem.target.offsetHeight + elem.target.scrollTop) >= (elem.target.scrollHeight - 20)) {
-        this.userFetchNext().then((users) => {
-          this.usersList = [...this.usersList, ...users];
-        }, error => {
-          console.log(error)
-        });
-      }
     },
 
     onSearchChange(event){

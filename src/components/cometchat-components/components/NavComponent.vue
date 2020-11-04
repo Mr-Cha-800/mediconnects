@@ -2,10 +2,10 @@
   <div class="ccl-left-panel-nav-list clearfix">
     <div class="ccl-left-panel-nav-listitem">
       <a
-        id="contactlist"
+        id="chatlist"
         href="javascript:void(0);"
         v-on:click="tabClickHandler($event)"
-        class="ccl-left-panel-nav-link people active"
+        class="ccl-left-panel-nav-link chat"
       ></a>
     </div>
     <!-- <div class="ccl-left-panel-nav-listitem">
@@ -18,10 +18,10 @@
     </div> -->
     <div class="ccl-left-panel-nav-listitem">
       <a
-        id="chatlist"
+        id="contactlist"
         href="javascript:void(0);"
         v-on:click="tabClickHandler($event)"
-        class="ccl-left-panel-nav-link chat"
+        class="ccl-left-panel-nav-link people active"
       ></a>
     </div>
     <div class="ccl-left-panel-nav-listitem">
