@@ -1,6 +1,10 @@
 <template>
 <div>
-  <div class="chat-ppl-list-ext-wrap scroll-container" @scroll="handleChatScroll($event)" >
+  <q-scroll-area
+      :thumb-style="thumbStyle"
+      :bar-style="barStyle"
+      style="height: 500px; max-width: 300px;"
+    >
     <div class="chat-ppl-list-wrap" v-for="(chatRow, index) in chatList" :key="index">
       <div class="chat-ppl-listitem clearfix" v-on:click="currentUser(chatRow, index)">
         <Avatar :item="chatRow.conversationWith" />
@@ -12,7 +16,7 @@
         <span class="chat-ppl-listitem-msg-cnt" v-if="chatRow.unreadMessageCount > 0">{{chatRow.unreadMessageCount}}</span>
       </div>
     </div>
-  </div>
+  </q-scroll-area>
 </div>
 </template>
 
@@ -39,6 +43,21 @@ export default {
   },
   data() {
     return {
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0.75
+      },
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0.2
+      },
       chatList: [],
       chatRequest: '',
       messageToDisplay: '',
@@ -50,7 +69,7 @@ export default {
         }
         return this.chatRequest;
       },
-      
+
       chatFetchNext() {
         return this.chatRequest.fetchNext();
       },

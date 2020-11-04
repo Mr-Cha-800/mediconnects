@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ccl-left-panel-head-wrap">
+        <div class="q-pl-md q-pt-md">
             <h4 class="ccl-left-panel-head-ttl">
                 {{ activeTab.charAt(0).toUpperCase() + activeTab.slice(1) }}
             </h4>

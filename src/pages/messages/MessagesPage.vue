@@ -16,9 +16,10 @@
             round
             flat
             icon="keyboard_arrow_left"
-            class="WAL__drawer-open q-mr-sm"
+            class="q-mr-sm"
+            v-if="!leftDrawerOpen"
             @click="leftDrawerOpen = true"
-          />
+          ></q-btn>
 
           <q-btn round flat v-if="selectedUser.avatar || selectedUser.icon">
             <q-avatar>
@@ -39,7 +40,6 @@
         bordered
         :breakpoint="690"
       >
-
         <ChatBoxSidebar />
         <!--<ChatsList />-->
       </q-drawer>
