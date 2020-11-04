@@ -1,12 +1,21 @@
 <template>
   <div>
+  <div class="fullscreen">
     <SidebarHeader :active-tab="activeTab" />
+  <q-scroll-area
+      :thumb-style="thumbStyle"
+      :bar-style="barStyle"
+      style="height: 80%; max-width: 300px;"
+    >
     <UserList v-if="activeTab=='contacts'" />
     <ChatsList v-else-if="activeTab=='chat'" />
     <GroupList v-else-if="activeTab=='groups'" />
+
+    </q-scroll-area>
     <div class="ccl-left-panel-footer-wrap">
       <Nav @activeTab="currentTab" />
     </div>
+  </div>
   </div>
 </template>
 
@@ -29,6 +38,21 @@ export default {
   },
   data() {
     return {
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0.75
+      },
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0.2
+      },
       activeTab: "contacts",
     };
   },

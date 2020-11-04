@@ -6,7 +6,6 @@
           <q-img :src="currentUser.avatar" />
         </q-avatar>
       </q-btn>
-
       <span class="q-subtitle-1 q-pl-md">
           {{ currentUser.name }}
         </span>

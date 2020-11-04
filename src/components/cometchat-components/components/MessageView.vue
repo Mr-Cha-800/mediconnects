@@ -1,7 +1,10 @@
 <template>
-  <div class="cc1-chat-win-conver-wrap"
-    id="messageViewWrapr"
-    v-on:scroll.passive="handlePreviousMsg($event)">
+  <q-scroll-area
+      class="q-pa-lg"
+      :thumb-style="thumbStyle"
+      :bar-style="barStyle"
+      style="height: 450px;"
+    >
     <div
       class="clearfix"
       :class="[msg.sender.uid === currentUser.uid ? 'cc1-chat-win-sndr-row' : 'cc1-chat-win-rcvr-row']"
@@ -105,10 +108,11 @@
         </div>
       </div>
     </div>
-
     <Loader v-if="loading" />
-
-  </div>
+    <q-banner  v-if="Object.keys(currentUser).length === 0" class="text-white bg-teal">
+      Choose a user please
+    </q-banner>
+    </q-scroll-area>
 </template>
 
 <script>
@@ -123,6 +127,21 @@ export default {
   },
   data() {
     return {
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0.75
+      },
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0.2
+      },
       userData: {},
       messageRequest: [],
       messages: [],
