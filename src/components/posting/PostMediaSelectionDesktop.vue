@@ -79,7 +79,7 @@
       },
       setAudio(mediaSource: File) {
         this.setSourceStream({ mediaSource, type: PostingTypesEnum.AUDIO });
-      }
+      },
     }
   });
 </script>

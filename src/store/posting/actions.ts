@@ -7,7 +7,7 @@ import {Router} from 'src/router';
 
 const actions: ActionTree<PostingStateInterface, StateInterface> = {
   addPost: ({ commit }, payload) => {
-    commit('PostingRequest', payload);
+    commit('PostingRequest', { ...payload, type: LoadingTypesEnum.POST });
     posting.post(payload).then(() => {
       commit('PostingSuccess', payload);
       Router.back();

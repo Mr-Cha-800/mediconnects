@@ -112,7 +112,7 @@
             this.payload.title = this.sectionDetails.section.title
             this.payload.description = this.sectionDetails.section.description
             this.payload.type = this.sectionDetails.section.type
-            this.payload.sectionGroup = this.sectionDetails.section.sectionGroup
+            this.payload.sectionGroup = this.sectionDetails.group
             if(this.sectionDetails.section.content) {
               this.file = this.sectionDetails.section.content
             }
