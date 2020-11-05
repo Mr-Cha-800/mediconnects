@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="q-mb-md">
     <div v-for="{ section, id } in filtersections" :key="section.id">
-      <q-card flat square class="q-mt-md">
+      <q-card flat square class="q-mt-md q-py-lg">
         <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
         <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
         <VideoCard v-if="section.type === postingTypes.VIDEO" :post="section"/>

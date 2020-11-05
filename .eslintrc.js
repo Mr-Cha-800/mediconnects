@@ -77,6 +77,7 @@ module.exports = {
     // Vue
     'vue/no-unused-components': 'off',
     'vue/valid-v-for': 'off',
+    'vue/no-parsing-error': 'off',
 
     // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],
