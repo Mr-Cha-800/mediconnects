@@ -20,7 +20,6 @@
             v-if="!leftDrawerOpen"
             @click="leftDrawerOpen = true"
           ></q-btn>
-
           <q-btn round flat v-if="selectedUser.avatar || selectedUser.icon">
             <q-avatar>
               <q-img :src="selectedUser.avatar || selectedUser.icon" />
@@ -30,7 +29,14 @@
           <span class="q-subtitle-1 q-pl-md">
           {{ selectedUser.name }}
         </span>
+        <q-chip v-if="selectedUser.status === 'offline'" dense size="sm" color="red" text-color="white" >
+          offline
+        </q-chip>
+        <q-chip v-else-if="selectedUser.status === 'online'" dense size="sm" color="green" text-color="white" >
+          online
+        </q-chip>
           <q-space />
+          <callmanagment :selectedUser="selectedUser"  />
         </q-toolbar>
       </q-header>
 
@@ -63,10 +69,10 @@
   import MessageFooter from 'components/cometchat-components/components/MessageFooter.vue';
   import MessageView from 'components/cometchat-components/components/MessageView.vue';
   import ChatBoxSidebar from '../../components/messages/ChatBoxSidebar';
-
+  import callmanagment from 'components/cometchat-components/components/CallManagmenet.vue';
   export default {
     name: 'MessagesPage',
-    components: { ChatsList, ChatBox, MessageFooter, MessageView, ChatBoxSidebar },
+    components: { ChatsList, ChatBox, MessageFooter, MessageView, ChatBoxSidebar, callmanagment },
     data() {
       const selectedUser = {};
       return {

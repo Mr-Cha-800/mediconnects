@@ -49,7 +49,7 @@ export default {
       this.userData = data;
     });
   },
-  
+
   methods: {
     getDate(datetime) {
       let date = new Date(datetime * 1000);
@@ -88,7 +88,7 @@ export default {
         el.classList.remove("center-open");
         // el.classList.remove("right-open");
         el.classList.add("left-open");
-      }      
+      }
     },
 
     attachListener(callback) {
@@ -110,7 +110,7 @@ export default {
                     if (offlineUser.getUid() === this.userData.uid) {
                         callback(offlineUser);
                         console.log(offlineUser, 'is offline');
-   
+
                     }
                 }
             })
