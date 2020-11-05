@@ -9,6 +9,7 @@ import GroupsModule from 'src/store/groups'
 import feedPostsModule from 'src/store/feed'
 import createCache from 'vuex-cache';
 import { createStore } from 'vuex-extensions';
+import callingModule from 'src/store/calling';
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -31,7 +32,8 @@ export default store(function ({ Vue }) {
       followConnectModule,
       postingModule,
       GroupsModule,
-      feedPostsModule
+      feedPostsModule,
+      callingModule
     },
     plugins: [createCache()],
 

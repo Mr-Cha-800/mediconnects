@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="full-width absolute-top z-max">
+      <CallBanner />
+    </div>
     <q-header elevated class="q-py-xs" height-hint="58">
       <q-toolbar>
         <q-btn
@@ -109,10 +112,11 @@
   import Search from 'components/Search.vue';
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
+  import CallBanner from 'components/calling/CallBanner.vue';
 
   export default Vue.extend({
     name: 'MainLayout',
-    components: { Search },
+    components: { Search, CallBanner },
     data() {
       return {
         search: '',

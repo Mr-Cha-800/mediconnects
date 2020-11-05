@@ -86,9 +86,6 @@
       getChatList(data) {
         this.callChatList(data).fetchNext().then(chat => {
             this.chatList = [...this.chatList, ...chat];
-            if (this.selectedChatIndex === null && this.chatList.length) {
-              this.currentUser(this.chatList[0], 0);
-            }
           },
           error => {
             console.log(error);

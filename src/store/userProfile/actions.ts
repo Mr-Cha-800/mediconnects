@@ -33,9 +33,10 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     })
   },
 
-  getMyProfile: ({ commit }) => {
+  getMyProfile: ({ commit, dispatch }) => {
     commit('MyProfileRequest');
     userProfile.get().then(userDetails => {
+      dispatch('callingModule/addCallListener', userDetails, {root: true});
       commit('MyProfileSuccess', userDetails);
     }).catch(error => commit('MyProfileFailed', error));
   },
