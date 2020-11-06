@@ -7,6 +7,7 @@
 
 <script>
   import { CometChat } from "@cometchat-pro/chat";
+  import { mapActions } from 'vuex';
 export default {
     data(){
         return{
@@ -25,17 +26,18 @@ export default {
         }
     },
     methods: {
+      ...mapActions('callingModule', ['callUser']),
       audioCall() {
         const receiverID = this.selectedUser.uid;
         const callType = CometChat.CALL_TYPE.AUDIO;
         const receiverType = CometChat.RECEIVER_TYPE.USER;
-        this.$store.dispatch('callingModule/callUser', { receiverID, callType, receiverType });
+        this.callUser({ receiverID, callType, receiverType });
       },
       videoCall() {
         const receiverID = this.selectedUser.uid;
         const callType = CometChat.CALL_TYPE.VIDEO;
         const receiverType = CometChat.RECEIVER_TYPE.USER;
-        this.$store.dispatch('callingModule/callUser', { receiverID, callType, receiverType });
+        this.callUser({ receiverID, callType, receiverType });
       },
     }
 }
