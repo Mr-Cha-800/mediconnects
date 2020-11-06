@@ -38,8 +38,8 @@
         </q-avatar>
         <label v-if="msg.action === 'ended'">ended videochat with <strong>{{msg.callReceiver.name}} </strong><br></label>
         <label v-if="msg.action === 'rejected'">Your videochat was rejected<br></label>
-        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a videochat </label><br>
-<br>
+        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a videochat <br></label>
+        <label v-if="msg.action === 'ongoing'">videochat responded </label><br>
          call state : {{msg.action}}
         </div>
             <q-media-player v-else type="video" background-color="white" :source="msg.data.url"/>
@@ -51,7 +51,8 @@
         </q-avatar>
         <label v-if="msg.action === 'ended'">ended call with <strong>{{msg.callReceiver.name}} </strong><br></label>
         <label v-if="msg.action === 'rejected'">Your call was rejected<br></label>
-        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a call </label><br>
+        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a call </label>
+        <label v-if="msg.action === 'ongoing'">call responded </label>
 
         <br> call state : {{msg.action}}
         </div>
@@ -95,8 +96,9 @@
           <q-img :src="msg.sender.avatar" />
         </q-avatar>
         <label v-if="msg.action === 'ended'">ended videochat with <strong>{{msg.callInitiator.name}} </strong><br></label>
-        <label v-if="msg.action === 'rejected'">missed videochat from <strong>{{msg.callInitiator.name}} </strong><br></label>
-        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a videochat </label><br>
+        <label v-if="msg.action === 'rejected'">missed videochat from <strong>{{msg.sender.name}} </strong><br></label>
+        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a videochat </label>
+        <label v-if="msg.action === 'ongoing'">videochat responded </label><br>
         call state :   {{msg.action}}
         </div>
             <q-media-player v-else type="video" background-color="white" :source="msg.data.url"/>
@@ -108,7 +110,8 @@
         </q-avatar>
         <label v-if="msg.action === 'ended'">ended call with <strong>{{msg.callInitiator.name}} </strong><br></label>
         <label v-if="msg.action === 'rejected'">missed call from <strong>{{msg.callInitiator.name}} </strong><br></label>
-        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a call </label><br>
+        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a call </label>
+        <label v-if="msg.action === 'ongoing'">call responded </label><br>
          call state : {{msg.action}}</div>
             <q-media-player v-else type="audio" background-color="white" dense :source="msg.data.url"/>
           </div>
