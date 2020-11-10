@@ -92,26 +92,23 @@ const actions: ActionTree<CallingStateInterface, StateInterface> = {
         .build();
       CometChat.startCall(
         callSettings,
-        document.getElementById("callScreen"),
+        document.getElementById("callScreen") || document.createElement('div'),
         new CometChat.OngoingCallListener({
-          onUserJoined: user => {
+          onUserJoined: (user: any) => {
             /* Notification received here if another user joins the call. */
             console.log("User joined call:", user);
             /* this method can be use to display message or perform any actions if someone joining the call */
           },
-          onUserLeft: user => {
+          onUserLeft: (user: any) => {
             /* Notification received here if another user left the call. */
             console.log("User left call:", user);
             /* this method can be use to display message or perform any actions if someone leaving the call */
           },
-          onCallEnded: call => {
-            /* Notification received here if current ongoing call is ended. */
-            console.log("Call ended:", call);
-            /* hiding/closing the call screen can be done here. */
+          onCallEnded: (call: any) => {
+            commit('endCall', call);
           },
-          onError: error => {
-            console.log("Error :", error);
-            /* hiding/closing the call screen can be done here. */
+          onError: (error: any) => {
+            commit('failedCall', error);
           }
         })
       );

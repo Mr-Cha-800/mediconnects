@@ -16,3 +16,8 @@
 .text-shadow {
   text-shadow: 0 0 30px #4A9F9D;
 }
+
+#callScreen > iframe {
+  height: 100vh;
+  border: 0;
+}

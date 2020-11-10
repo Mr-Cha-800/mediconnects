@@ -3,5 +3,8 @@
   "appName": "MediConnects",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "url": "https://d3f768b51092.ngrok.io"
+  }
 }
