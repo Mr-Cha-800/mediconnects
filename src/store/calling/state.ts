@@ -17,5 +17,4 @@ const state: CallingStateInterface = {
     calling: false,
   }
 };
-
 export default state;

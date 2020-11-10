@@ -165,9 +165,9 @@
 .cc1-chat-win-conver-wrap{padding:5px 16px;height:calc(100vh - 132px);overflow-y:auto;background-color: #ffffff;z-index: 1;position: relative;}
 .cc1-chat-win-rcvr-msg-wrap{display:inline-block;border-radius:12px;background-color:rgba(248,248,248,0.92);padding:8px 12px}
 .chat-txt-msg{font-size:15px;margin:0;letter-spacing:-.1px;line-height:20px}
-.cc1-chat-win-rcvr-row{margin-bottom:16px}
+.cc1-chat-win-rcvr-row{text-align:right;margin-bottom:16px}
 .cc1-chat-win-msg-block{display:inline-block;position:relative}
-.cc1-chat-win-sndr-row{text-align:right;margin-bottom:16px}
+.cc1-chat-win-sndr-row{text-align:left;margin-bottom:16px}
 .cc1-chat-win-sndr-msg-wrap{display:inline-block;border-radius:12px;background-color:rgba(51,153,255,0.92);color:#fff;padding:8px 12px}
 .cc1-chat-win-timestamp{display:inline-block;font-size:11px;font-weight:500;letter-spacing:-.1px;line-height:12px;text-transform:uppercase;margin-top:5px}
 .cc1-chat-win-rcvr-row .cc1-chat-win-timestamp{margin-left:5px}

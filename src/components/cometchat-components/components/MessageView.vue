@@ -22,20 +22,98 @@
       </div>
       <div v-if="userData.guid">
         <q-avatar size="lg" class="q-mr-sm">
-          <q-img :src="msg.sender.avatar" />
+          <q-img :src="msg.reciever.avatar" />
         </q-avatar>
         <div class="chat-ppl-listitem-dtls">
           <span>{{msg.sender.name}}</span>
         </div>
       </div>
-      <div class="cc1-chat-win-msg-block sender-msg" v-if="msg.sender.uid === currentUser.uid">
-        <div class="cc1-chat-win-sndr-msg-wrap bg-primary">
+      <div class="cc1-chat-win-msg-block reciever-msg" v-if="msg.sender.uid !== currentUser.uid">
+        <div class="cc1-chat-win-rcvr-msg-wrap text-white bg-primary">
           <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
           <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
-            <q-media-player type="video" background-color="white" :source="msg.data.url"/>
+             <div v-if="msg.callReceiver">
+        <q-avatar size="lg" class="q-mr-sm">
+          <q-img :src="msg.sender.avatar" />
+        </q-avatar>
+        <label v-if="msg.action === 'ended'">ended videochat with <strong>{{msg.callReceiver.name}} </strong><br></label>
+        <label v-if="msg.action === 'rejected'">Your videochat was rejected<br></label>
+        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a videochat <br></label>
+        <label v-if="msg.action === 'ongoing'">videochat responded </label><br>
+         call state : {{msg.action}}
+        </div>
+            <q-media-player v-else type="video" background-color="white" :source="msg.data.url"/>
           </div>
           <div v-else-if="cometchat.MESSAGE_TYPE.AUDIO === msg.type" class="message-audio">
-            <q-media-player type="audio" background-color="white" dense :source="msg.data.url"/>
+            <div v-if="msg.callReceiver">
+        <q-avatar size="lg" class="q-mr-sm">
+          <q-img :src="msg.sender.avatar" />
+        </q-avatar>
+        <label v-if="msg.action === 'ended'">ended call with <strong>{{msg.callReceiver.name}} </strong><br></label>
+        <label v-if="msg.action === 'rejected'">Your call was rejected<br></label>
+        <label v-if="msg.action === 'initiated'"><strong>You</strong> started a call </label>
+        <label v-if="msg.action === 'ongoing'">call responded </label>
+
+        <br> call state : {{msg.action}}
+        </div>
+            <q-media-player v-else type="audio" background-color="white" dense :source="msg.data.url"/>
+          </div>
+          <div
+            v-else-if="cometchat.MESSAGE_TYPE.MEDIA === msg.type"
+            class="message-media"
+          >{{ msg.text? "this is text Message": msg.category }}</div>
+          <div v-else-if="cometchat.MESSAGE_TYPE.FILE === msg.type" class="message-file">
+            <a :href="msg.data.url" target="_blank">File message</a>
+          </div>
+          <div
+            v-else-if="cometchat.MESSAGE_TYPE.CUSTOM === msg.type"
+            class="message-text"
+          >{{msg.text?"this is text Message":msg.category}}</div>
+          <div v-else-if="cometchat.MESSAGE_TYPE.IMAGE == msg.type" class="message-image">
+            <q-img :src="msg.data.url ? msg.data.url : msg.category" style="width: 300px" />
+          </div>
+          <div
+            v-else
+            class="message-text"
+          >{{(msg.text?"Something Unknown MediConnects can't process":"Something Unknown MediConnects can't process")}}</div>
+        </div>
+
+        <div class="cc1-chat-win-msg-time-wrap">
+          <span class="cc1-chat-win-timestamp">
+            {{getDate(msg.sentAt)}}
+            <!-- <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
+              <path fill="#4FC3F7" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" />
+            </svg>-->
+          </span>
+        </div>
+      </div>
+      <div class="cc1-chat-win-msg-block sender-msg" v-if="msg.sender.uid === currentUser.uid">
+        <div class="cc1-chat-win-rcvr-msg-wrap">
+          <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
+          <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
+              <div v-if="msg.callInitiator">
+        <q-avatar size="lg" class="q-mr-sm">
+          <q-img :src="msg.sender.avatar" />
+        </q-avatar>
+        <label v-if="msg.action === 'ended'">ended videochat with <strong>{{msg.callInitiator.name}} </strong><br></label>
+        <label v-if="msg.action === 'rejected'">missed videochat from <strong>{{msg.sender.name}} </strong><br></label>
+        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a videochat </label>
+        <label v-if="msg.action === 'ongoing'">videochat responded </label><br>
+        call state :   {{msg.action}}
+        </div>
+            <q-media-player v-else type="video" background-color="white" :source="msg.data.url"/>
+          </div>
+          <div v-else-if="cometchat.MESSAGE_TYPE.AUDIO === msg.type" class="message-audio">
+            <div v-if="msg.callInitiator">
+        <q-avatar size="lg" class="q-mr-sm">
+          <q-img :src="msg.sender.avatar" />
+        </q-avatar>
+        <label v-if="msg.action === 'ended'">ended call with <strong>{{msg.callInitiator.name}} </strong><br></label>
+        <label v-if="msg.action === 'rejected'">missed call from <strong>{{msg.callInitiator.name}} </strong><br></label>
+        <label v-if="msg.action === 'initiated'"><strong>{{msg.callInitiator.name}}</strong> started a call </label>
+        <label v-if="msg.action === 'ongoing'">call responded </label><br>
+         call state : {{msg.action}}</div>
+            <q-media-player v-else type="audio" background-color="white" dense :source="msg.data.url"/>
           </div>
           <div
             v-else-if="cometchat.MESSAGE_TYPE.MEDIA === msg.type"
@@ -69,44 +147,6 @@
             <span class="cc1-chat-win-tick" v-if="msg.readAt">
               <img style="width: 15px;" src="./../assets/images/double_tick_blue.png" alt="sent" />
             </span>
-          </span>
-        </div>
-      </div>
-      <div class="cc1-chat-win-msg-block reciever-msg" v-if="msg.sender.uid !== currentUser.uid">
-        <div class="cc1-chat-win-rcvr-msg-wrap">
-          <p class="chat-txt-msg" v-if="cometchat.MESSAGE_TYPE.TEXT === msg.type">{{msg.text}}</p>
-          <div v-else-if="cometchat.MESSAGE_TYPE.VIDEO === msg.type" class="message-video">
-            <q-media-player type="video" background-color="white" :source="msg.data.url"/>
-          </div>
-          <div v-else-if="cometchat.MESSAGE_TYPE.AUDIO === msg.type" class="message-audio">
-            <q-media-player type="audio" background-color="white" dense :source="msg.data.url"/>
-          </div>
-          <div
-            v-else-if="cometchat.MESSAGE_TYPE.MEDIA === msg.type"
-            class="message-media"
-          >{{ msg.text? "this is text Message": msg.category }}</div>
-          <div v-else-if="cometchat.MESSAGE_TYPE.FILE === msg.type" class="message-file">
-            <a :href="msg.data.url" target="_blank">File message</a>
-          </div>
-          <div
-            v-else-if="cometchat.MESSAGE_TYPE.CUSTOM === msg.type"
-            class="message-text"
-          >{{msg.text?"this is text Message":msg.category}}</div>
-          <div v-else-if="cometchat.MESSAGE_TYPE.IMAGE == msg.type" class="message-image">
-            <q-img :src="msg.data.url ? msg.data.url : msg.category" style="width: 300px" />
-          </div>
-          <div
-            v-else
-            class="message-text"
-          >{{(msg.text?"Something Unknown MediConnects can't process":"Something Unknown MediConnects can't process")}}</div>
-        </div>
-
-        <div class="cc1-chat-win-msg-time-wrap">
-          <span class="cc1-chat-win-timestamp">
-            {{getDate(msg.sentAt)}}
-            <!-- <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
-              <path fill="#4FC3F7" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" />
-            </svg>-->
           </span>
         </div>
       </div>
