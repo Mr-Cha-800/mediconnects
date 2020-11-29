@@ -7,9 +7,21 @@
         </NavBanner>
         <UserProfileHeader :profile="profile"/>
         <q-separator/>
-        <q-btn flat color="primary" class="full-width" size="md" label="View Activity"></q-btn>
+        <q-btn flat color="primary" class="full-width" size="md" :icon="!viewActivity?'expand_more':'expand_less'" :label="!viewActivity ? 'View Activity' : 'Hide Activity'" @click="viewActivity =! viewActivity"></q-btn>
         <q-separator/>
-        <ProfilePosting/>
+        <div class="row q-py-lg items-center justify-center">
+          <q-btn to="/post" style="width:22rem"  color="primary" label="Post To Profile"  />
+        </div>
+        <State v-if="viewActivity" :status="postsStatus" :empty="!getSections.length">
+            <div>
+              <q-list bordered>
+                <template v-for="post in userPosts">
+                  <feedpost :post="post"/>
+                  <q-separator/>
+                </template>
+              </q-list>
+            </div>
+        </State>
       </q-card>
 
       <ProfileSections />
@@ -21,17 +33,27 @@
   import Vue from 'vue';
   import UserProfileHeader from 'components/profile/UserProfileHeader.vue';
   import ProfilePosting from 'components/profile/ProfilePosting.vue';
-  import { mapGetters } from 'vuex';
+  import { mapGetters,mapActions } from 'vuex';
   import State from 'components/common/State.vue';
   import ProfileSections from 'components/posts/ProfileSections.vue';
   import NavBanner from 'components/common/NavBanner.vue';
+  import feedpost from 'components/feedPosts/feedpost.vue';
 
   export default Vue.extend({
     name: 'MyProfile',
-    components: { UserProfileHeader, ProfilePosting, State, ProfileSections, NavBanner },
-    computed: {
-      ...mapGetters('userProfileModule', ['profile', 'status'])
+    data(){
+      return {viewActivity : false}
     },
+    components: { UserProfileHeader, ProfilePosting, State, ProfileSections, NavBanner,feedpost },
+    computed: {
+      ...mapGetters('userProfileModule', ['profile', 'status','getSections']),
+      ...mapGetters('accountModule', ['user']),
+      ...mapGetters('feedPostsModule', { postsStatus : 'status' }),
+      userPosts(){
+        return this.getSections;
+      }
+    },
+
     mounted() {
       if (this.profile && this.profile.email && !this.profile.firstName) {
         return this.$router.push({ name: 'MyProfileUpdate' });
