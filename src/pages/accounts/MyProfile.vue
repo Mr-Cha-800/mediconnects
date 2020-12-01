@@ -10,7 +10,7 @@
         <q-btn flat color="primary" class="full-width" size="md" :icon="!viewActivity?'expand_more':'expand_less'" :label="!viewActivity ? 'View Activity' : 'Hide Activity'" @click="viewActivity =! viewActivity"></q-btn>
         <q-separator/>
         <div class="row q-py-lg items-center justify-center">
-          <q-btn to="/post" style="width:22rem"  color="primary" label="Post To Profile"  />
+          <q-btn to="/post/profile" style="width:22rem"  color="primary" label="Post To Profile"  route="/posts/profile"/>
         </div>
         <State v-if="viewActivity" :status="postsStatus" :empty="!getSections.length">
             <div>
