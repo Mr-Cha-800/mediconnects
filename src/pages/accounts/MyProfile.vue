@@ -12,12 +12,12 @@
         <div class="row q-py-lg items-center justify-center">
           <q-btn to="/post/profile" style="width:22rem"  color="primary" label="Post To Profile"  route="/posts/profile"/>
         </div>
-        <State v-if="viewActivity" :status="postsStatus" :empty="!getSections.length">
+        <State v-if="viewActivity" :status="status" :empty="!getSections.length">
             <div>
               <q-list bordered>
                 <template v-for="post in userPosts">
-                  <feedpost :post="post"/>
-                  <q-separator/>
+                  <feedpost :key="post.id" :post="post"/>
+                  <q-separator :key="post.id" />
                 </template>
               </q-list>
             </div>
@@ -37,19 +37,21 @@
   import State from 'components/common/State.vue';
   import ProfileSections from 'components/posts/ProfileSections.vue';
   import NavBanner from 'components/common/NavBanner.vue';
-  import feedpost from 'components/feedPosts/feedpost.vue';
+  import feedpost from 'components/profile/ProfileSectionPost.vue';
 
   export default Vue.extend({
     name: 'MyProfile',
     data(){
-      return {viewActivity : false}
+      return {
+        viewActivity : false
+        }
     },
     components: { UserProfileHeader, ProfilePosting, State, ProfileSections, NavBanner,feedpost },
     computed: {
       ...mapGetters('userProfileModule', ['profile', 'status','getSections']),
       ...mapGetters('accountModule', ['user']),
-      ...mapGetters('feedPostsModule', { postsStatus : 'status' }),
       userPosts(){
+        console.log(this.getSections);
         return this.getSections;
       }
     },
