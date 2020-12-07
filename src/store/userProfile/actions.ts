@@ -57,6 +57,11 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   },
   addSection: ({commit},payload)=>{
     commit('AddNewSection',payload)
+  },
+  getContacts: ({ commit, dispatch }) => {
+    userProfile.getContacts().then(contactList => {
+      commit('getContacts', contactList);
+    }).catch(error => commit('MyProfileFailed', error));
   }
 };
 
