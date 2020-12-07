@@ -54,7 +54,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   filterSectionss: ({ commit }, payload) =>{
     commit('updateFilter',payload)
   },
-  // not working
+  // new one
   getContacts: ({ commit, dispatch }) => {
     userProfile.getContacts().then(contactList => {
       commit('getContacts', contactList);

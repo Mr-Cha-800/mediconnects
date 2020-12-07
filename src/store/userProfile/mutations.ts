@@ -69,7 +69,7 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   updateFilter(state, filter){
     Vue.set(state, 'filter', filter);
   },
-  // not working
+  // new one
   getContacts(state, contactlist){
     Vue.set(state, 'profile', { ...state.profile, contactList: contactlist });
   }
