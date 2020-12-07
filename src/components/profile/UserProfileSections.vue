@@ -1,28 +1,26 @@
 <template>
   <div>
     <q-chip
-      :outline="!isActive('All')"
+      :outline="!isActive('')"
       size="1rem"
-      :color="isActive('All') ? 'primary' : 'grey-8'"
-      :outline-color="isActive('All') ? 'primary' : 'grey-8'"
+      :color="isActive('') ? 'primary' : 'grey-8'"
+      :outline-color="isActive('') ? 'primary' : 'grey-8'"
       clickable
-      :text-color="isActive('All') ? 'white' : ''"
-      @click="toggleAllSection"
+      :text-color="isActive('') ? 'white' : ''"
+      @click="setSection('')"
     >All
     </q-chip>
     <q-chip
       v-for="section in sections"
-      :key="section.id"
       :outline="!isActive(section.name)"
       size="1rem"
-      :color="isActive(section.id) ? 'primary' : 'grey-8'"
-      :outline-color="isActive(section.id) ? 'primary' : 'grey-8'"
+      :color="isActive(section.name) ? 'primary' : 'grey-8'"
+      :outline-color="isActive(section.name) ? 'primary' : 'grey-8'"
       clickable
-      :text-color="isActive(section.id) ? 'white' : ''"
-      @click="toggleSection(section.id)"
+      :text-color="isActive(section.name) ? 'white' : ''"
+      @click="setSection(section.name)"
     >{{section.name}}
     </q-chip>
-    <q-btn color="primary" class="q-mx-sm" unelevated  size="md" rounded icon="add"  @click="addSection" />
 
     <!--<q-btn outline round @click="editMode = true" color="grey-8" size="sm" icon="add"/>
     <q-form @submit.prevent="addSection" ref="addSectionForm" v-if="editMode" class="row">
@@ -49,52 +47,38 @@
     data() {
       const sections: Record<string, unknown>[] = [];
       return {
+        sections,
         newSection: '',
         editMode: false,
         Experience: true,
+        activeSection: '',
       };
-    },
-    computed:{
-      sections():Record<string,string>[]{
-        
-        return this.$props.userSections;
-      }
     },
     methods: {
       ...mapGetters('userProfileModule', ['filtersections']),
       ...mapActions('userProfileModule', ['filterSectionss'] ),
       isActive(sectionName: string): boolean {
-        if(sectionName == "All")
-        {
-         return this.filtersections().length == this.sections.length ? true : false;
-        }
-        return this.filtersections().includes(sectionName.toLowerCase());
+        return this.activeSection === sectionName;
       },
       setSection(sectionName: string): void {
-        // this.activeSection = sectionName
-        // this.filterSectionss(this.activeSection)
+        this.activeSection = sectionName
+        this.filterSectionss(this.activeSection)
       },
       resetSection(): void {
-        // this.newSection = '';
-        // this.editMode = false;
+        this.newSection = '';
+        this.editMode = false;
       },
       addSection(): void {
-        // if (this.newSection) {
-        //   this.sections.push({
-        //     name: this.newSection,
-        //   });
-        //   this.resetSection();
-        // }
-      },
-      toggleSection(sectionName: string){
-        var filteredSections : string[]=this.filtersections();
-        filteredSections.includes(sectionName) ? 
-        this.filterSectionss(filteredSections.filter(sec => sec !== sectionName)) :
-        this.filterSectionss([...filteredSections,sectionName]);
-      },
-      toggleAllSection(){
-        this.filtersections().length != this.sections.length ? this.filterSectionss([...this.sections.map((o ) => o!.id)]) : this.filterSectionss([]);
+        if (this.newSection) {
+          this.sections.push({
+            name: this.newSection,
+          });
+          this.resetSection();
+        }
       }
+    },
+    mounted() {
+      this.sections = [...this.$props.userSections];
     }
   });
 </script>

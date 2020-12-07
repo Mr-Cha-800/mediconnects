@@ -73,4 +73,3 @@ export const removeMemberFromGroup = async (guid: string, memberId: string) => {
   await CometChat.kickGroupMember(guid, memberId);
   return Promise.resolve();
 }
-

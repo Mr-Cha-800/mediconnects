@@ -10,12 +10,13 @@ const routes: RouteConfig[] = [
       { path: '/profile', component: () => import('pages/accounts/MyProfile.vue'), name: 'MyProfile', meta: { auth: true } },
       { path: '/profile/update', component: () => import('pages/accounts/MyProfileUpdate.vue'), name: 'MyProfileUpdate', meta: { auth: true, noFooter: true } },
       { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue'), name: 'profileOrganizations', meta: { auth: true } },
+      { path: '/profile/connections', component: () => import('pages/accounts/ProfileConnections.vue'), name: 'profileConnections', meta: { auth: true } },
       { path: '/profile/organizations/add', component: () => import('pages/organizations/OrgProfileAdd.vue'), name: 'OrgProfileAdd', meta: { auth: true, noFooter: true } },
       { path: '/profile/organizations/:orgId', component: () => import('pages/organizations/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
       { path: '/profile/organizations/:orgId/edit', component: () => import('pages/organizations/OrgProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true, noFooter: true } },
       { path: '/profile/organizations/:orgId/members', component: () => import('pages/organizations/OrganizationMembers.vue'), name: 'OrganizationMembers', meta: { auth: true } },
       { path: '/profile/requests', component: () => import('pages/accounts/UserConnectRequests.vue'), name: 'UserConnectRequests', meta: { auth: true } },
-      { path: '/post/:type', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
+      { path: '/post', component: () => import('pages/posting/AddPost.vue'), name: 'AddPost', meta: { auth: true, noFooter: true } },
       { path: '/section/:Id/edit', component: () => import('pages/posting/EditSection.vue'), name: 'EditSection', meta: { auth: true, noFooter: true } },
 
       { path: '/groups', component: () => import('pages/groups/Groups.vue'), name: 'groups', meta: { auth: true } },
@@ -31,6 +32,7 @@ const routes: RouteConfig[] = [
       { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
 
       { path: '/messages', component: () => import('pages/messages/MessagesPage.vue'), name: 'messages', meta: { auth: true, noFooter: true } },
+      { path: '/messages/:id', component: () => import('pages/messages/MessagesPage.vue'), name: 'messages', meta: { auth: true, noFooter: true } },
     ]
   },
 
