@@ -32,7 +32,7 @@ export interface UserProfileStateInterface {
   users: UserProfileInterface[],
   profile: UserProfileInterface;
   user: UserProfileInterface;
-  filter: string;
+  filter: string[];
   status: {
     loading: boolean;
     updating: boolean;
@@ -46,10 +46,10 @@ export interface UserProfileStateInterface {
 
 const state: UserProfileStateInterface = {
   users: [],
-  profile: {},
+  profile : {},
   user: {},
   userStatus: {},
-  filter: 'all',
+  filter: ['experience','education','companies','family','music'],
   status: {
     loading: false,
     updating: false,

@@ -67,6 +67,7 @@ const mutation: MutationTree<UserProfileStateInterface> = {
     Vue.set(state, 'profile', { ...state.profile, followers: followers && followers - 1 });
   },
   updateFilter(state, filter){
+    console.log(filter);
     Vue.set(state, 'filter', filter);
   }
 };
