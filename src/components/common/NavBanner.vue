@@ -1,9 +1,9 @@
 <template>
   <q-banner dense inline-actions class="text-white bg-transparent">
-    <q-btn flat dense color="primary" @click="goBack()" icon="arrow_back" />
-    <template v-slot:action>
+    <template  v-slot:action>
       <slot />
     </template>
+    <q-btn flat dense color="primary" @click="goBack()" icon="arrow_back" />
   </q-banner>
 </template>
 

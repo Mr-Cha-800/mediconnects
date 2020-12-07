@@ -1,79 +1,75 @@
 <template>
-  <q-form @submit.prevent="submitProfile" ref="updateForm">
+  <q-form @submit="submitProfile" ref="updateForm">
     <NavBanner>
-      <q-toggle
-        :false-value="false"
-        :label="`Public ${isPublicPost ? 'ON' : 'OFF'}`"
-        :true-value="true"
-        left-label
-        icon="local_cafe"
-        color="blue-grey-8"
-        v-model="isPublicPost"
-        style="color:#009688"
-      />
+      <slot name="action"><span class="text-h4 center-post-label absolute text-primary">{{ postType == 'profile'?'Profile Post':(postType == 'feed')?'Create Post': false }}</span></slot>
     </NavBanner>
-    <!-- END -->
-    <q-item v-if="!isPublicPost">
-      <q-chip
-        :outline="!organization.orgs.length"
-        size="1rem"
-        :color="organization.orgs.length ? 'primary' : 'grey-8'"
-        :outline-color="!organization.orgs.length ? 'primary' : 'grey-8'"
-        clickable
-        @click="() => {organization.showList = true; individual.showList = false}"
-        :text-color="!organization.orgs.length ? 'white' : ''"
-      >{{organization.name}}
-        <q-badge align="bottom" v-if="organization.orgs.length " color="red" floating>{{organization.orgs.length}}</q-badge>
-      </q-chip>
-      <q-chip
-        :outline="!individual.users.length"
-        size="1rem"
-        :color="individual.users.length ? 'primary' : 'grey-8'"
-        :outline-color="!individual.users.length ? 'primary' : 'grey-8'"
-        clickable
-        @click="() => {individual.showList = true; organization.showList = false}"
-        :text-color="!individual.users.length ? 'white' : ''"
-      >{{individual.name}}
-        <q-badge align="bottom" v-if="individual.users.length " color="red" floating>{{individual.users.length}}</q-badge>
-      </q-chip>
-    </q-item>
-    <q-item>
-      <AddUserIdtoPost @clicked="onClickUsers" v-if="individual.showList" />
-      <AddOrgIdtoPost @clicked="onClickOrgs" v-if="organization.showList" />
-    </q-item>
+    <div class="q-ma-md">
+      <q-select 
+        v-model="postDetails.sectionGroup" 
+        :options="filtersections" 
+        label="Select Profile Section"
+        class="requiredAsterik"
+        transition-show="jump-up"
+        transition-hide="jump-down"
+        v-if=" postType == 'profile'"
+        clearable
+        ref="stupid"
+        :rules="[ val => val && val.length > 0 || 'Profile Section is required']"
+         />
+      <q-select 
+        v-model="postDetails.sectionGroup" 
+        :options="filtersections" 
+        label="Select Profile Section"
+        transition-show="jump-up"
+        transition-hide="jump-down"
+        v-if=" postType == 'feed'"
+        clearable
+         />
+      <q-select 
+        v-model="organization" 
+        :options="organizations" 
+        label="Post in Organization"
+        transition-show="jump-up"
+        transition-hide="jump-down"
+        emit-value
+        map-options
+        clearable
+         />
+      <q-select 
+        v-model="connection" 
+        :options="connections" 
+        label="Send to connection"
+        transition-show="jump-up"
+        transition-hide="jump-down"
+        emit-value
+        map-options
+        clearable
+         />
+
+    </div>
     <q-item>
       <q-item-section>
         <q-input
           class="full-width"
-          placeholder="Share something..."
-          borderless
+          placeholder="Say something..."
           rows="10"
-          v-model="payload.title"
+          v-model="postDetails.title"
           type="text"
         />
       </q-item-section>
 
     </q-item>
     <div class="full-width">
-
-        <q-expansion-item
-          label="More details"
-          class="overflow-hidden full-width"
-          append
-          expand-icon="add"
-          expand-icon-toggle
-        >
-          <q-card>
+         <q-card flat>
             <q-card-section>
               <q-input
-                v-model="payload.description"
+                v-model="postDetails.description"
                 class="full-width"
-                placeholder="Add Description to your post"
+                placeholder="Add a description..."
                 type="textarea"
               />
             </q-card-section>
           </q-card>
-        </q-expansion-item>
     </div>
     <PostMediaSelection @streamSelected="streamSelected"/>
 
@@ -93,17 +89,36 @@
   import Vue from 'vue';
   import PostingState from 'components/common/PostingState.vue';
 
-  import { VForm } from 'src/types';
-  import { mapActions } from 'vuex';
-  import { validateRequired } from 'src/formValidators';
-  import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
+  import { VForm } from '../../../src/types';
+  import { mapActions,mapGetters } from 'vuex';
+  import { validateRequired } from '../../../src/formValidators';
+  import { PostingRequestInterface, PostingTypesEnum } from '../../../src/store/posting/state';
   import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
   import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
   import PostMediaSelection from 'components/posting/PostMediaSelection.vue';
   import NavBanner from 'components/common/NavBanner.vue';
+  import { OrgSearchQueryInterface, OrgSearchScopeEnum } from '../../../src/services/organisations.service';
 
   export default Vue.extend({
     name: 'PostingForm',
+    data() {
+      return {
+        postType: 'profile',
+        imageStream: null,
+        videoStream: null,
+        //single or muliple
+        organization:'',
+        connection:'',
+        //
+        postDetails:{
+          type: PostingTypesEnum.TEXT,
+          title: '',
+          description: '',
+          organizations:[],
+          sectionGroup:''
+        }
+      }
+    },
     components: { AddUserIdtoPost, AddOrgIdtoPost, PostMediaSelection, PostingState, NavBanner },
     props: {
       profile: {
@@ -113,66 +128,91 @@
       submitting: {
         type: Boolean,
         default: (): boolean => false,
-      }
-    },
-    data() {
-        const payload: PostingRequestInterface = {
-        type: PostingTypesEnum.TEXT,
-        title: '',
-        description: '',
-      };
-      return {
-        postType: 'users',
-        imageStream: null,
-        videoStream: null,
-        isPublicPost: true,
-        payload,
-        organization: {
-          name: 'Organization',
-          orgs: [],
-          badge: 0,
-          showList: false,
-        },
-        individual: {
-          name: 'Individuals',
-          users: [],
-          badge: 0,
-          showList: false,
-        }
+      },
+      type:{
+        type: String,
+        required: true
       }
     },
     computed: {
+      ...mapGetters('orgProfileModule',['getOrgs']),
+      ...mapGetters('userProfileModule',['filtersections','users']),
+
       vUpdateForm(): VForm {
-        return this.$refs.updateForm as VForm
+        return this.$refs.updateForm as VForm;
       },
+      organizations(){
+        return this.getOrgs.map((o : { name:string,id:string }) => { return { label:o!.name,value:o!.id }});
+      },
+      connections(){
+        return this.users.map((o :Record<string,string>) =>{ return { label:o!.firstname + o!.lastname, value:o!.id }} )
+      }
     },
     methods: {
-      ...mapActions('postingModule', ['addPost']),
+      ...mapActions('postingModule', ['addPost','addProfilePost']),
+      ...mapActions('orgProfileModule', ['search']),
       validateRequired: validateRequired,
       submitProfile(): void {
-        if (this.vUpdateForm.validate()) {
+        if ((this.vUpdateForm as VForm).validate()) {
           this.$emit('submit', { profile: this.$props.profile });
         }
       },
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
-        this.payload = { ...this.payload, mediaSource, type };
-      },
-      onClickUsers (value:any) {
-       this.individual.users = value;
-       this.individual.showList = false;
-      },
-      onClickOrgs (value:any) {
-       this.organization.orgs = value;
-       this.organization.showList = false;
+        this.postDetails = { ...this.postDetails as PostingRequestInterface, mediaSource, type };
       },
       submitPost() {
-        this.addPost(this.payload)
-        this.payload = {
-          type: PostingTypesEnum.TEXT,
-          title: '',
-          description: '',
-        };
+        this.vUpdateForm.validate().then(success=>{
+          if(success)
+          {
+        
+            this.postDetails.organizations.push(this.organization);
+            //@ts-ignore
+            this.postType =='profile' ? this.addProfilePost(this.postDetails) : this.addPost(this.postDetails);
+            this.organization = '';
+            this.postDetails = {
+              type: PostingTypesEnum.TEXT,
+              title: '',
+              description: '',
+              organizations:[],
+              sectionGroup:''
+            };
+              this.vUpdateForm.resetValidation();
+              this.postDetails.sectionGroup = this.filtersections[1];
+              this.$q.notify({
+                message: 'Post Sucessful',
+                icon: 'check',
+                color:'primary',
+              })
+          }
+          else{
+            //do something later
+          }
+        });
+       
+
       }
     },
+    mounted(){
+      //@ts-ignore
+      this.search({ scope: OrgSearchScopeEnum.ACCOUNT });
+      var routeParam=this.$route.params.type;
+      if(routeParam == 'profile' || routeParam == 'feed')
+      this.postType=routeParam;
+      else
+      alert('HMPH :/');
+    }
   });
 </script>
+<style lang="scss" scoped>
+.center-post-label{
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+</style>
+<style lang="scss">
+.requiredAsterik .q-field__label::after{
+  content: '*';
+  color: red;
+}
+</style>

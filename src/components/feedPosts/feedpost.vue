@@ -1,7 +1,7 @@
 <template>
   <div class="q-mt-md">
     <q-card flat>
-      <q-item :to="{name: 'UserProfile', params: { userId: post.createdBy.id}}" >
+      <q-item>
         <q-item-section avatar>
           <q-avatar>
             <q-img :src="propAvatar" height="100%"/>
