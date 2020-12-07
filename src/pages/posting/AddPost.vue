@@ -1,8 +1,8 @@
-<template >
-  <q-card class="q-my-md q-py-md" flat>
+<template>
+  <q-card flat>
     <div class="row">
       <div class="col-12">
-        <PostingForm :type="this.$route.params.type" />
+        <PostingForm/>
       </div>
     </div>
   </q-card>
@@ -15,7 +15,7 @@
 
   export default Vue.extend({
     name: 'AddPost',
-    components: { PostingForm }
+    components: { PostingForm },
   });
 </script>
 

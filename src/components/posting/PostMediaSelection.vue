@@ -5,7 +5,7 @@
         <q-card flat square v-if="type !== postingTypes.TEXT">
           <div class="text-right">
             <q-btn flat dense @click="deleteSrc">
-              <q-icon color="negative" name="cancel" size="md"/>
+              <q-icon color="negative" name="delete" size="md"/>
             </q-btn>
           </div>
           <q-img
