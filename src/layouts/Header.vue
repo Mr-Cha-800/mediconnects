@@ -32,7 +32,12 @@
           <q-btn round dense flat icon="message" :to="{name: 'messages'}">
             <q-tooltip>Messages</q-tooltip>
           </q-btn>
-          <ConnectNotifications/>
+          <q-btn round dense flat icon="notifications">
+            <q-badge color="red" text-color="white" floating>
+              2
+            </q-badge>
+            <q-tooltip>Notifications</q-tooltip>
+          </q-btn>
           <q-btn round flat exact :to="{name: 'MyProfile'}" v-if="$q.screen.gt.sm">
             <q-avatar size="26px">
               <q-img :src="getAvatar" />
@@ -108,11 +113,10 @@
   import Vue from 'vue';
   import { mapActions, mapGetters } from 'vuex';
   import CallBanner from 'components/calling/CallBanner.vue';
-  import ConnectNotifications from 'components/profile/ConnectNotifications.vue';
 
   export default Vue.extend({
     name: 'MainLayout',
-    components: { Search, CallBanner, ConnectNotifications },
+    components: { Search, CallBanner },
     data() {
       return {
         search: '',
@@ -132,11 +136,6 @@
             label: 'Connect Requests',
             icon: 'group_add',
             pathName: 'UserConnectRequests'
-          },
-          connections: {
-            label: 'Connections',
-            icon: 'group',
-            pathName: 'profileConnections'
           },
           groups: {
             label: 'Groups',

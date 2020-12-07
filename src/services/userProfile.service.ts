@@ -65,8 +65,3 @@ export const changeOrderDown = async (id: string, weight: number) => {
 export const getById = (id: string) =>
   axios.get<SectionInterface>(`${API}/account/profile/sections/${id}`)
   .then(({ data }) => data);
-
-  // not working
-  export const getContacts = () =>
-  axios.get(`${API}/account/connections`)
-  .then(({ data }) => data);

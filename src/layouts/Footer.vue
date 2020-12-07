@@ -6,7 +6,7 @@
       </q-toolbar>
     </q-footer>
     <q-page-sticky position="bottom-right" :offset="[18, 18]" class="gt-sm" v-if="!postingStatus.loading">
-      <q-btn fab icon="add" color="primary" :to="{name: 'AddPost'}"/>
+      <q-btn fab icon="add" color="primary" to="/post/feed"/>
     </q-page-sticky>
 
     <PostingState v-if="postingStatus.loading" />

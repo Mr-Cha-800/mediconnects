@@ -33,8 +33,7 @@
         <q-item-label caption>
           <UserProfileSocialTags :count="profile.followers">Followers</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.following">Following</UserProfileSocialTags>
-          <UserProfileSocialTags  v-if="isMyProfile"  :count="profile.connections"><router-link :to="{ name: 'profileConnections'}"> Connections</router-link></UserProfileSocialTags>
-          <UserProfileSocialTags  v-else  :count="profile.connections">Connections</UserProfileSocialTags>
+          <UserProfileSocialTags :count="profile.connections">Connections</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.organizations">Organizations</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.posts">Posts</UserProfileSocialTags>
         </q-item-label>

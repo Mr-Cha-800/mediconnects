@@ -52,13 +52,11 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     }).catch(error => commit('MyProfileUpdateFailed', error));
   },
   filterSectionss: ({ commit }, payload) =>{
+    console.log('Updated + ',payload);
     commit('updateFilter',payload)
   },
-  // new one
-  getContacts: ({ commit, dispatch }) => {
-    userProfile.getContacts().then(contactList => {
-      commit('getContacts', contactList);
-    }).catch(error => commit('MyProfileFailed', error));
+  addSection: ({commit},payload)=>{
+    commit('AddNewSection',payload)
   }
 };
 
