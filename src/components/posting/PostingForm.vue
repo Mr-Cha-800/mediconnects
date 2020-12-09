@@ -6,24 +6,17 @@
     <div class="q-ma-md">
       <q-select 
         v-model="postDetails.sectionGroup" 
-        :options="filtersections" 
+        :options="sectionGroups" 
         label="Select Profile Section"
         class="requiredAsterik"
         transition-show="jump-up"
         transition-hide="jump-down"
         v-if=" postType == 'profile'"
+        emit-value
+        map-options
         clearable
         ref="stupid"
         :rules="[ val => val && val.length > 0 || 'Profile Section is required']"
-         />
-      <q-select 
-        v-model="postDetails.sectionGroup" 
-        :options="filtersections" 
-        label="Select Profile Section"
-        transition-show="jump-up"
-        transition-hide="jump-down"
-        v-if=" postType == 'feed'"
-        clearable
          />
       <q-select 
         v-model="organization" 
@@ -32,6 +25,7 @@
         transition-show="jump-up"
         transition-hide="jump-down"
         emit-value
+        v-if="postType != 'profile'"
         map-options
         clearable
          />
@@ -44,6 +38,7 @@
         emit-value
         map-options
         clearable
+        v-if="postType != 'profile' "
          />
 
     </div>
@@ -75,7 +70,7 @@
 
     <q-item class="q-pa-sm">
       <q-item-section class="q-pa-md">
-        <q-btn type="submit" label="Post" @click="submitPost" color="primary" >
+        <q-btn  label="Post" @click="submitPost" color="primary" >
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />
             Posting...
@@ -136,7 +131,7 @@
     },
     computed: {
       ...mapGetters('orgProfileModule',['getOrgs']),
-      ...mapGetters('userProfileModule',['filtersections','users']),
+      ...mapGetters('userProfileModule',['getSectionGroups','users']),
 
       vUpdateForm(): VForm {
         return this.$refs.updateForm as VForm;
@@ -146,6 +141,9 @@
       },
       connections(){
         return this.users.map((o :Record<string,string>) =>{ return { label:o!.firstname + o!.lastname, value:o!.id }} )
+      },
+      sectionGroups(){
+        return this.getSectionGroups.map((o:Record<string,string>) => {return { label:o!.name ,value:o!.id }})
       }
     },
     methods: {

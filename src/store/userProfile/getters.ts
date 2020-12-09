@@ -46,6 +46,9 @@ const getters: GetterTree<UserProfileStateInterface, StateInterface> = {
   getAvatar: ({ profile: { avatar } }) => avatarMediaObject(avatar),
   getSections(state){
     return state.profile.sections;
+  },
+  getSectionGroups(state){
+    return state.profile.sectionGroups;
   }
 };
 

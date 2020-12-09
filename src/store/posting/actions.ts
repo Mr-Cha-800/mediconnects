@@ -19,6 +19,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
       userProfile.addSection({post, weight: payload.weight, group: payload.sectionGroup }).then(() => {
         commit('PostingSuccess', payload);
         dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+        Router.back();
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
   },
