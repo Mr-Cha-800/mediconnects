@@ -33,7 +33,8 @@
         <q-item-label caption>
           <UserProfileSocialTags :count="profile.followers">Followers</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.following">Following</UserProfileSocialTags>
-          <UserProfileSocialTags :count="profile.connections">Connections</UserProfileSocialTags>
+          <UserProfileSocialTags  v-if="isMyProfile"  :count=" profile.contactList.connections.length"><router-link :to="{ name: 'profileConnections'}"> Connections</router-link></UserProfileSocialTags>
+          <UserProfileSocialTags  v-else  :count="profile.connections"> Connections</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.organizations">Organizations</UserProfileSocialTags>
           <UserProfileSocialTags :count="profile.posts">Posts</UserProfileSocialTags>
         </q-item-label>
@@ -57,7 +58,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import UserProfileSocialTags from 'components/profile/UserProfileSocialTags.vue';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import FollowConnect from 'components/public/FollowConnect.vue';
   import { EntityTypes } from 'src/types';
   import UserProfileSections from 'components/profile/UserProfileSections.vue';
@@ -71,6 +72,9 @@
         type: Object,
         default: (): Record<string, unknown> => ({})
       },
+    },
+    methods: {
+      ...mapActions('userProfileModule', ['getContacts'])
     },
     computed: {
       ...mapGetters('userProfileModule', ['isMe']),
@@ -86,6 +90,9 @@
         Experience: true,
         ratingModel: 3
       };
+    },
+    created(){
+        this.getContacts()
     }
 
   });

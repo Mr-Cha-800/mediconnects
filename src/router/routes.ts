@@ -10,6 +10,7 @@ const routes: RouteConfig[] = [
       { path: '/profile', component: () => import('pages/accounts/MyProfile.vue'), name: 'MyProfile', meta: { auth: true } },
       { path: '/profile/update', component: () => import('pages/accounts/MyProfileUpdate.vue'), name: 'MyProfileUpdate', meta: { auth: true, noFooter: true } },
       { path: '/profile/organizations', component: () => import('pages/accounts/UserOrgsList.vue'), name: 'profileOrganizations', meta: { auth: true } },
+      { path: '/profile/connections', component: () => import('pages/accounts/ProfileConnections.vue'), name: 'profileConnections', meta: { auth: true } },
       { path: '/profile/organizations/add', component: () => import('pages/organizations/OrgProfileAdd.vue'), name: 'OrgProfileAdd', meta: { auth: true, noFooter: true } },
       { path: '/profile/organizations/:orgId', component: () => import('pages/organizations/organizationProfile.vue'), name: 'organizationProfile', meta: { auth: true } },
       { path: '/profile/organizations/:orgId/edit', component: () => import('pages/organizations/OrgProfileEdit.vue'), name: 'EditOrganization', meta: { auth: true, noFooter: true } },

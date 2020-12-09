@@ -1,7 +1,6 @@
 <template>
 
 <div>
-
   <!-- <div class="ccl-left-panel-srch-wrap "> -->
   <div class="ccl-left-panel-head-wrap">
     <div class="ccl-left-panel-srch-inpt-wrap">
@@ -16,18 +15,20 @@
     </p>
   </div>
     <div class="contact-list-wrpr" v-for="(userRow, i) in usersList" :key="i">
-      <div class="chat-ppl-listitem clearfix" v-on:click="currentUser(userRow)">
-        <span class='chat-contact-list-apla-ftlr' v-if="(i > 0 && usersList[i-1].name.charAt(0).toUpperCase() !== userRow.name.charAt(0).toUpperCase())">{{(i > 0 && usersList[i-1].name.charAt(0).toUpperCase() === userRow.name.charAt(0).toUpperCase()) ? '' : userRow.name.substring(0, 1).toUpperCase()}}</span>
-        <!-- <div class="chat-contact-listitem"> -->
-          <Avatar :item="userRow" />
-          <div class="chat-ppl-listitem-dtls">
-            <span class="chat-ppl-listitem-name">{{userRow.name}}</span>
-          </div>
-          <!-- <div class="chat-contact-listitem-name ccl-semi-bold-text">{{userRow.name}}</div> -->
-        <!-- </div> -->
-      </div>
-    </div>
+      <template v-for="proo in profile.contactList.connections">
+        <div class="chat-ppl-listitem clearfix" v-if="proo.id === userRow.uid"  :key="proo.id" v-on:click="currentUser(userRow)">
+          <span class='chat-contact-list-apla-ftlr' v-if="(i > 0 && usersList[i-1].name.charAt(0).toUpperCase() !== userRow.name.charAt(0).toUpperCase())">{{(i > 0 && usersList[i-1].name.charAt(0).toUpperCase() === userRow.name.charAt(0).toUpperCase()) ? '' : userRow.name.substring(0, 1).toUpperCase()}}</span>
+          <!-- <div class="chat-contact-listitem"> -->
+            <Avatar :item="userRow" />
+            <div class="chat-ppl-listitem-dtls">
+              <span class="chat-ppl-listitem-name">{{userRow.name}}</span>
+            </div>
+            <!-- <div class="chat-contact-listitem-name ccl-semi-bold-text">{{userRow.name}}</div> -->
+          <!-- </div> -->
+        </div>
+      </template>
 
+    </div>
 
 
 
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import { CometChat } from "@cometchat-pro/chat";
 import Avatar from "./Avatar";
 
@@ -76,6 +78,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('userProfileModule', ['getContacts']),
     currentUser(data) {
       this.$root.$emit("selectedUser", data);
     },
@@ -113,6 +116,10 @@ export default {
   },
   created() {
     this.getUserlist();
+    this.getContacts();
+  },
+  computed: {
+    ...mapGetters('userProfileModule', ['profile'])
   }
 };
 </script>
