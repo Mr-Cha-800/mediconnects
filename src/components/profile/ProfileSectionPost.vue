@@ -90,6 +90,7 @@
         </div>
       </div>
     </q-card>
+    <q-separator />
   </div>
 
 </template>
