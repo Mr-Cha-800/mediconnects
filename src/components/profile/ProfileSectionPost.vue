@@ -14,6 +14,28 @@
           <q-item-label>{{post.group}}</q-item-label>
           <q-item-label caption>{{formatDate(post.section.timestamp)}}</q-item-label>
         </q-item-section>
+        <q-item-section side>
+            <q-btn-dropdown menu-anchor="bottom middle" menu-self="top middle"  dropdown-icon="more_horiz" no-icon-animation dense flat  color="primary">
+              <q-list dense>
+                <q-item  clickable v-close-popup @click="editPost">
+                  <q-item-section avatar>
+                    <q-icon size="xs" color="dark" name="o_edit" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-dark ">Edit post</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="deletePost">
+                  <q-item-section avatar>
+                    <q-icon size="xs"  color="dark" name="o_delete" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="text-body2 ">Delete post</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+        </q-item-section>
       </q-item>
         <TextCard v-if="post.section.type === postingTypes.TEXT" :post="post.section"/>
         <ImageCard v-if="post.section.type === postingTypes.IMAGE" :post="post.section"/>
@@ -81,6 +103,7 @@
   import VideoCard from 'components/posts/VideoCard.vue';
   import AudioCard from 'components/posts/AudioCard.vue';
   import { avatarMediaObject } from 'src/helpers/parseMediaOject';
+  import { mapActions, mapGetters } from 'vuex';
 
   export default Vue.extend({
     name: 'profilepost',
@@ -97,6 +120,7 @@
       }
     },
     methods: {
+      ...mapActions('postingModule', ['deleteSection']),
       agreer(val) {
         if (val === 4) {
           this.agree = 1;
@@ -110,9 +134,12 @@
       formatDate(stringDate) {
         return formatDistanceToNow(new Date(stringDate), { addSuffix: true });
       },
+      deletePost(){
+        this.deleteSection(this.post.id);
+      }
     },
   computed: {
-
+    
     postingTypes: () => PostingTypesEnum,
   },
   mounted(){
@@ -120,3 +147,8 @@
   }
   });
 </script>
+<style lang="scss" scoped>
+.q-btn-dropdown--simple .q-btn-dropdown__arrow {
+  margin-left: 0px !important;
+}
+</style>
