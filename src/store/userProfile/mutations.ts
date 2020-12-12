@@ -73,6 +73,18 @@ const mutation: MutationTree<UserProfileStateInterface> = {
   // working fine
   getContacts(state, contactlist){
     Vue.set(state, 'profile', { ...state.profile, contactList: contactlist });
+  },
+  //section group mutations
+  sectionGroupAdded( state, payload:string ){
+    state.profile.sectionGroups?.push( { name: payload,id: payload.toLowerCase().trim() });
+  },
+  sectionGroupDeleted( state, payload:string ){
+    state.profile.sectionGroups?.splice(state.profile.sectionGroups.findIndex( grp => grp.id == payload ), 1);
+  },
+  sectionGroupUpdated( state, payload:string ){
+    var index = state.profile.sectionGroups?.findIndex((grp => grp.id == payload))!;
+    state.profile.sectionGroups![index]={ name:payload,id:payload.trim().toLowerCase() };
+    Vue.set(state,'profile',{ ...state.profile });
   }
 };
 
