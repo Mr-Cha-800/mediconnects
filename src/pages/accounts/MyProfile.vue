@@ -17,7 +17,6 @@
               <q-list bordered>
                 <template v-for="post in userPosts">
                   <feedpost :key="post.id" :post="post"/>
-                  <q-separator :key="post.id" />
                 </template>
               </q-list>
             </div>

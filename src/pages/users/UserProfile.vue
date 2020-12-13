@@ -6,13 +6,12 @@
       <q-separator />
     </q-card>
 
-    <div v-for="{ section } in user.sections" :key="section.id">
-      <q-card flat square class="q-mt-md">
-        <TextCard v-if="section.type === postingTypes.TEXT" :post="section"/>
-        <ImageCard v-if="section.type === postingTypes.IMAGE" :post="section"/>
-        <VideoCard v-if="section.type === postingTypes.VIDEO" :post="section"/>
-        <AudioCard v-if="section.type === postingTypes.AUDIO" :post="section"/>
-      </q-card>
+    <div >
+      <q-list bordered>
+        <template v-for="section in user.sections" >
+          <feedpost :key="section.id" :post="section"/>
+        </template>
+      </q-list>
     </div>
   </State>
 </template>
@@ -29,10 +28,11 @@
   import AudioCard from 'components/posts/AudioCard.vue';
   import { mapCacheActions } from 'vuex-cache';
   import NavBanner from 'components/common/NavBanner.vue';
+  import feedpost from 'components/profile/ProfileSectionPost.vue';
 
   export default Vue.extend({
     name: 'UserProfile',
-    components: { State, UserProfileHeader, TextCard, ImageCard, VideoCard, AudioCard, NavBanner },
+    components: { State, UserProfileHeader, TextCard, ImageCard, VideoCard, AudioCard, NavBanner,feedpost },
     computed: {
       ...mapGetters('userProfileModule', ['user', 'userStatus']),
       postingTypes: () => PostingTypesEnum
@@ -45,6 +45,9 @@
       if (userId) {
         this.getUser(userId);
       }
+    },
+    mounted(){
+      
     }
   });
 </script>
