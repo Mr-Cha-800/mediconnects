@@ -62,7 +62,13 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
     userProfile.getContacts().then(contactList => {
       commit('getContacts', contactList);
     }).catch(error => commit('MyProfileFailed', error));
+  },
+  //section groups actions
+  addSectionGroup:({ commit },payload) => {
+    userProfile.addSectionGroup( payload ).then((sectionGroup :String ) => {
+        commit('sectionGroupAdded', payload);
+    });
   }
-};
+}
 
 export default actions;

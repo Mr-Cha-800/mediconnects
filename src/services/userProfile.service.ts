@@ -70,3 +70,13 @@ export const getById = (id: string) =>
   export const getContacts = () =>
   axios.get(`${API}/account/connections`)
   .then(({ data }) => data);
+//section groups calls
+
+export const addSectionGroup = (name:string) =>
+  axios.post(`${API}/account/sectiongroups`,{ name }).then(({ data }) => data);
+
+export const editSectionGroup = (name:string) =>
+  axios.put(`${API}/account/sectiongroups/${name}`,{ name }).then(({ data }) => data);
+
+export const deleteSectionGroup = (name:string) => 
+  axios.delete(`${API}/account/sectiongroups/${name}`).then(({ data }) => data);
