@@ -11,10 +11,9 @@
             />
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{post.group}}</q-item-label>
           <q-item-label caption>{{formatDate(post.section.timestamp)}}</q-item-label>
         </q-item-section>
-        <q-item-section side>
+        <q-item-section v-if="$route.name != 'UserProfile'" side>
             <q-btn-dropdown menu-anchor="bottom middle" menu-self="top middle"  dropdown-icon="more_horiz" no-icon-animation dense flat  color="primary">
               <q-list dense>
                 <q-item  clickable v-close-popup @click="editPost">
