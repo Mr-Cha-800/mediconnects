@@ -18,7 +18,7 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
     posting.post(payload).then(({id: post}) => {
       userProfile.addSection({post, weight: payload.weight, group: payload.sectionGroup }).then(() => {
         commit('PostingSuccess', payload);
-        dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+        dispatch('userProfileModule/getMyProfile', null, { root: true });
         Router.back();
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
@@ -29,23 +29,23 @@ const actions: ActionTree<PostingStateInterface, StateInterface> = {
     posting.editSection(payload).then(({id: post})  => {
       userProfile.editSection(payload.id,payload.sectionGroup).then(() => {
         commit('PostingSuccess', payload);
-        dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+        dispatch('userProfileModule/getMyProfile', null, { root: true });
       }).catch(error => commit('PostingFailed', error));
     }).catch(error => commit('PostingFailed', error));
   },
   deleteSection: ({ commit,dispatch }, payload) => {
       userProfile.deleteSection(payload).then(() => {
-     dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+     dispatch('userProfileModule/getMyProfile', null, { root: true });
     }).catch(error => commit('PostingFailed', error));
   },
   MoveUpSection: ({ commit, dispatch }, payload) => {
       userProfile.changeOrderUP(payload.id,payload.weight).then(() => {
-        dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+        dispatch('userProfileModule/getMyProfile', null, { root: true });
       }).catch(error => commit('PostingFailed', error));
   },
   MoveDownSection: ({ commit, dispatch }, payload) => {
       userProfile.changeOrderDown(payload.id,payload.weight).then(() => {
-        dispatch(`userProfileModule/getMyProfile`, null, { root: true });
+        dispatch('userProfileModule/getMyProfile', null, { root: true });
       }).catch(error => commit('PostingFailed', error));
   },
   getSection: ({ commit }, id: string) => {

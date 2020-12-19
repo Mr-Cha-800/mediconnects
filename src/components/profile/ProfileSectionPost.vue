@@ -143,7 +143,7 @@
     postingTypes: () => PostingTypesEnum,
   },
   mounted(){
-      console.log("Is this even a thing?")
+      console.log('Is this even a thing?')
   }
   });
 </script>

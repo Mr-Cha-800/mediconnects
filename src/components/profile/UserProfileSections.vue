@@ -47,7 +47,7 @@
       </q-card>
     </q-dialog>
     <!--<q-btn outline round @click="editMode = true" color="grey-8" size="sm" icon="add"/>
-    <q-form @submit.prevent="addSection" ref="addSectionForm" v-if="editMode" class="row">
+    <q-form @submit.prevent="adctionForm" v-if="editMode" class="row">
       <q-input bottom-slots v-model="newSection" placeholder="Add Section" autofocus class="col-6" />
       <div class="col-6 flex row items-center">
         <q-btn flat label="Save" type="submit"/>
@@ -86,7 +86,7 @@
       ...mapGetters('userProfileModule', ['filtersections']),
       ...mapActions('userProfileModule', ['filterSectionss','addSectionGroup'] ),
       isActive(sectionName: string): boolean {
-        if(sectionName == "All")
+        if(sectionName == 'All')
         {
          return this.filtersections().length == this.sections.length ? true : false;
         }
@@ -101,7 +101,7 @@
         this.editMode = false;
       },
       addNewSectionGroup(): void {
-        if(this.$refs.newGroup.validate())
+        if(this.$refs.newGroup)
         {
           this.addSectionGroup( this.newSectionGroup );
           this.resetSection();
@@ -114,7 +114,7 @@
         this.filterSectionss([...filteredSections,sectionName]);
       },
       toggleAllSection(){
-        this.filtersections().length != this.sections.length ? this.filterSectionss([...this.sections.map((o ) => o!.id)]) : this.filterSectionss([]);
+        this.filtersections().length !== this.sections.length ? this.filterSectionss([...this.sections.map((o ) => o!.id)]) : this.filterSectionss([]);
       }
     }
   });

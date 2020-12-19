@@ -38,7 +38,7 @@
         outline
         color="primary"
         v-if="status.connected"
-        @click="sendPM = true">
+        @click="$router.push({ name: 'messagesID', params: { id: entity } })">
       <span>
          Message
       </span>

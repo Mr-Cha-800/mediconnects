@@ -81,7 +81,7 @@
       };
     },
     mounted() {
-      this.$root.$on("selectedUser", data => {
+      this.$root.$on('selectedUser', data => {
         this.leftDrawerOpen = false;
         this.selectedUser = data;
       });

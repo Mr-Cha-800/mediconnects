@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from '@cometchat-pro/chat';
 
 export default {
-  name: "RightSidebar",
+  name: 'RightSidebar',
   data() {
     return {
       isMenu: false,
@@ -87,12 +87,12 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on("menuOpen", val => {
+    this.$root.$on('menuOpen', val => {
       // console.log(val, 'menu open')
       this.isMenu = val;
     });
 
-    this.$root.$on("selectedUser", data => {
+    this.$root.$on('selectedUser', data => {
       this.user = data;
       this.blockeUser = this.user.blockedByMe;
     });
@@ -109,10 +109,10 @@ export default {
         CometChat.blockUsers(usersList).then(
           list => {
             this.blockeUser = !this.blockeUser;
-            console.log("users list blocked", { list });
+            console.log('users list blocked', { list });
           },
           error => {
-            console.log("Blocking user fails with error", error);
+            console.log('Blocking user fails with error', error);
           }
         );
       } else {
@@ -121,10 +121,10 @@ export default {
         CometChat.unblockUsers(usersList).then(
           list => {
             this.blockeUser = !this.blockeUser;
-            console.log("users list unblocked", { list });
+            console.log('users list unblocked', { list });
           },
           error => {
-            console.log("unblocking user fails with error", error);
+            console.log('unblocking user fails with error', error);
           }
         );
       }
@@ -136,9 +136,9 @@ export default {
 
     backToCenter() {
       const el  = document.getElementById('pageWrapper');
-      if (el.classList.contains("right-open")) {
-        el.classList.remove("right-open");
-        el.classList.add("center-open");
+      if (el.classList.contains('right-open')) {
+        el.classList.remove('right-open');
+        el.classList.add('center-open');
         this.isMenu = false;
       }      
     }

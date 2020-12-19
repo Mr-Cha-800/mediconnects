@@ -68,7 +68,7 @@
   import { CometChat } from '@cometchat-pro/chat';
 
   export default {
-    name: "MessageFooter",
+    name: 'MessageFooter',
     data() {
       return {
         inputmessage: '',
@@ -85,7 +85,7 @@
       }
     },
     mounted() {
-      this.$root.$on("selectedUser", data => {
+      this.$root.$on('selectedUser', data => {
         this.currentUser = data;
         if(data.uid) {
           this.user = data;

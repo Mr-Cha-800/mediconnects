@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import { CometChat } from "@cometchat-pro/chat";
+  import { CometChat } from '@cometchat-pro/chat';
   import { mapActions } from 'vuex';
 export default {
     data(){
@@ -21,7 +21,6 @@ export default {
     },
     props:{
         selectedUser:{
-            type: Object,
             required: true
         }
     },

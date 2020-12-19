@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name:"SidebarHeader",
+    name:'SidebarHeader',
     props:['activeTab'],
 }
 </script>

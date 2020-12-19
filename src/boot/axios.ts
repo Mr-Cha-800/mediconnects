@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { boot } from 'quasar/wrappers';
 import { Router } from 'src/router';
-import * as Sentry from "@sentry/browser";
+import * as Sentry from '@sentry/browser';
 
 declare module 'vue/types/vue' {
   interface Vue {

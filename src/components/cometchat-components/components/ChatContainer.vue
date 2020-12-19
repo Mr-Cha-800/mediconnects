@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from '@cometchat-pro/chat';
 import LeftSidebar from './LeftSidebar';
 import MessageContainer from './MessageContainer';
 import RightSidebar from './RightSidebar';
@@ -46,13 +46,13 @@ export default {
     },
 
     mounted() {
-        this.$root.$on("selectedUser", data => {
+        this.$root.$on('selectedUser', data => {
             console.log(data);
             const el  = document.getElementById('pageWrapper');
             console.log('back butn', el);
-            if (el.classList.contains("left-open")) {
-                el.classList.add("center-open");
-                el.classList.remove("left-open");
+            if (el.classList.contains('left-open')) {
+                el.classList.add('center-open');
+                el.classList.remove('left-open');
             }
         });
     },

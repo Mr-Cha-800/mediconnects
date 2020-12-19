@@ -18,7 +18,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex';
   import State from 'components/common/State.vue';
   import UserProfileHeader from 'components/profile/UserProfileHeader.vue';
   import { PostingTypesEnum } from 'src/store/posting/state';
@@ -45,9 +45,6 @@
       if (userId) {
         this.getUser(userId);
       }
-    },
-    mounted(){
-      
     }
   });
 </script>

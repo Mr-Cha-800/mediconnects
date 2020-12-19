@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from '@cometchat-pro/chat';
 
 export default {
-  name: "MessageHeader",
+  name: 'MessageHeader',
   data() {
     return {
       menuOption: false,
@@ -45,7 +45,7 @@ export default {
   // props:['userData'],
 
   mounted() {
-    this.$root.$on("selectedUser", data => {
+    this.$root.$on('selectedUser', data => {
       this.userData = data;
     });
   },
@@ -75,19 +75,19 @@ export default {
       this.$root.$emit('menuOpen', this.menuOption);
 
       const el  = document.getElementById('pageWrapper');
-      if (el.classList.contains("center-open")) {
-        el.classList.remove("center-open");
-        el.classList.add("right-open");
+      if (el.classList.contains('center-open')) {
+        el.classList.remove('center-open');
+        el.classList.add('right-open');
         // el.classList.add("left-open");
       }
     },
 
     backToLeft() {
       const el  = document.getElementById('pageWrapper');
-      if (el.classList.contains("center-open")) {
-        el.classList.remove("center-open");
+      if (el.classList.contains('center-open')) {
+        el.classList.remove('center-open');
         // el.classList.remove("right-open");
-        el.classList.add("left-open");
+        el.classList.add('left-open');
       }
     },
 

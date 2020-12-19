@@ -13,16 +13,16 @@
 
 <script>
 // import { CometChat } from "@cometchat-pro/chat";
-import SidebarHeader from "./SidebarHeader";
-import Nav from "./NavComponent";
-import UserList from "./UserList";
-import ChatList from "./ChatList";
-import CallList from "./CallList";
-import GroupList from "./GroupList";
-import MoreList from "./MoreList";
+import SidebarHeader from './SidebarHeader';
+import Nav from './NavComponent';
+import UserList from './UserList';
+import ChatList from './ChatList';
+import CallList from './CallList';
+import GroupList from './GroupList';
+import MoreList from './MoreList';
 
 export default {
-  name: "LeftSidebar",
+  name: 'LeftSidebar',
   components: {
     SidebarHeader,
     Nav,
@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      activeTab: "contacts",
+      activeTab: 'contacts',
     };
   },
   methods: {
