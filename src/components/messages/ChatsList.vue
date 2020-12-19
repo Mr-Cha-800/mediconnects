@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { CometChat } from "@cometchat-pro/chat";
+  import { CometChat } from '@cometchat-pro/chat';
 
   export const STRING_CONSTS = {
     STRING_MESSAGES: {
@@ -53,7 +53,7 @@
   };
 
   export default {
-    name: "ChatsList",
+    name: 'ChatsList',
     data() {
       return {
         chatList: [],

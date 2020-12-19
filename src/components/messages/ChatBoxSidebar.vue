@@ -35,7 +35,7 @@ import Nav from '../cometchat-components/components/NavComponent';
 import ChatsList from './ChatsList';
 
 export default {
-  name: "ChatBoxSidebar",
+  name: 'ChatBoxSidebar',
   components: {
     SidebarHeader,
     Nav,
@@ -60,7 +60,7 @@ export default {
         width: '9px',
         opacity: 0.2
       },
-      activeTab: "contacts",
+      activeTab: 'contacts',
     };
   },
   methods: {

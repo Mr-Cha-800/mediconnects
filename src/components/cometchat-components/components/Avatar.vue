@@ -18,7 +18,7 @@
 </template>
 <script>
 export default {
-    name: "Avatar",
+    name: 'Avatar',
     props:['item'],
     data() {
         return {

@@ -3,7 +3,7 @@ export const getImageMeta = (file: File) => {
   return new Promise((resolve) => {
     reader.onload = ({ target: { result } }: any) => {
       const img = new Image();
-      img.addEventListener("load", function() {
+      img.addEventListener('load', function() {
         resolve({width: this.naturalWidth, height: this.naturalHeight});
       });
       img.src = result;
@@ -16,7 +16,7 @@ export const getVideoMeta = (file: File) => {
   return new Promise((resolve) => {
     reader.onload = ({ target: { result } }: any) => {
       const video = document.createElement('video');
-      video.addEventListener("canplay", function() {
+      video.addEventListener('canplay', function() {
         resolve({width: this.videoWidth, height: this.videoHeight, duration: this.duration, resolution: 'hd'});
       });
       const source = document.createElement('source');
@@ -33,7 +33,7 @@ export const getAudioMeta = (file: File) => {
   return new Promise((resolve) => {
     reader.onload = ({ target: { result } }: any) => {
       const video = document.createElement('video');
-      video.addEventListener("canplay", function() {
+      video.addEventListener('canplay', function() {
         resolve({duration: this.duration, resolution: 'hd'});
       });
       const source = document.createElement('source');

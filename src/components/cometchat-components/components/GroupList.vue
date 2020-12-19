@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
-import Avatar from "./Avatar";
+import { CometChat } from '@cometchat-pro/chat';
+import Avatar from './Avatar';
 
 export const STRING_CONSTS = {
   STRING_MESSAGES: {
@@ -45,7 +45,7 @@ export const STRING_CONSTS = {
 };
 
 export default {
-  name: "GroupList",
+  name: 'GroupList',
   components: {
     Avatar
   },

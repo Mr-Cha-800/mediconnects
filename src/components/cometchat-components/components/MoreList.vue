@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from '@cometchat-pro/chat';
 
 export default {
-  name: "MoreList",
+  name: 'MoreList',
   data() {
     return {
         user: CometChat.getLoggedinUser().then(usr=>{

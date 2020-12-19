@@ -1,7 +1,7 @@
 <template>
-  <q-form @submit="submitProfile" ref="updateForm">
+  <q-form @submit.prevent="submitPost" ref="updateForm">
     <NavBanner>
-      <slot name="action"><span class="text-h4 center-post-label absolute text-primary">{{ postType == 'profile'?'Profile Post':(postType == 'feed')?'Create Post': false }}</span></slot>
+      <slot name="action"><span class="text-h4 center-post-label absolute text-primary">{{ postType === 'profile'?'Profile Post':(postType === 'feed')?'Create Post': false }}</span></slot>
     </NavBanner>
     <div class="q-ma-md">
       <q-select 
@@ -11,7 +11,7 @@
         class="requiredAsterik"
         transition-show="jump-up"
         transition-hide="jump-down"
-        v-if=" postType == 'profile'"
+        v-if=" postType === 'profile'"
         emit-value
         map-options
         clearable
@@ -25,7 +25,7 @@
         transition-show="jump-up"
         transition-hide="jump-down"
         emit-value
-        v-if="postType != 'profile'"
+        v-if="postType !== 'profile'"
         map-options
         clearable
          />
@@ -38,7 +38,7 @@
         emit-value
         map-options
         clearable
-        v-if="postType != 'profile' "
+        v-if="postType !== 'profile' "
          />
 
     </div>
@@ -83,16 +83,15 @@
 <script lang="ts">
   import Vue from 'vue';
   import PostingState from 'components/common/PostingState.vue';
-
-  import { VForm } from '../../../src/types';
+  import { VForm } from 'src/types';
   import { mapActions,mapGetters } from 'vuex';
-  import { validateRequired } from '../../../src/formValidators';
-  import { PostingRequestInterface, PostingTypesEnum } from '../../../src/store/posting/state';
+  import { validateRequired } from 'src/formValidators';
+  import { PostingRequestInterface, PostingTypesEnum } from 'src/store/posting/state';
   import AddUserIdtoPost from 'components/posting/AddUserIdtoPost.vue';
   import AddOrgIdtoPost from 'components/posting/AddOrgIdtoPost.vue';
   import PostMediaSelection from 'components/posting/PostMediaSelection.vue';
   import NavBanner from 'components/common/NavBanner.vue';
-  import { OrgSearchQueryInterface, OrgSearchScopeEnum } from '../../../src/services/organisations.service';
+  import { OrgSearchQueryInterface, OrgSearchScopeEnum } from 'src/services/organisations.service';
 
   export default Vue.extend({
     name: 'PostingForm',
@@ -159,13 +158,10 @@
         this.postDetails = { ...this.postDetails as PostingRequestInterface, mediaSource, type };
       },
       submitPost() {
-        this.vUpdateForm.validate().then(success=>{
-          if(success)
-          {
-        
+        if((this.vUpdateForm as VForm).validate()){
             this.postDetails.organizations.push(this.organization);
             //@ts-ignore
-            this.postType =='profile' ? this.addProfilePost(this.postDetails) : this.addPost(this.postDetails);
+            this.postType ==='profile' ? this.addProfilePost(this.postDetails) : this.addPost(this.postDetails);
             this.organization = '';
             this.postDetails = {
               type: PostingTypesEnum.TEXT,
@@ -174,27 +170,21 @@
               organizations:[],
               sectionGroup:''
             };
-              this.vUpdateForm.resetValidation();
+              (this.vUpdateForm as VForm).resetValidation();
               this.postDetails.sectionGroup = this.filtersections[1];
               this.$q.notify({
-                message: 'Post Sucessful',
+                message: 'Post Successful',
                 icon: 'check',
                 color:'primary',
               })
-          }
-          else{
-            //do something later
-          }
-        });
-       
-
+        }
       }
     },
     mounted(){
       //@ts-ignore
       this.search({ scope: OrgSearchScopeEnum.ACCOUNT });
       var routeParam=this.$route.params.type;
-      if(routeParam == 'profile' || routeParam == 'feed')
+      if(routeParam === 'profile' || routeParam === 'feed')
       this.postType=routeParam;
       else
       alert('HMPH :/');

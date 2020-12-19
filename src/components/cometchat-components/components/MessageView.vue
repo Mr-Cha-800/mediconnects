@@ -163,11 +163,11 @@
 </template>
 
 <script>
-import { CometChat } from "@cometchat-pro/chat";
-import Loader from "./Loader";
+import { CometChat } from '@cometchat-pro/chat';
+import Loader from './Loader';
 
 export default {
-  name: "MessageView",
+  name: 'MessageView',
   props:['currentUser'],
   components: {
     Loader
@@ -197,8 +197,8 @@ export default {
       cometchat: CometChat,
       loading: false,
       messageRequestBuilder: function(uType, uid, limit) {
-        var messagesRequest = "";
-        if (uType == "user") {
+        var messagesRequest = '';
+        if (uType == 'user') {
           messagesRequest = new CometChat.MessagesRequestBuilder()
             .setUID(uid)
             .setLimit(limit)
@@ -289,12 +289,12 @@ export default {
   },
   // props:['userData'],
   mounted() {
-    this.$root.$on("selectedUser", data => {
+    this.$root.$on('selectedUser', data => {
         this.messageWindowRefresh(data);
     });
 
-    this.$root.$on("messageSent", msg => {
-      console.log("change something");
+    this.$root.$on('messageSent', msg => {
+      console.log('change something');
       this.messages.push(msg);
       // this.scrollToBottom();
       this.scroll();
@@ -347,7 +347,7 @@ export default {
 
   },
   updated: function() {
-    this.messageScrollWrpr = document.getElementById("messageViewWrapr");
+    this.messageScrollWrpr = document.getElementById('messageViewWrapr');
 
     // this.scrollToBottom();
 
@@ -389,7 +389,7 @@ export default {
       // this.currentHeight = 0;
 
       if (this.userData && this.userData.uid) {
-        this.messageRequest = this.messageRequestBuilder("user", this.userData.uid, 30);
+        this.messageRequest = this.messageRequestBuilder('user', this.userData.uid, 30);
 
         this.messageRequest.fetchPrevious().then(
           messages => {
@@ -403,7 +403,7 @@ export default {
           }
         );
       } else if (this.userData && this.userData.guid) {
-        this.messageRequest = this.messageRequestBuilder("group", this.userData.guid, 30);
+        this.messageRequest = this.messageRequestBuilder('group', this.userData.guid, 30);
 
         this.messageRequest.fetchPrevious().then(
           messages => {

@@ -66,7 +66,7 @@
 
 <script>
 export default {
-  name: "CallList"
+  name: 'CallList'
 };
 </script>
 

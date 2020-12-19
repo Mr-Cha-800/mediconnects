@@ -19,7 +19,7 @@ import MessageView from './MessageView';
 import MessageFooter from './MessageFooter';
 
 export default {
-  name: "MessageContainer",
+  name: 'MessageContainer',
   props:['currentUser'],
   components: {
     MessageHeader,
@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on("selectedUser", data => {
+    this.$root.$on('selectedUser', data => {
       this.userData = data;
     });
   },

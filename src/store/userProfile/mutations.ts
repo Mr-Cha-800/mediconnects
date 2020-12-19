@@ -82,7 +82,7 @@ const mutation: MutationTree<UserProfileStateInterface> = {
     state.profile.sectionGroups?.splice(state.profile.sectionGroups.findIndex( grp => grp.id == payload ), 1);
   },
   sectionGroupUpdated( state, payload:string ){
-    var index = state.profile.sectionGroups?.findIndex((grp => grp.id == payload))!;
+    let index = state.profile.sectionGroups?.findIndex((grp => grp.id == payload))!;
     state.profile.sectionGroups![index]={ name:payload,id:payload.trim().toLowerCase() };
     Vue.set(state,'profile',{ ...state.profile });
   }

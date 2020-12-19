@@ -30,17 +30,13 @@
 
     </div>
 
-
-
-
-
 </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { CometChat } from "@cometchat-pro/chat";
-import Avatar from "./Avatar";
+import { CometChat } from '@cometchat-pro/chat';
+import Avatar from './Avatar';
 
 export const STRING_CONSTS = {
   STRING_MESSAGES: {
@@ -55,12 +51,13 @@ export const STRING_CONSTS = {
 };
 
 export default {
-  name: "UserList",
+  name: 'UserList',
   components: {
     Avatar
   },
   data() {
     return {
+      userData: {},
       usersList: [],
       usersRequest: '',
       messageToDisplay: '',
@@ -80,10 +77,22 @@ export default {
   methods: {
     ...mapActions('userProfileModule', ['getContacts']),
     currentUser(data) {
-      this.$root.$emit("selectedUser", data);
+      this.$root.$emit('selectedUser', data);
     },
 
     getUserlist(data) {
+      if(this.$route.params.id){
+      this.callUser(data).fetchNext().then(users => {
+          this.usersList = [...this.usersList, ...users];
+          
+    this.userData = this.usersList.filter(x => x.uid === this.$route.params.id);
+      this.currentUser(this.userData[0]);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      }else {
       this.callUser(data).fetchNext().then(users => {
           this.usersList = [...this.usersList, ...users];
         },
@@ -91,6 +100,8 @@ export default {
           console.log(error);
         }
       );
+      }
+
     },
 
     onSearchChange(event){

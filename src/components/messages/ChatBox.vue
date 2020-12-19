@@ -40,8 +40,8 @@
     },
     methods: {
       messageRequestBuilder: function(uType, uid, limit) {
-        var messagesRequest = "";
-        if (uType == "user") {
+        var messagesRequest = '';
+        if (uType == 'user') {
           messagesRequest = new CometChat.MessagesRequestBuilder()
             .setUID(uid)
             .setLimit(limit)
@@ -62,7 +62,7 @@
         // this.currentHeight = 0;
 
         if (this.currentUser && this.currentUser.uid) {
-          this.messageRequest = this.messageRequestBuilder("user", this.currentUser.uid, 30);
+          this.messageRequest = this.messageRequestBuilder('user', this.currentUser.uid, 30);
 
           this.messageRequest.fetchPrevious().then(
             messages => {
@@ -73,7 +73,7 @@
             }
           );
         } else if (this.currentUser && this.currentUser.guid) {
-          this.messageRequest = this.messageRequestBuilder("group", this.currentUser.guid, 30);
+          this.messageRequest = this.messageRequestBuilder('group', this.currentUser.guid, 30);
 
           this.messageRequest.fetchPrevious().then(
             messages => {
@@ -90,7 +90,7 @@
       },
     },
     mounted() {
-      this.$root.$on("selectedUser", data => {
+      this.$root.$on('selectedUser', data => {
         this.currentUser = data;
         this.messageWindowRefresh();
       });

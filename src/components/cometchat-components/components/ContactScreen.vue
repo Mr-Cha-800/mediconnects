@@ -12,7 +12,7 @@
 
 </template>
 <script>
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from '@cometchat-pro/chat';
 
 import UserList from './UserList'
 import MessageContainer from './MessageContainer';
@@ -48,12 +48,12 @@ export default {
     },
 
     mounted() {
-        this.$root.$on("selectedUser", data => {
+        this.$root.$on('selectedUser', data => {
             console.log(data);
             const el  = document.getElementById('pageWrapper');
-            if (el.classList.contains("left-open")) {
-                el.classList.add("center-open");
-                el.classList.remove("left-open");
+            if (el.classList.contains('left-open')) {
+                el.classList.add('center-open');
+                el.classList.remove('left-open');
             }
         });
     },

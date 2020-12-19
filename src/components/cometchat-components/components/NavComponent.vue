@@ -37,35 +37,35 @@
 
 <script>
 export default {
-  name: "Nav",
+  name: 'Nav',
   methods: {
     tabClickHandler(e) {
       e.preventDefault();
 
       let currEle = e.currentTarget;
-      let currentTabName = currEle.getAttribute("id");
-      let oldActive = document.querySelector(".active");
-      oldActive.classList.remove("active");
+      let currentTabName = currEle.getAttribute('id');
+      let oldActive = document.querySelector('.active');
+      oldActive.classList.remove('active');
 
 
-      if (currentTabName == "contactlist") {
-        currEle.classList.add("active");
+      if (currentTabName == 'contactlist') {
+        currEle.classList.add('active');
         // this.activeTab = "contacts";
         this.$emit('activeTab', 'contacts');
-      } else if (currentTabName === "calllist") {
-        currEle.classList.add("active");
+      } else if (currentTabName === 'calllist') {
+        currEle.classList.add('active');
         // this.activeTab = "call";
         this.$emit('activeTab', 'call');
-      } else if (currentTabName === "chatlist") {
-        currEle.classList.add("active");
+      } else if (currentTabName === 'chatlist') {
+        currEle.classList.add('active');
         // this.activeTab = "chat";
         this.$emit('activeTab', 'chat');
-      } else if (currentTabName === "grouplist") {
-        currEle.classList.add("active");
+      } else if (currentTabName === 'grouplist') {
+        currEle.classList.add('active');
         // this.activeTab = "groups";
         this.$emit('activeTab', 'groups');
       } else {
-        currEle.classList.add("active");
+        currEle.classList.add('active');
         // this.activeTab = "more";
         this.$emit('activeTab', 'more');
       }

@@ -65,7 +65,7 @@ const actions: ActionTree<UserProfileStateInterface, StateInterface> = {
   },
   //section groups actions
   addSectionGroup:({ commit },payload) => {
-    userProfile.addSectionGroup( payload ).then((sectionGroup :String ) => {
+    userProfile.addSectionGroup( payload ).then((sectionGroup :string ) => {
         commit('sectionGroupAdded', payload);
     });
   }

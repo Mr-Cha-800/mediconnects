@@ -32,6 +32,7 @@ const routes: RouteConfig[] = [
       { path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },{ path: '/public/organizations/:orgId', component: () => import('pages/publicAccount/PublicOrganizationProfile.vue'), name: 'PublicOrganizationProfile', meta: { auth: true } },
 
       { path: '/messages', component: () => import('pages/messages/MessagesPage.vue'), name: 'messages', meta: { auth: true, noFooter: true } },
+      { path: '/messages/:id', component: () => import('pages/messages/MessagesPage.vue'), name: 'messagesID', meta: { auth: true, noFooter: true } },
     ]
   },
 

@@ -92,16 +92,16 @@ const actions: ActionTree<CallingStateInterface, StateInterface> = {
         .build();
       CometChat.startCall(
         callSettings,
-        document.getElementById("callScreen") || document.createElement('div'),
+        document.getElementById('callScreen') || document.createElement('div'),
         new CometChat.OngoingCallListener({
           onUserJoined: (user: any) => {
             /* Notification received here if another user joins the call. */
-            console.log("User joined call:", user);
+            console.log('User joined call:', user);
             /* this method can be use to display message or perform any actions if someone joining the call */
           },
           onUserLeft: (user: any) => {
             /* Notification received here if another user left the call. */
-            console.log("User left call:", user);
+            console.log('User left call:', user);
             /* this method can be use to display message or perform any actions if someone leaving the call */
           },
           onCallEnded: (call: any) => {
