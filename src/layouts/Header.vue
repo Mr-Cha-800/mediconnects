@@ -133,6 +133,11 @@
             icon: 'group_add',
             pathName: 'UserConnectRequests'
           },
+          connections: {
+            label: 'Connections',
+            icon: 'group',
+            pathName: 'profileConnections'
+          },
           groups: {
             label: 'Groups',
             icon: 'groups',
