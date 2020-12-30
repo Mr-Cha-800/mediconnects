@@ -93,6 +93,10 @@ module.exports = {
     'prefer-const': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/restrict-plus-operands': 'off',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     '@typescript-eslint': 'off',
 
     // allow debugger during development only

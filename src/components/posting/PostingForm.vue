@@ -4,9 +4,9 @@
       <slot name="action"><span class="text-h4 center-post-label absolute text-primary">{{ postType === 'profile'?'Profile Post':(postType === 'feed')?'Create Post': false }}</span></slot>
     </NavBanner>
     <div class="q-ma-md">
-      <q-select 
-        v-model="postDetails.sectionGroup" 
-        :options="sectionGroups" 
+      <q-select
+        v-model="postDetails.sectionGroup"
+        :options="sectionGroups"
         label="Select Profile Section"
         class="requiredAsterik"
         transition-show="jump-up"
@@ -18,9 +18,9 @@
         ref="stupid"
         :rules="[ val => val && val.length > 0 || 'Profile Section is required']"
          />
-      <q-select 
-        v-model="organization" 
-        :options="organizations" 
+      <q-select
+        v-model="organization"
+        :options="organizations"
         label="Post in Organization"
         transition-show="jump-up"
         transition-hide="jump-down"
@@ -29,9 +29,9 @@
         map-options
         clearable
          />
-      <q-select 
-        v-model="connection" 
-        :options="connections" 
+      <q-select
+        v-model="connection"
+        :options="connections"
         label="Send to connection"
         transition-show="jump-up"
         transition-hide="jump-down"
@@ -109,7 +109,7 @@
           title: '',
           description: '',
           organizations:[],
-          sectionGroup:''
+          sectionGroup:'',
         }
       }
     },
@@ -135,13 +135,13 @@
       vUpdateForm(): VForm {
         return this.$refs.updateForm as VForm;
       },
-      organizations(){
+      organizations(): Record<string, unknown> {
         return this.getOrgs.map((o : { name:string,id:string }) => { return { label:o!.name,value:o!.id }});
       },
-      connections(){
+      connections(): Record<string, unknown> {
         return this.users.map((o :Record<string,string>) =>{ return { label:o!.firstname + o!.lastname, value:o!.id }} )
       },
-      sectionGroups(){
+      sectionGroups(): Record<string, unknown> {
         return this.getSectionGroups.map((o:Record<string,string>) => {return { label:o!.name ,value:o!.id }})
       }
     },
@@ -155,11 +155,12 @@
         }
       },
       streamSelected({ mediaSource, type }: { mediaSource?: File, type: PostingTypesEnum }): void {
+        // @ts-ignore
         this.postDetails = { ...this.postDetails as PostingRequestInterface, mediaSource, type };
       },
-      submitPost() {
+      submitPost(): void {
         if((this.vUpdateForm as VForm).validate()){
-            this.postDetails.organizations.push(this.organization);
+          (this.postDetails.organizations as string[]).push(this.organization);
             //@ts-ignore
             this.postType ==='profile' ? this.addProfilePost(this.postDetails) : this.addPost(this.postDetails);
             this.organization = '';
@@ -171,6 +172,7 @@
               sectionGroup:''
             };
               (this.vUpdateForm as VForm).resetValidation();
+              // @ts-ignore
               this.postDetails.sectionGroup = this.filtersections[1];
               this.$q.notify({
                 message: 'Post Successful',
@@ -180,7 +182,7 @@
         }
       }
     },
-    mounted(){
+    mounted(): void {
       //@ts-ignore
       this.search({ scope: OrgSearchScopeEnum.ACCOUNT });
       var routeParam=this.$route.params.type;
